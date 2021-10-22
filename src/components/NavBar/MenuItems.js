@@ -15,6 +15,11 @@ export const MenuItems = [
         cName: 'nav-links',
     },
     {
+        title: 'Calendar',
+        url: 'Calendar',
+        cName: 'nav-links',
+    },
+    {
         title: 'Sign up',
         url: 'http://localhost:3000/SignUp',
         cName: 'nav-links-mobile',
