@@ -3,6 +3,7 @@ import SignUp from './components/SignUp/SignUp.js';
 import ContactUs from './components/ContactUs/ContactUs';
 import Navbar from './components/NavBar/NavBar';
 import Calendar from './components/Calendar/Calendar';
+import Profile from './components/Profile/Profile';
 import React from "react"
 import { Container, NavItem } from 'react-bootstrap';
 
@@ -25,6 +26,9 @@ function App() {
           </Route>
           <Route path="/SignUp" exact>
             <SignUp />
+          </Route>
+          <Route path="/Profile" exact>
+            <Profile />
           </Route>
         </Switch>
       </main>
