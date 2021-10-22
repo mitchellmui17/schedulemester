@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+import './Profile.css'
 
 
 class Profile extends Component{
@@ -10,10 +10,9 @@ class Profile extends Component{
         return(
             <div>
             <div className ="welcome-template">
-                <div className = "welcome-comment">
-                    <span className ="welcome">WELCOME</span><br></br>
+                <div id = "welcome-comment">
+                    <span id ="welcome">This is the profile page.</span><br></br>
                 </div>
-
             </div>
             {/* <Footer/> */}
             </div>
