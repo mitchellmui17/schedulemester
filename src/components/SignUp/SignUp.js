@@ -12,7 +12,7 @@ export default function SignUp() {
     const passwordConfirmRef = useRef();
     const nameRef = useRef();
     const userRef = useRef();
-    const {signup, currentUser} = useAuth();
+    const {signup} = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false)
     const history = useHistory();
@@ -47,7 +47,7 @@ export default function SignUp() {
                     });
             history.push('/Home');
         } catch(error){
-            {console.log(error)}
+            console.log(error)
         
         }
         setLoading(false)
@@ -94,7 +94,7 @@ export default function SignUp() {
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">
-                Already have an account? Go back to Login
+                Already have an account? Go back to <Link className="links" to='/Login'>Login</Link>!
             </div>
             </div>
         </Container>
