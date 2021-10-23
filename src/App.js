@@ -3,6 +3,7 @@ import SignUp from './components/SignUp/SignUp.js';
 import ContactUs from './components/ContactUs/ContactUs';
 import Navbar from './components/NavBar/NavBar';
 import Calendar from './components/Calendar/Calendar';
+import Login from './components/Login/Login'
 import React from "react"
 import { Container, NavItem } from 'react-bootstrap';
 import { AuthProvider } from './context/AuthContext.js';
@@ -28,6 +29,9 @@ function App() {
             <Route path="/SignUp" exact>
               <SignUp />
             </Route>
+            <Route path="/Login" exact>
+            <Login />
+          </Route>
           </Switch>
         </main>
       </Router>
