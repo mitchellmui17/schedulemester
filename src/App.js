@@ -2,11 +2,13 @@ import LandingPage from './components/Landingpage/LandingPage.js';
 import SignUp from './components/SignUp/SignUp.js';
 import ContactUs from './components/ContactUs/ContactUs';
 import Navbar from './components/NavBar/NavBar';
-import Calendar from './components/Calendar/Calendar';
+import './components/Calendar/Mycalendar'
 import React from "react"
 import { Container, NavItem } from 'react-bootstrap';
 
+
 import { BrowserRouter as Router, Route, Redirect, Switch} from "react-router-dom";
+import Mycalendar from './components/Calendar/Mycalendar';
 
 function App() {
   return (
@@ -18,7 +20,7 @@ function App() {
             <LandingPage />
           </Route>
           <Route path="/Calendar" exact> 
-            <Calendar />
+            <Mycalendar />
           </Route>
           <Route path="/ContactUs" exact>
             <ContactUs />

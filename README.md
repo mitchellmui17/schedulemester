@@ -16,7 +16,7 @@ Tip: To test that you have Node.js and npm correctly installed on your machine, 
     ```
     git clone https://github.com/mitchellmui17/schedulemester.git.  This clones the repo
     ```
-3. 'cd into the new folder and type
+3. use the 'cd schedulemester' cd into the new folder and type
     ```
     npm install
     ```
