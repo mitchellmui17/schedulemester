@@ -4,6 +4,8 @@ import ContactUs from './components/ContactUs/ContactUs';
 import Navbar from './components/NavBar/NavBar';
 import Calendar from './components/Calendar/Calendar';
 import Login from './components/Login/Login'
+import EmailVerification from './components/EmailVerification/EmailVerification'
+import ResetPassword from './components/ResetPassword/ResetPassword.js';
 import React from "react"
 import { Container, NavItem } from 'react-bootstrap';
 import { AuthProvider } from './context/AuthContext.js';
@@ -31,7 +33,13 @@ function App() {
             </Route>
             <Route path="/Login" exact>
             <Login />
-          </Route>
+            </Route>
+            <Route path="/EmailVerification" exact>
+            <EmailVerification />
+            </Route>
+            <Route path="/ResetPassword" exact>
+            <ResetPassword />
+            </Route>
           </Switch>
         </main>
       </Router>

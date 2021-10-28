@@ -75,7 +75,7 @@ export default function Login() {
                             </Card.Body>
                         </Card>
                         <div className = "w-100 text-center mt-2">
-                            Forgot your password? <Link className="links" to = '/reset-password'>Click here!</Link>    
+                            <Link className="links" to = '/EmailVerification'>Forgot your password? </Link>    
                         </div>
                     </div>
                 </Container>

@@ -14,7 +14,7 @@ export default function SignUp() {
     const userRef = useRef();
     const {signup} = useAuth();
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
     let db = Fire.db;
 
