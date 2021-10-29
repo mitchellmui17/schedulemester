@@ -2,6 +2,10 @@ import React, {Component} from "react";
 import './Profile.css'
 import picture from './../../assets/profile/default_profile_pic.jpg'
 
+export const func = (test) => {
+    return 1
+}
+
 class Profile extends Component{
     render(){
         let username = "Student" // need to get from database
@@ -12,6 +16,8 @@ class Profile extends Component{
         let toggle = (elemId) => {
             let elem = document.getElementById(elemId)
             let isVisible = elem.style.display;
+            let style = window.getComputedStyle(elem);
+            let display = style.getPropertyValue('display');
             elem.style.display = isVisible === 'none' ? 'block' : 'none';
         }
         

@@ -1,9 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { toggleVisibility } from './../Profile';
-import { test1 } from './../Profile';
+import * as pf from './../Profile';
 
 
+jest.mock("./../Profile");
+
+
+test("calls test", () => {
+    let a = 0
+    
+    expect(a+1).toBe(1)
+  });
+  
 /*
 jest.mock("./../Profile");
 
