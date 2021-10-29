@@ -2,7 +2,7 @@ import LandingPage from './components/Landingpage/LandingPage.js';
 import SignUp from './components/SignUp/SignUp.js';
 import ContactUs from './components/ContactUs/ContactUs';
 import Navbar from './components/NavBar/NavBar';
-import Calendar from './components/Calendar/Calendar';
+import Calendar from './components/Calendar/MyCalendar';
 import Profile from './components/Profile/Profile';
 import Login from './components/Login/Login'
 import React from "react"
