@@ -5,6 +5,8 @@ import Navbar from './components/NavBar/NavBar';
 import Calendar from './components/Calendar/MyCalendar';
 import Profile from './components/Profile/Profile';
 import Login from './components/Login/Login'
+import EmailVerification from './components/EmailVerification/EmailVerification'
+import ResetPassword from './components/ResetPassword/ResetPassword.js';
 import React from "react"
 import { Container, NavItem } from 'react-bootstrap';
 import { AuthProvider } from './context/AuthContext.js';
