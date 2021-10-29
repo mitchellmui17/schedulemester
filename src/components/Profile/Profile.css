@@ -1,0 +1,31 @@
+#welcome-comment {
+    text-align: center;
+}
+
+.profile-pic {
+    border-style: solid;
+    border-width: 2pt;
+    border-radius: 10%;
+    width: 200px;
+    height: 200px;
+}
+
+#student-info {
+    padding: 5%;
+    float: left;
+}
+
+#username {
+    display: block;
+    text-align: center;
+}
+
+#vertical-line {
+    display: inline-block;
+    border-right: 2px solid;
+    height: 300px;
+    /*
+    display: flex;
+    margin-right: 10%;
+     */
+}
