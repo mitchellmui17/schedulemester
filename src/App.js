@@ -32,10 +32,16 @@ function App() {
             </Route>
             <Route path="/Login" exact>
             <Login />
-          </Route>
-          <Route path="/Profile" exact>
-            <Profile />
-          </Route>
+            </Route>
+            <Route path="/Profile" exact>
+              <Profile />
+            </Route>
+            <Route path="/EmailVerification" exact>
+              <EmailVerification />
+            </Route>
+            <Route path="/ResetPassword" exact>
+              <ResetPassword />
+            </Route>
           </Switch>
         </main>
       </Router>

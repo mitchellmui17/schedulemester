@@ -1,0 +1,36 @@
+.button-test{
+    color:white;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.form{
+    font-weight: 400;
+}
+
+.links{
+    text-decoration: none;
+    color: #84DAE7;
+    -webkit-text-stroke-width: 0.1px;
+    -webkit-text-stroke-color: grey;
+    
+}
+
+
+a:hover{
+    color:blue;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+/*centers div on right side*/
+.w-100.div{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
