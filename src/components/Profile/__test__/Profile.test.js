@@ -1,51 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import * as pf from './../Profile';
+import Profile from './../Profile'
+import {render} from '@testing-library/react';
+import 'jest-dom/extend-expect';
 
-
-jest.mock("./../Profile");
-
-
-test("calls test", () => {
-    let a = 0
-    
-    expect(a+1).toBe(1)
-  });
-  
 /*
-jest.mock("./../Profile");
-
-test('calls sideEffect', () => {
-    let elem = document.createElement("div")
-    elem.id = "test"
-    elem.style.display = "none"
-    document.body.appendChild(elem)
-    expect(toggleVisibility("test")).toBe(1);
-    console.log(elem.style.display)
-
-
-    //expect(elem.style.display).toBe("block")
-
-    //expect(sideEffect).toHaveBeenCalledTimes(1);
-    //expect(sideEffect).toHaveBeenCalledWith();
+it('renders without crashing', () => {
+    const div = document.createElement("div");
+    ReactDOM.render(<Button></Button>, div);
 });
 
-//toggleVisibility = jest.fn();
-
-
-/*
-
-describe("testing toggle function", () => { 
-    test('element is visible', () => {
-            let elem = document.createElement("div")
-            elem.id = "test"
-            document.body.appendChild(elem)
-            toggleVisibility(elem.id)
-            expect(toggleVisibility).toHaveBeenCalledTimes(1)
-            /*
-            elem.style.display = 'block';
-            console.log(elem.style.display);
-            expect(profile.toggleVisibility("test")).toBe("none");
-        })
-    })
+it("renders button correctly", () => {
+	const {getByTestId} = render(<Button label="text"></Button>)
+	expect(getByTestId('button')).toHaveTextContent("text")
+})
 */
