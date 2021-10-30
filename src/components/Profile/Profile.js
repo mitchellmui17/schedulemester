@@ -5,14 +5,11 @@ import picture from './../../assets/profile/default_profile_pic.jpg'
 
 export const closeModal = () => {
     let modal = document.getElementById("modal");
-    console.log(modal.style.display);
     modal.style.display = "none" 
 }
 
 export const openModal = () => {
     let modal = document.getElementById("modal");
-    console.log("Modal element: " + modal);
-    console.log("Modal display style: " + modal.style.display);
     modal.style.display = 'block'
 }
 
@@ -22,12 +19,12 @@ class Profile extends Component{
         let major = "Computer Science" // need to get from database
         let semester = "Fall 2021"// need to get from database
         const TASKS = 3; // change later to # of tasks we want to show up in table
-        
+        /*
         let createTasks = () => {
             let table = document.getElementById('table-table');
             let row = document.createElement('tr');
             for (let i = 0; i < TASKS; i++) table.appendChild(row);
-        }
+        }*/
 
         // takes in an id of an element and toggles its visiblity depending on its current display style
         let toggle = (elemId) => {
@@ -55,12 +52,10 @@ class Profile extends Component{
                     <span> Major: {major} </span> <br/>
                     <span> Current Semester: {semester} </span> 
                 </div>
-                
                 <br/> <br/>
                 <button id='course-btn' onClick={ () => toggle('course-container') }>Show Courses</button>
                 <h2 id = "graph-title">Current Semester Tasks</h2> 
                 <div id = 'bar-graph-container'>
-                    
                     <BarChart id='bar-graph' width={500} height={500} data={data} >
                         <CartesianGrid />
                         <XAxis dataKey="name" />
@@ -106,7 +101,6 @@ class Profile extends Component{
                 </table>
                 
                 <div id = 'tasks-container'>
-                    
                     <div id = 'modal' className='modal'>
                         <div id = 'modal-content'>
                             <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>

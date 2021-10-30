@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import Profile from './../Profile'
-import {render} from '@testing-library/react';
-import 'jest-dom/extend-expect';
+//import { closeModal } from './../Profile'
+//import { openModal } from './../Profile'
+
+
+let closeModal = jest.fn((modal) => {
+    modal.style.display = 'none';
+})
+
+let openModal = jest.fn((modal) => {
+    modal.style.display = 'block';
+})
+
+describe("tests modal functionality", () => {
+    let modal = document.createElement('div');
+    modal.style.display = 'none';
+    test("tests if modal shows properly", () => {
+        openModal(modal);
+        expect(modal.style.display).toBe("block");
+    })
+
+    test("tests if modal shows properly", () => {
+        closeModal(modal);
+        expect(modal.style.display).toBe("none");
+    })
+});
 
 /*
 it('renders without crashing', () => {
