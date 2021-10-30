@@ -58,7 +58,6 @@ class Profile extends Component{
                 
                 <br/> <br/>
                 <button id='course-btn' onClick={ () => toggle('course-container') }>Show Courses</button>
-                <h2 id = "graph-title">Current Semester Tasks</h2> 
                 <div id = 'bar-graph-container'>
                     
                     <BarChart id='bar-graph' width={500} height={500} data={data} >
@@ -69,7 +68,7 @@ class Profile extends Component{
                         <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
                         <Tooltip />
                         <Legend />
-                    </BarChart>
+                    </BarChart> 
                 </div>
                 <div id = 'course-container'>
                     <table>
@@ -91,15 +90,15 @@ class Profile extends Component{
                     </thead>
                     <tbody>
                             <tr>
-                            <td><button onClick={ () => openModal() } id='sample-task'> CSC332 Lab 4 </button></td>
+                            <td><button onClick={ () => openModal() } id='sample-task'> Chem10301 Lab 4 </button></td>
                             <td><div className = 'priorityHigh'> </div></td>
                         </tr>
                         <tr> 
-                            <td><button id='sample-task'> CSC335 Midterm </button></td>
+                            <td><button id='sample-task'> CSC44800 Midterm </button></td>
                             <td><div className = 'priorityMid'> </div></td>
                         </tr>
                         <tr>
-                            <td><button id='sample-task'> MATH366 Midterm </button></td>
+                            <td><button id='sample-task'> CSC30100 Midterm </button></td>
                             <td><div className = 'priorityLow'> </div></td>
                         </tr>
                     </tbody>
