@@ -3,38 +3,32 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'rec
 import './Profile.css'
 import picture from './../../assets/profile/default_profile_pic.jpg'
 
+export const closeModal = () => {
+    let modal = document.getElementById("modal");
+    console.log(modal.style.display);
+    modal.style.display = "none" 
+}
+
+export const openModal = () => {
+    let modal = document.getElementById("modal");
+    console.log("Modal element: " + modal);
+    console.log("Modal display style: " + modal.style.display);
+    modal.style.display = 'block'
+}
+
 class Profile extends Component{
     render(){
         let username = "Student" // need to get from database
         let major = "Computer Science" // need to get from database
         let semester = "Fall 2021"// need to get from database
-        let modal = document.getElementById("modal");
-        //let modalCloseElem = document.getElementById("modal-close");
-        //let span = document.getElementsByClassName("close")[0];
         const TASKS = 3; // change later to # of tasks we want to show up in table
-        //span.onclick = () => modal.style.display = "none";
-        let closeModal = () => { 
-            console.log(modal.style.display);
-            modal.style.display = "none" 
-        }
-
-        let openModal = () => { 
-            console.log("Modal element: " + modal);
-            console.log("Modal display style: " + modal.style.display);
-            modal.style.display = 'block'
-         } 
         
         let createTasks = () => {
             let table = document.getElementById('table-table');
             let row = document.createElement('tr');
-            
-            
             for (let i = 0; i < TASKS; i++) table.appendChild(row);
-            
         }
 
-
-        
         // takes in an id of an element and toggles its visiblity depending on its current display style
         let toggle = (elemId) => {
             let elem = document.getElementById(elemId)
@@ -79,39 +73,50 @@ class Profile extends Component{
                 </div>
                 <div id = 'course-container'>
                     <table>
-                        <tr><td><a href = '/Courses'>CSC44800 - Artificial Intelligence</a></td></tr>
-                        <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
-                        <tr><td><a href = '/Courses'>CSC30400 - Introduction to Theoretical Computer Science</a></td></tr>
-                        <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr>
+                        <tbody>
+                            <tr><td><a href = '/Courses'>CSC44800 - Artificial Intelligence</a></td></tr>
+                            <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
+                            <tr><td><a href = '/Courses'>CSC30400 - Introduction to Theoretical Computer Science</a></td></tr>
+                            <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr>
+                        </tbody>
                     </table>
                 </div>
                 <br/><br/><br/>
-                
-                <div id = 'tasks-container'>
-                    <table id = 'tasks-table'>
+
+                <table id = 'tasks-table'>
+                    <thead>
                         <tr>
                             <th>Tasks</th>
                         </tr>
-                        <tr>
-                            <td><button onclick={ () => openModal() } id='sample-task'> Task 1 </button></td>
+                    </thead>
+                    <tbody>
+                            <tr>
+                            <td><button onClick={ () => openModal() } id='sample-task'> CSC332 Lab 4 </button></td>
                             <td><div className = 'priorityHigh'> </div></td>
                         </tr>
                         <tr> 
-                            <td><button id='sample-task'> Task 2 </button></td>
+                            <td><button id='sample-task'> CSC335 Midterm </button></td>
                             <td><div className = 'priorityMid'> </div></td>
                         </tr>
                         <tr>
-                            <td><button id='sample-task'> Task 3 </button></td>
+                            <td><button id='sample-task'> MATH366 Midterm </button></td>
                             <td><div className = 'priorityLow'> </div></td>
                         </tr>
-                    </table>
-                    <div id = 'modal' class='modal'>
+                    </tbody>
+                </table>
+                
+                <div id = 'tasks-container'>
+                    
+                    <div id = 'modal' className='modal'>
                         <div id = 'modal-content'>
-                            <span onclick = { () => closeModal() } id='modal-close' class="close">&times;</span>
-                            <p>Some text in the Modal..</p>
+                            <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>
+                            <p> Write a special simple command interpreter that takes a command and its
+                            arguments. This interpreter is a program where the main process creates a child
+                            process to execute the command using exec() family functions. </p>
+                            <b> <span> Due 11/15</span></b> <br/> <br/> <br/>
+                            <a href='/Courses'> Go to Course</a>
                         </div>
                     </div>
-
                 </div>
             </div>  
         )
