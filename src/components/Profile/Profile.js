@@ -104,10 +104,12 @@ class Profile extends Component{
                     <div id = 'modal' className='modal'>
                         <div id = 'modal-content'>
                             <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>
+                            <b><span> Chem10301 Lab 4</span></b>
+                            <b> <span> Due 11/15</span></b>
                             <p> Write a special simple command interpreter that takes a command and its
                             arguments. This interpreter is a program where the main process creates a child
                             process to execute the command using exec() family functions. </p>
-                            <b> <span> Due 11/15</span></b> <br/> <br/> <br/>
+                            <br/> <br/>
                             <a href='/Courses'> Go to Course</a>
                         </div>
                     </div>
