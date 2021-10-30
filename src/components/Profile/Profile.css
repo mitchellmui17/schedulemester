@@ -10,6 +10,32 @@
     height: 200px;
 }
 
+.priorityHigh {
+    border: solid 21px red;
+    background-color: red;
+    height:50px;
+    width:50px;
+}
+
+.priorityMid {
+    border: solid 21px yellow;
+    background-color: yellow;
+    height:50px;
+    width:50px;
+}
+
+.priorityLow {
+    border: solid 21px green;
+    background-color: green;
+    height:50px;
+    width:50px;
+}
+
+
+td {
+    padding: 1%;
+}
+
 #student-info {
     padding: 5%;
     float: left;
@@ -17,6 +43,19 @@
 
 #course-container {
     display: none;
+}
+
+#sample-task {
+    padding: 3%;
+    height:50px;
+    width:450px;
+
+}
+
+#bar-graph-container{
+    display:flex;
+    padding: 3%;
+    float: right;
 }
 
 #username {
@@ -28,8 +67,48 @@
     display: inline-block;
     border-right: 2px solid;
     height: 300px;
-    /*
-    display: flex;
-    margin-right: 10%;
-     */
 }
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+/* Modal Content */
+#modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+#graph-title {
+    float:right;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
