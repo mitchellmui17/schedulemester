@@ -15,6 +15,10 @@
     float: left;
 }
 
+#course-container {
+    display: none;
+}
+
 #username {
     display: block;
     text-align: center;
