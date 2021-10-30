@@ -13,12 +13,13 @@ export const openModal = () => {
     modal.style.display = 'block'
 }
 
+export let username = "Student" // need to get from database
+export let major = "Computer Science" // need to get from database
+export let semester = "Fall 2021"// need to get from database
+export const TASKS = 3; // change later to # of tasks we want to show up in table
+
 class Profile extends Component{
     render(){
-        let username = "Student" // need to get from database
-        let major = "Computer Science" // need to get from database
-        let semester = "Fall 2021"// need to get from database
-        const TASKS = 3; // change later to # of tasks we want to show up in table
         /*
         let createTasks = () => {
             let table = document.getElementById('table-table');
