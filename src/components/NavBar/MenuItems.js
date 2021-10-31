@@ -5,18 +5,18 @@ export const MenuItems = [
         cName: 'nav-links',
     },
     {
-        title: 'Never gonna give u up',
-        url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        cName: 'nav-links',
-    },
-    {
-        title: 'Contact Us',
-        url: 'ContactUs',
+        title: 'About Us',
+        url: 'http://localhost:3000/ContactUs',
         cName: 'nav-links',
     },
     {
         title: 'Calendar',
-        url: 'Calendar',
+        url: 'http://localhost:3000/Calendar',
+        cName: 'nav-links',
+    },
+    {
+        title: 'Profile',
+        url: 'http://localhost:3000/Profile',
         cName: 'nav-links',
     },
     {
