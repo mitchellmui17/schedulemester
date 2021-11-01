@@ -1,11 +1,13 @@
 import React, { createElement } from 'react';
 import Profile from './../Profile'
-//import { closeModal } from './../Profile'
-//import { openModal } from './../Profile'
+import { closeModal } from './../Profile'
+import { openModal } from './../Profile'
 import {username} from "./../Profile"
 import {major} from "./../Profile"
 import {semester} from "./../Profile"
 import {TASKS} from "./../Profile"
+import {DATA} from './../Profile'
+
 
 describe("initialize: variables are correct", () => {
     test("test username var", () => {
@@ -22,16 +24,9 @@ describe("initialize: variables are correct", () => {
     })
 })
 
-let closeModal = jest.fn((modal) => {
-    modal.style.display = 'none';
-})
-
-let openModal = jest.fn((modal) => {
-    modal.style.display = 'block';
-})
-
 describe("tests modal functionality", () => {
-    let modal = document.createElement('div');
+    document.body.innerHTML = '<div id = "modal"> </div>'
+    const modal = document.getElementById('modal');
     modal.style.display = 'none';
     test("tests if modal shows properly", () => {
         openModal(modal);

@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'rec
 import './Profile.css'
 import picture from './../../assets/profile/default_profile_pic.jpg'
 
+
 export const closeModal = () => {
     let modal = document.getElementById("modal");
     modal.style.display = "none" 
@@ -13,10 +14,17 @@ export const openModal = () => {
     modal.style.display = 'block'
 }
 
+export const DATA = [
+    { name: 'Sept', 'Task Completed': 7, 'Task Todo': 0 }, //Template data table for graph.
+    { name: 'Oct', 'Task Completed': 5, 'Task Todo': 3 },  //Waiting on making table on firebase to see what 
+    { name: 'Nov', 'Task Completed': 2, 'Task Todo': 8 },  //fields the Courses table. Should have it done
+    { name: 'Dec', 'Task Completed': 0, 'Task Todo': 10 }, //upon next meeting.
+];
+export const TASKS = 3; // change later to # of tasks we want to show up in table
+
 export let username = "Student" // need to get from database
 export let major = "Computer Science" // need to get from database
 export let semester = "Fall 2021"// need to get from database
-export const TASKS = 3; // change later to # of tasks we want to show up in table
 
 class Profile extends Component{
     render(){
@@ -28,6 +36,7 @@ class Profile extends Component{
         }*/
 
         // takes in an id of an element and toggles its visiblity depending on its current display style
+        /*
         let toggle = (elemId) => {
             let elem = document.getElementById(elemId)
             let style = window.getComputedStyle(elem);
@@ -37,14 +46,8 @@ class Profile extends Component{
             let btn = document.getElementById('course-btn');
             btn.innerHTML = display === 'none' ? "Hide Courses" : "Show Courses";
         }
+        */
 
-        const data = [
-            { name: 'Sept', 'Task Completed': 7, 'Task Todo': 0 }, //Template data table for graph.
-            { name: 'Oct', 'Task Completed': 5, 'Task Todo': 3 },  //Waiting on making table on firebase to see what 
-            { name: 'Nov', 'Task Completed': 2, 'Task Todo': 8 },  //fields the Courses table. Should have it done
-            { name: 'Dec', 'Task Completed': 0, 'Task Todo': 10 }, //upon next meeting.
-        ];
-        
         return(
             <div>
                 <div id = 'student-info'>
@@ -54,9 +57,8 @@ class Profile extends Component{
                     <span> Current Semester: {semester} </span> 
                 </div>
                 <br/> <br/>
-                <button id='course-btn' onClick={ () => toggle('course-container') }>Show Courses</button>
                 <div id = 'bar-graph-container'>
-                    <BarChart id='bar-graph' width={500} height={500} data={data} >
+                    <BarChart id='bar-graph' width={500} height={500} data={DATA} >
                         <CartesianGrid />
                         <XAxis dataKey="name" />
                         <YAxis />
@@ -68,6 +70,11 @@ class Profile extends Component{
                 </div>
                 <div id = 'course-container'>
                     <table>
+                        <thead>
+                            <tr>
+                                <th>Courses</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr><td><a href = '/Courses'>CSC44800 - Artificial Intelligence</a></td></tr>
                             <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
@@ -76,6 +83,7 @@ class Profile extends Component{
                         </tbody>
                     </table>
                 </div>
+                
                 <br/><br/><br/>
 
                 <table id = 'tasks-table'>
@@ -118,6 +126,5 @@ class Profile extends Component{
         )
     }
 }
-
 
 export default Profile;

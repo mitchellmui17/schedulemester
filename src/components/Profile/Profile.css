@@ -41,10 +41,6 @@ td {
     float: left;
 }
 
-#course-container {
-    display: none;
-}
-
 #sample-task {
     padding: 3%;
     height:50px;
