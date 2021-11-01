@@ -71,11 +71,14 @@ export default function Login() {
                                     <Button className = "button-test w-100" type = "submit" disabled={loading}>
                                         Login
                                     </Button>
+                                    <div className = "w-100 text-center mt-2">
+                                        <Link className="links" to = '/SignUp'>Don't have an account yet?</Link>    
+                                    </div>
                                 </Form>
                             </Card.Body>
                         </Card>
                         <div className = "w-100 text-center mt-2">
-                            <Link className="links" to = '/EmailVerification'>Forgot your password? </Link>    
+                            <Link className="links" to = '/ResetPassword'>Forgot your password? </Link>    
                         </div>
                     </div>
                 </Container>

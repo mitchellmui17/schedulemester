@@ -20,8 +20,8 @@ export const MenuItems = [
         cName: 'nav-links',
     },
     {
-        title: 'Sign up',
-        url: 'http://localhost:3000/SignUp',
+        title: 'Login',
+        url: '/Login',
         cName: 'nav-links',
     },
 ]

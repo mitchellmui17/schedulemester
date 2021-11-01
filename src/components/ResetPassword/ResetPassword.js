@@ -7,37 +7,58 @@ import Fire from '../../firebase'
 
 export default function ResetPassword() {
 
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
+    const emailRef = useRef();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const { resetPassword } = useAuth()
+    const history = useHistory();
+    let database = Fire.db;
+    
 
+    async function checkUser(){
+        await database.getCollection('Users').doc(emailRef.current.value).get().then(function(doc){
+            try{
+                if(doc.exists){
+                    console.log("Password Reset Email Sent.")
+                    history.push("/Login")
+                }
+            }catch(error){
+                console.log(error);
 
+            }
+        })
+        
+    }
+    
     async function handleSubmit(e){
         e.preventDefault()
-        if(passwordRef.current.value !== passwordConfirmRef.current.value){
-            return setError('Passwords do not match')
+        try{
+            setError("");
+            setLoading(true)
+            await resetPassword(emailRef.current.value)
+            checkUser()
         }
+        catch(error){
+            console.log(error)
+        }
+        setLoading(false)
     }
 
+
     return (
-        <Container className = "d-flex align-items-center justify-content-center" style ={{minHeight: "65vh"}}>
+        <Container className = "d-flex align-items-center justify-content-center" style ={{minHeight: "80vh"}}>
             <div className ="W-100" style ={{maxWidth: '400px'}}>
                 <Card>
                     <Card.Body>
                         <h2 className ="text-center mb-4">Account Recovery</h2>
                             {error && <Alert variant ="danger">{error}</Alert>}
-                        <Form className = "form">
+                        <Form onSubmit ={handleSubmit} className = "form">
                             <Form.Group>
-                                <Form.Label>New Password</Form.Label>
-                                <Form.Control type ="text" ref = {passwordRef} required/>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Enter Password Again</Form.Label>
-                                <Form.Control type = "verification" ref ={passwordConfirmRef} required/>
+                                <Form.Label>Enter Your Email</Form.Label>
+                                <Form.Control type ="text" ref = {emailRef} required/>
                             </Form.Group>
                             <Button className ="button-test w-100" type ="submit" disabled={loading}>
-                                Confirm
+                                Submit
                             </Button>
                         </Form>
                     </Card.Body>
