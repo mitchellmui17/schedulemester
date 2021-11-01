@@ -27,13 +27,14 @@ describe("initialize: variables are correct", () => {
 describe("tests modal functionality", () => {
     document.body.innerHTML = '<div id = "modal"> </div>'
     const modal = document.getElementById('modal');
-    modal.style.display = 'none';
     test("tests if modal shows properly", () => {
+        modal.style.display = 'none';
         openModal(modal);
         expect(modal.style.display).toBe("block");
     })
 
-    test("tests if modal shows properly", () => {
+    test("tests if modal closes properly", () => {
+        modal.style.display = 'block';
         closeModal(modal);
         expect(modal.style.display).toBe("none");
     })

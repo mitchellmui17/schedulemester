@@ -35,19 +35,6 @@ class Profile extends Component{
             for (let i = 0; i < TASKS; i++) table.appendChild(row);
         }*/
 
-        // takes in an id of an element and toggles its visiblity depending on its current display style
-        /*
-        let toggle = (elemId) => {
-            let elem = document.getElementById(elemId)
-            let style = window.getComputedStyle(elem);
-            let display = style.getPropertyValue('display');
-            elem.style.display = display === 'none' ? 'block' : 'none';
-
-            let btn = document.getElementById('course-btn');
-            btn.innerHTML = display === 'none' ? "Hide Courses" : "Show Courses";
-        }
-        */
-
         return(
             <div>
                 <div id = 'student-info'>
@@ -83,7 +70,6 @@ class Profile extends Component{
                         </tbody>
                     </table>
                 </div>
-                
                 <br/><br/><br/>
 
                 <table id = 'tasks-table'>
