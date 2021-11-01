@@ -21,7 +21,7 @@ export const MenuItems = [
     },
     {
         title: 'Login',
-        url: 'http://localhost:3000/Login',
+        url: '/Login',
         cName: 'nav-links',
     },
 ]
