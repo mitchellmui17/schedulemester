@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, {useRef, useState} from 'react'
 import {Card, Form, Button, Container, Alert} from 'react-bootstrap'
 import Fire from '../../firebase'
