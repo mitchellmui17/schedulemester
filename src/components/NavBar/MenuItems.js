@@ -1,27 +1,27 @@
 export const MenuItems = [
     {
         title: 'Home',
-        url: 'http://localhost:3000',
+        url: '/',
         cName: 'nav-links',
     },
     {
         title: 'About Us',
-        url: 'http://localhost:3000/ContactUs',
+        url: '/ContactUs',
         cName: 'nav-links',
     },
     {
         title: 'Calendar',
-        url: 'http://localhost:3000/Calendar',
+        url: '/Calendar',
         cName: 'nav-links',
     },
     {
         title: 'Profile',
-        url: 'http://localhost:3000/Profile',
+        url: '/Profile',
         cName: 'nav-links',
     },
     {
-        title: 'Sign up',
-        url: 'http://localhost:3000/SignUp',
+        title: 'Login',
+        url: '/Login',
         cName: 'nav-links',
     },
 ]
