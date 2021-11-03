@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Alice-Regular
+font link: https://fonts.google.com/specimen/Alice
+font author: Ksenia Erulevich
+font author site: http://www.cyreal.org/
+
+
+icon designer: Johan H. W. Basberg
+icon designer link: /Gatada
+        
+{"bg":"transparent","icon-gradient-0":"#0D7CE9","icon-gradient-1":"#15CFF1","font":"#000000","slogan":"#141414"}
+      
