@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { MenuItems } from "./MenuItems"
-import logo from "../../images/sch_logo.png"
+import logo from "../../images/ScheduleMester-logo/default.png"
 import { Button } from "../Button/Button"
 import './NavBar.css'
 
