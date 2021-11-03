@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, {useRef, useState} from 'react'
 import {Card, Form, Button, Container} from 'react-bootstrap'
 import {useAuth} from '../../context/AuthContext'
