@@ -23,3 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 package-lock.json
+src/components/Landingpage/LandingPage.js
+src/components/Landingpage/LandingPage.css
+src/components/ContactUs/ContactUs.css

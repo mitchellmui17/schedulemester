@@ -19,7 +19,7 @@ function App() {
         <Navbar />
         <main>
           <Switch>   
-            <Route path="/Home" exact> 
+            <Route path="/" exact> 
               <LandingPage />
             </Route>
             <Route path="/Calendar" exact> 
