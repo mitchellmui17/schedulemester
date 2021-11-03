@@ -7,11 +7,15 @@
     font-size: 1.2rem;
 }
 
-.navbar-log {
+.navbar-logo {
     color: #fff;
     justify-self: start;
     margin-left: 20px;
     cursor: pointer;
+}
+.image_1 {
+    width: 250px;
+    height: 250px;
 }
 
 .fa-react {
@@ -54,7 +58,7 @@
     display: none;
 
 }
-/*
+
 @media screen and (max-width: 960px){
     .NavbarItems{
         position: relative;
@@ -93,9 +97,7 @@
 
     .navbar-logo {
         position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(25%, 50%);
+        top: -50;
     }
 
     .menu-icon {
@@ -131,8 +133,5 @@
         color: rgb(123, 81, 177);
         transition: 250ms;
     }
-    Button {
-        display: none;
-    }
+
 }
-*/
