@@ -5,6 +5,7 @@ import {useAuth} from '../../context/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import "./Login.css"
 import Fire from '../../firebase'
+import logo from '../../images/ScheduleMester-logo/default.png';
 
 export default function Login() {
 
@@ -49,8 +50,13 @@ export default function Login() {
     return (
         <div className= "grid-container">
             <div className = "grid-child first"> 
-                <Container className = "d-flex align-items-center justify-content-center" style ={{minHeight: "100vh"}}>
-                    Add a picture or something here idk
+                <Container className = "d-flex justify-content-center" style ={{minHeight: "100vh"}}>
+                    <div  className= 'd-flex  align-items-center justify-content-center'>
+                    <img src ={logo} width= "500" height ="500"></img>
+                    </div>
+                    <div  className= 'd-flex align-items-center'>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+                    </div>
                 </Container>
             </div>
             <div className="test">
