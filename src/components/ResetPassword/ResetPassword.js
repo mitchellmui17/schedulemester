@@ -4,6 +4,7 @@ import {useAuth} from '../../context/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import "./ResetPassword.css"
 import Fire from '../../firebase'
+import background from '../../images/pattern_jigsaw.png';
 
 export default function ResetPassword() {
 
@@ -46,6 +47,7 @@ export default function ResetPassword() {
 
 
     return (
+        <div style = {{backgroundImage: `url(${background})`}}>
         <Container className = "d-flex align-items-center justify-content-center" style ={{minHeight: "80vh"}}>
             <div className ="W-100" style ={{maxWidth: '400px'}}>
                 <Card>
@@ -65,5 +67,6 @@ export default function ResetPassword() {
                 </Card>
             </div>
         </Container>
+        </div>
     )
 }

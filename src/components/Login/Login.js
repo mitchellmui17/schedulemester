@@ -5,7 +5,8 @@ import {useAuth} from '../../context/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import "./Login.css"
 import Fire from '../../firebase'
-import logo from '../../images/ScheduleMester-logo/default.png';
+import logo from '../../images/ScheduleMester-logo/default_Stroke_black.png';
+import background from '../../images/pattern_jigsaw.png';
 
 export default function Login() {
 
@@ -48,6 +49,7 @@ export default function Login() {
 
 
     return (
+        <div style = {{backgroundImage: `url(${background})`}}>
         <div className= "grid-container">
             <div className = "grid-child first"> 
                 <Container className = "d-flex justify-content-center" style ={{minHeight: "100vh"}}>
@@ -81,16 +83,16 @@ export default function Login() {
                                     <div className = "w-100 text-center mt-2">
                                         <Link className="links" to = '/SignUp'>Don't have an account yet?</Link>    
                                     </div>
+                                    <div className = "w-100 text-center mt-2">
+                                        <Link className="links" to = '/ResetPassword'>Forgot your password? </Link>    
+                                    </div>
                                 </Form>
                             </Card.Body>
                         </Card>
-                        <div className = "w-100 text-center mt-2">
-                            <Link className="links" to = '/ResetPassword'>Forgot your password? </Link>    
-                        </div>
                     </div>
                 </Container>
             </div>
-            
+        </div>
         </div>
     )
 }

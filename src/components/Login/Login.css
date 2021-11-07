@@ -8,7 +8,7 @@
 
 .links{
     text-decoration: none;
-    color: #84DAE7;
+    color: black;
     -webkit-text-stroke-width: 0.1px;
     -webkit-text-stroke-color: grey;
     
@@ -16,7 +16,7 @@
 }
 
 a:hover{
-    color:blue;
+    color:#84DAE7;
 }
 
 .grid-container{
