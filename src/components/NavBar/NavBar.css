@@ -38,10 +38,11 @@
     color:rgb(0, 0, 0);
     text-decoration: none;
     padding: 0.5rem 1rem;
+    font-family: 'handwriting';
 }
 
 .nav-links:hover {
-    color:rgb(127, 211, 200);
+    color:rgb(132, 218, 231);
     border-radius: 4px;
     transition: all 0.2s ease-out;
 }
@@ -88,6 +89,7 @@
         padding: 2rem;
         width: 100%;
         display: table;
+        
     }
 
     .nav-links:hover {
@@ -133,5 +135,9 @@
         color: rgb(123, 81, 177);
         transition: 250ms;
     }
-
+    
+}
+@font-face {
+    font-family: 'handwriting';
+    src:local('handwriting'),url(./../../assets/fonts/handwriting-draft_free-version.ttf) format('truetype');
 }

@@ -23,6 +23,7 @@ a:hover{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
+    font-family: 'JosefinSans';
 }
 
 /*centers div on right side*/
@@ -33,4 +34,9 @@ a:hover{
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   padding-top: 10%;
+}
+
+@font-face {
+    font-family: 'JosefinSans';
+    src:local('JosefinSans'),url(./../../assets/fonts/JosefinSans-VariableFont_wght.ttf) format('truetype');
 }
