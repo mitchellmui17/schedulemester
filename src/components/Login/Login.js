@@ -5,8 +5,8 @@ import {useAuth} from '../../context/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import "./Login.css"
 import Fire from '../../firebase'
-import logo from '../../images/ScheduleMester-logo/default_Stroke.png';
-import background from '../../images/wallhaven-nme3w9.png';
+import logo from '../../assets/images/ScheduleMester-logo/default_Stroke.png';
+import background from '../../assets/images/wallhaven-nme3w9.png';
 import "./../../assets/fonts/font.css"
 
 

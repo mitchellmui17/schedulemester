@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { MenuItems } from "./MenuItems"
-import logo from "../../images/ScheduleMester-logo/default.png"
-import background from "../../images/wallhaven-nkexld-2.png"
+import logo from "../../assets/images/ScheduleMester-logo/default.png"
+import background from "../../assets/images/wallhaven-nkexld-2.png"
 import { Button } from "../Button/Button"
 import './NavBar.css'
 import "./../../assets/fonts/font.css"

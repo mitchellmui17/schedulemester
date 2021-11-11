@@ -1,25 +1,63 @@
 .back {
-    background-color: #b4fff5;
+    background-color: #ffffff;
     min-height: 100vh;
     text-align: center;
 }
 .image_time {
+  width: 50%;
+  height: 50%;
+}
+
+.app-description {
+  background-color: #dad8d8;
+  position: absolute;
+  left: 96px;
+  top: 100px;
+  width: 90%;
+  min-height: 30vh;
+}
+
+.layer1-left {
+  background-color: #dad8d8;
+  position: absolute;
+  top: 420px;
+  left: 96px;
+  width: 30%;
+  min-height: 50vh;
+}
+
+.layer1-right {
+  background-color: #dad8d8;
+  position: absolute;
+  top: 420px;
+  right: 88px;
+  width: 58.5%;
+  min-height: 50vh;
+}
+
+.layer2-left {
+  background-color: #dad8d8;
+  position: absolute;
+  top: 935px;
+  left: 96px;
+  width: 43.4%;
+  min-height: 50vh;
+}
+
+.layer2-right {
+  background-color: #dad8d8;
+  position: absolute;
+  top: 935px;
+  right: 88px;
+  width: 45%;
+  min-height: 50vh;
+}
+
+.bottom {
+  background-color: #000000;
+  position: absolute;
+  top: 1800px;
+  bottom: -100px;
   width: 100%;
-  height: 60vh;
-}
-
-.left-half {
-  background-color: #5be6ff;
-  position: absolute;
-  left: 0px;
-  width: 50%;
-  min-height: 60vh;
-}
-
-.right-half {
-  background-color: #5be6ff;
-  position: absolute;
-  right: 0px;
-  width: 50%;
-  min-height: 60vh;
+  min-height: 19vh;
 }

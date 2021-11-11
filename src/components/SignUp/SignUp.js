@@ -5,7 +5,7 @@ import Fire from '../../firebase'
 import {useAuth} from '../../context/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import "./SignUp.css"
-import background from '../../images/wallhaven-nme3w9.png';
+import background from '../../assets/images/wallhaven-nme3w9.png';
 
 export default function SignUp() {
 
