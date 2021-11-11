@@ -34,66 +34,92 @@ class Profile extends Component{
             let row = document.createElement('tr');
             for (let i = 0; i < TASKS; i++) table.appendChild(row);
         }*/
+    
+        return( 
+            <div className="profile-page">    
+                <div className="main main-raised">
+                    <div className="profile-content">
+                        <div className="container">
+                            <div className="row">
+                                    <div className="profile">
+                                        <div className="avatar">
+                                            <img src={picture} className="rounded-circle"/>
+                                        </div>
+                                        <div className="name">
+                                            <h3 className="title">Student Name</h3>
+                                            <h5>Major</h5>
+                                            <h5>Semester</h5>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div className="description text-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        return(
-            <div>
-                <div id = 'student-info'>
-                    <img className='profile-pic'src = {picture} alt='pfp'/> <br/>
-                    <span id = 'username'>Welcome, {username}</span>
-                    <span> Major: {major} </span> <br/>
-                    <span> Current Semester: {semester} </span> 
-                </div>
-                <br/> <br/>
-                <div id = 'bar-graph-container'>
-                    <BarChart id='bar-graph' width={500} height={500} data={DATA} >
-                        <CartesianGrid />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
-                        <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
-                        <Tooltip />
-                        <Legend />
-                    </BarChart> 
-                </div>
-                <div id = 'course-container'>
-                    <table>
+                <div className = 'parent'>
+                    <div id = 'course-container' className = 'child'>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><h5>Courses</h5></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><a href = '/Courses'>CSC44800 - Artificial Intelligence</a></td></tr>
+                                <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
+                                <tr><td><a href = '/Courses'>CSC30400 - Introduction to Theoretical Computer Science</a></td></tr>
+                                <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className='vertical-line'></div>
+
+                    {/* BAR GRAPH HERE */}
+                    <table id = 'bar-table'>
+                            <thead>
+                                <tr>
+                                    <th><h5>Tasks Progress</h5></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <BarChart id='bar-graph' className = 'child' width={500} height={500} data={DATA} >
+                                <CartesianGrid />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
+                                <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
+                                <Tooltip />
+                                <Legend />
+                                </BarChart> 
+                            </tbody>
+                    </table>
+                    
+
+                    <table id = 'tasks-table' className='child'>
                         <thead>
                             <tr>
-                                <th>Courses</th>
+                                <th><h5>Tasks</h5></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td><a href = '/Courses'>CSC44800 - Artificial Intelligence</a></td></tr>
-                            <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
-                            <tr><td><a href = '/Courses'>CSC30400 - Introduction to Theoretical Computer Science</a></td></tr>
-                            <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr>
+                            <tr>
+                                <td><button onClick={ () => openModal() } className='task-btn'> Chem10301 Lab 4 </button></td>
+                                <td><div className = 'priorityHigh'> </div></td>
+                            </tr>
+                            <tr> 
+                                <td><button className='task-btn'> CSC44800 Midterm </button></td>
+                                <td><div className = 'priorityMid'> </div></td>
+                            </tr>
+                            <tr>
+                                <td><button className='task-btn'> CSC30100 Midterm </button></td>
+                                <td><div className = 'priorityLow'> </div></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-                <br/><br/><br/>
 
-                <table id = 'tasks-table'>
-                    <thead>
-                        <tr>
-                            <th>Tasks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            <tr>
-                            <td><button onClick={ () => openModal() } id='sample-task'> Chem10301 Lab 4 </button></td>
-                            <td><div className = 'priorityHigh'> </div></td>
-                        </tr>
-                        <tr> 
-                            <td><button id='sample-task'> CSC44800 Midterm </button></td>
-                            <td><div className = 'priorityMid'> </div></td>
-                        </tr>
-                        <tr>
-                            <td><button id='sample-task'> CSC30100 Midterm </button></td>
-                            <td><div className = 'priorityLow'> </div></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
                 <div id = 'tasks-container'>
                     <div id = 'modal' className='modal'>
                         <div id = 'modal-content'>
@@ -108,7 +134,7 @@ class Profile extends Component{
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         )
     }
 }
