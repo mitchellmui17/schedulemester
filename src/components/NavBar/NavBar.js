@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { MenuItems } from "./MenuItems"
 import logo from "../../images/ScheduleMester-logo/default.png"
+import background from "../../images/wallhaven-nkexld-2.png"
 import { Button } from "../Button/Button"
 import './NavBar.css'
+import "./../../assets/fonts/font.css"
 
 class Navbar extends Component {
   state = { clicked: false }
@@ -13,7 +15,7 @@ class Navbar extends Component {
 
   render () {
     return (
-      <nav className="NavbarItems">
+      <nav className="NavbarItems font-style-handwriting" style = {{backgroundImage: `url(${background})`}}>
         <h1 className="navbar-logo"><img className="image_1" src={logo} alt="Logo" /><i className="fab fa-react"></i></h1>
         <div className="menu-icon" onClick={this.handleClick}>
           <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>

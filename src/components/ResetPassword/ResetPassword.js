@@ -4,7 +4,7 @@ import {useAuth} from '../../context/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import "./ResetPassword.css"
 import Fire from '../../firebase'
-import background from '../../images/pattern_jigsaw.png';
+import background from '../../images/wallhaven-nme3w9.png';
 
 export default function ResetPassword() {
 
@@ -62,6 +62,9 @@ export default function ResetPassword() {
                             <Button className ="button-test w-100" type ="submit" disabled={loading}>
                                 Submit
                             </Button>
+                            <div className="w-100 text-center mt-2">
+                                <Link className="links" to='/Login'>》Login Here《</Link>
+                            </div>
                         </Form>
                     </Card.Body>
                 </Card>

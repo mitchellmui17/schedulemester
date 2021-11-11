@@ -26,7 +26,7 @@
 .nav-menu {
     display: grid;
     grid-template-columns: repeat(5, auto);
-    grid-gap: 10px;
+    grid-gap: 5px;
     list-style: none;
     text-align: center;
     width: 70vw;
@@ -38,7 +38,6 @@
     color:rgb(0, 0, 0);
     text-decoration: none;
     padding: 0.5rem 1rem;
-    font-family: 'handwriting';
 }
 
 .nav-links:hover {
@@ -137,7 +136,4 @@
     }
     
 }
-@font-face {
-    font-family: 'handwriting';
-    src:local('handwriting'),url(./../../assets/fonts/handwriting-draft_free-version.ttf) format('truetype');
-}
+

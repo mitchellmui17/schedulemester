@@ -1,0 +1,16 @@
+.font-style-JosefinSans{
+    font-family: 'JosefinSans';
+}
+.font-style-handwriting{
+    font-family: 'handwriting';
+}
+
+@font-face {
+    font-family: 'JosefinSans';
+    src:local('JosefinSans'),url(./JosefinSans-VariableFont_wght.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'handwriting';
+    src:local('handwriting'),url(./handwriting-draft_free-version.ttf) format('truetype');
+}
