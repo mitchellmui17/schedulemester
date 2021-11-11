@@ -47,7 +47,7 @@ export default function ResetPassword() {
 
 
     return (
-        <div className = "font-style" style = {{backgroundImage: `url(${background})`}}>
+        <div className = "font-style backgroundsize" style = {{backgroundImage: `url(${background})`}}>
         <Container className = "d-flex align-items-center justify-content-center" style ={{minHeight: "80vh"}}>
             <div className ="W-100" style ={{maxWidth: '400px'}}>
                 <Card>

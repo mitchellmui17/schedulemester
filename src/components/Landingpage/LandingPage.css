@@ -9,48 +9,66 @@
 }
 
 .app-description {
-  background-color: #dad8d8;
+  background-color: #ffffff;
   position: absolute;
   left: 96px;
   top: 100px;
   width: 90%;
   min-height: 30vh;
+  box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
+}
+.imgsize{
+  max-height: 50vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+.backgroundsize{
+  min-height: 190vh;
+  background-size:auto;
+
+
 }
 
 .layer1-left {
-  background-color: #dad8d8;
+  background-color: #ffffff;
   position: absolute;
   top: 420px;
   left: 96px;
   width: 30%;
   min-height: 50vh;
+  box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
 }
 
 .layer1-right {
-  background-color: #dad8d8;
+  background-color: #ffffff;
   position: absolute;
   top: 420px;
   right: 88px;
   width: 58.5%;
   min-height: 50vh;
+  box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
 }
 
 .layer2-left {
-  background-color: #dad8d8;
+  background-color: #ffffff;
   position: absolute;
-  top: 935px;
+  top: 935px; 
   left: 96px;
   width: 43.4%;
-  min-height: 50vh;
+  min-height: 80vh;
+  box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
+  
 }
 
 .layer2-right {
-  background-color: #dad8d8;
+  background-color: #ffffff;
   position: absolute;
   top: 935px;
   right: 88px;
   width: 45%;
-  min-height: 50vh;
+  min-height: 80vh;
+  box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
 }
 
 .bottom {
@@ -60,4 +78,5 @@
   bottom: -100px;
   width: 100%;
   min-height: 19vh;
+  box-shadow: 0 0 0 10px rgb(0, 0, 0);
 }
