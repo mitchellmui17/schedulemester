@@ -28,6 +28,11 @@ export let semester = "Fall 2021"// need to get from database
 
 class Profile extends Component{
     render(){
+        // placeholders until db connection
+        let name = "Student Name"
+        let major = "Major"
+        let semester = "Semester"
+
         /*
         let createTasks = () => {
             let table = document.getElementById('table-table');
@@ -39,22 +44,14 @@ class Profile extends Component{
             <div className="profile-page">    
                 <div className="main main-raised">
                     <div className="profile-content">
-                        <div className="container">
-                            <div className="row">
-                                    <div className="profile">
-                                        <div className="avatar">
-                                            <img src={picture} className="rounded-circle"/>
-                                        </div>
-                                        <div className="name">
-                                            <h3 className="title">Student Name</h3>
-                                            <h5>Major</h5>
-                                            <h5>Semester</h5>
-                                        </div>
-                                    </div>
+                            <div className="profile">
+                                <img src={picture} id = 'pic' className="rounded-circle"/>
+                                <div className="description">
+                                    <h3 id="name">{name}</h3>
+                                    <h5>{major}</h5>
+                                    <h5>{semester}</h5>
+                                </div>
                             </div>
-                            <div className="description text-center">
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -74,7 +71,6 @@ class Profile extends Component{
                             </tbody>
                         </table>
                     </div>
-                    <div className='vertical-line'></div>
 
                     {/* BAR GRAPH HERE */}
                     <table id = 'bar-table'>
@@ -96,7 +92,6 @@ class Profile extends Component{
                             </tbody>
                     </table>
                     
-
                     <table id = 'tasks-table' className='child'>
                         <thead>
                             <tr>
