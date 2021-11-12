@@ -1,7 +1,6 @@
 /* Classes for making child elements on same line */
 .parent {
     white-space: nowrap;
-    overflow-x: auto;
     display: flex;
     justify-content: space-between;
 }
@@ -12,6 +11,8 @@
 }
 
 /**/
+
+
 
 h5 {
     text-align: center;
@@ -68,18 +69,28 @@ td {
     color:#2b8492;
 }
 
-#tasks-table, #course-container {
+#tasks-table {
+    margin-top: 5%;
+    margin-left: 10%;
+}
+
+#course-container {
     padding: 2%;
+    margin-top: 30%;
+    /*
     width:400px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; */
 }
 
 /* BAR GRAPH */
 #bar-table {
-    margin-top: 2%;
+    margin-top: 5%;
+    margin-right: 10%;
+    /*
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; 
+    */
 }
 /**/
 
@@ -122,8 +133,11 @@ td {
 
 /* Profile Card */
 .main-raised {
-    margin: 90px 300px 0;
+    float:left;
+    margin: 120px 100px 0;
     border-radius: 6px;
+    height:300px;
+    width:400px;
     box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
 }
 

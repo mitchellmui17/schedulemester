@@ -41,7 +41,7 @@ class Profile extends Component{
         }*/
     
         return( 
-            <div className="profile-page">    
+            <div className="profile-page">
                 <div className="main main-raised">
                     <div className="profile-content">
                             <div className="profile">
@@ -53,10 +53,8 @@ class Profile extends Component{
                                 </div>
                             </div>
                     </div>
-                </div>
 
-                <div className = 'parent'>
-                    <div id = 'course-container' className = 'child'>
+                    <div id = 'course-container'>
                         <table>
                             <thead>
                                 <tr>
@@ -71,27 +69,9 @@ class Profile extends Component{
                             </tbody>
                         </table>
                     </div>
-
-                    {/* BAR GRAPH HERE */}
-                    <table id = 'bar-table'>
-                            <thead>
-                                <tr>
-                                    <th><h5>Tasks Progress</h5></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <BarChart id='bar-graph' className = 'child' width={500} height={500} data={DATA} >
-                                <CartesianGrid />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
-                                <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
-                                <Tooltip />
-                                <Legend />
-                                </BarChart> 
-                            </tbody>
-                    </table>
-                    
+                </div>
+                
+                <div className = 'parent'>
                     <table id = 'tasks-table' className='child'>
                         <thead>
                             <tr>
@@ -113,24 +93,44 @@ class Profile extends Component{
                             </tr>
                         </tbody>
                     </table>
-                </div>
 
-                <div id = 'tasks-container'>
-                    <div id = 'modal' className='modal'>
-                        <div id = 'modal-content'>
-                            <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>
-                            <b><span> Chem10301 Lab 4</span></b>
-                            <b> <span> Due 11/15</span></b>
-                            <p> Write a special simple command interpreter that takes a command and its
-                            arguments. This interpreter is a program where the main process creates a child
-                            process to execute the command using exec() family functions. </p>
-                            <br/> <br/>
-                            <a href='/Courses'> Go to Course</a>
-                        </div>
+
+                    {/* BAR GRAPH HERE */}
+                    <table id = 'bar-table'>
+                        <thead>
+                            <tr>
+                                <th><h5>Tasks Progress</h5></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <BarChart id='bar-graph' className = 'child' width={500} height={500} data={DATA} >
+                            <CartesianGrid />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
+                            <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
+                            <Tooltip />
+                            <Legend />
+                            </BarChart> 
+                        </tbody>
+                    </table>
+                </div>
+            
+            <div id = 'tasks-container' className='child'>
+                <div id = 'modal' className='modal'>
+                    <div id = 'modal-content'>
+                        <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>
+                        <b><span> Chem10301 Lab 4</span></b>
+                        <b> <span> Due 11/15</span></b>
+                        <p> Write a special simple command interpreter that takes a command and its
+                        arguments. This interpreter is a program where the main process creates a child
+                        process to execute the command using exec() family functions. </p>
+                        <br/> <br/>
+                        <a href='/Courses'> Go to Course</a>
                     </div>
                 </div>
             </div>
-        )
+        </div>)
     }
 }
 
