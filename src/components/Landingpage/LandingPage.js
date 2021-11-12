@@ -18,19 +18,19 @@ class LandingPage extends Component{
                         <p> Schedulemester is an application for convenient planning of coursework by Users.</p>
                 </article>
                 </div>
-                <div class="layer1-left imgsize" style = {{backgroundImage: `url(${gallery_img1})`}}>
+                <div className="layer1-left imgsize" style = {{backgroundImage: `url(${gallery_img1})`}}>
                     Image gallery
                 </div>
-                <div class="layer1-right">
+                <div className="layer1-right">
                     Undecided
                 </div>
-                <div class="layer2-left">
+                <div className="layer2-left">
                     Events from the CUNY/SUNY
                 </div>
-                <div class="layer2-right">
+                <div className="layer2-right">
                     Breaks/Days off
                 </div>
-                <div class="bottom" style = {{backgroundImage: `url(${bottom_background})`}}>
+                <div className="bottom" style = {{backgroundImage: `url(${bottom_background})`}}>
                 </div>
             </div>
         );
