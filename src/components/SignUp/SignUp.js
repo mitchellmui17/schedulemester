@@ -5,6 +5,7 @@ import Fire from '../../firebase'
 import {useAuth} from '../../context/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import "./SignUp.css"
+import background from '../../assets/images/wallhaven-nme3w9.png';
 
 export default function SignUp() {
 
@@ -56,7 +57,7 @@ export default function SignUp() {
        
     }
     return (
-
+        <div className = "font-style" style = {{backgroundImage: `url(${background})`}}>
         <Container className = "d-flex align-items-center justify-content-center" style ={{minHeight: "100vh"}}>
           <div className ="w-100" style = {{ maxWidth: '400px'}}>
             <Card>
@@ -91,13 +92,14 @@ export default function SignUp() {
                         <Button disabled = {loading} className = "button-test w-100" type = "submit" >
                             Sign Up
                         </Button>
+                        <div className="w-100 text-center mt-2">
+                            <Link className="links" to='/Login'>》Login Here《</Link>
+                        </div>
                     </Form>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
-                Already have an account? Go back to <Link className="links" to='/Login'>Login</Link>!
-            </div>
             </div>
         </Container>
+        </div>
     )
 }
