@@ -57,6 +57,7 @@ export default function SignUp() {
        
     }
     return (
+
         <div className = "font-style" style = {{backgroundImage: `url(${background})`}}>
         <Container className = "d-flex align-items-center justify-content-center" style ={{minHeight: "100vh"}}>
           <div className ="w-100" style = {{ maxWidth: '400px'}}>
@@ -89,7 +90,7 @@ export default function SignUp() {
                             <Form.Label>Name</Form.Label>
                             <Form.Control type = "text" ref={nameRef} required/>                 
                         </Form.Group> */}
-                        <Button disabled = {loading} className = "button-test w-100" type = "submit" >
+                        <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
                             Sign Up
                         </Button>
                         <div className="w-100 text-center mt-2">
