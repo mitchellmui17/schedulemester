@@ -1,86 +1,114 @@
+/* Classes for making child elements on same line */
+.parent {
+    white-space: nowrap;
+    display: flex;
+    justify-content: space-between;
+}
+
+.child {
+    display: inline-block;
+    height: 100%;
+}
+
+/**/
+
+
+
+h5 {
+    text-align: center;
+    font-size: 23px;
+}
+
 #welcome-comment {
     text-align: center;
 }
 
-.profile-pic {
-    border-style: solid;
-    border-width: 2pt;
-    border-radius: 10%;
-    width: 200px;
-    height: 200px;
-}
-
+/* Priority Shapes */
 .priorityHigh {
-    border: solid 21px red;
+    border: solid 10px red;
     background-color: red;
     height:50px;
-    width:50px;
+    width:10px;
+    box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 
 .priorityMid {
-    border: solid 21px yellow;
+    border: solid 10px yellow;
     background-color: yellow;
     height:50px;
-    width:50px;
+    width:10px;
+    box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 
 .priorityLow {
-    border: solid 21px green;
+    border: solid 10px green;
     background-color: green;
     height:50px;
-    width:50px;
+    width:10px;
+    box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
-
+/**/
 
 td {
     padding: 1%;
 }
 
-#student-info {
-    padding: 5%;
-    float: left;
+.task-btn {
+    background-color: #2b8492;
+    color:#fff;
+    border: none;
+    height: 50px;
+    width: 300px;
+    font-size: 14pt;
+    transition: 800ms;
+    box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 
-#sample-task {
-    padding: 3%;
-    height:50px;
-    width:450px;
-
+.task-btn:hover {
+    background:#fff;
+    color:#2b8492;
 }
 
-#bar-graph-container{
-    display:flex;
-    padding: 3%;
-    float: right;
+#tasks-table {
+    margin-top: 5%;
+    margin-left: 10%;
 }
 
-#username {
-    display: block;
-    text-align: center;
+#course-container {
+    padding: 2%;
+    margin-top: 30%;
+    /*
+    width:400px;
+    margin-left: auto;
+    margin-right: auto; */
 }
 
-#vertical-line {
-    display: inline-block;
-    border-right: 2px solid;
-    height: 300px;
+/* BAR GRAPH */
+#bar-table {
+    margin-top: 5%;
+    margin-right: 10%;
+    /*
+    margin-left: auto;
+    margin-right: auto; 
+    */
 }
+/**/
 
-/* The Modal (background) */
+/* Modal */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 100px; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    /* BACKGROUND DIM */
+    background-color: rgba(0,0,0,0.4); 
+}
   
-/* Modal Content */
 #modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -89,18 +117,68 @@ td {
     width: 50%;
 }
 
-/* The Close Button */
 .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
+}
   
-  .close:hover,
-  .close:focus {
+.close:hover, .close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-  }
+}
+/**/
+
+/* Profile Card */
+.main-raised {
+    float:left;
+    margin: 120px 100px 0;
+    border-radius: 6px;
+    height:300px;
+    width:400px;
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+}
+
+.main {
+    position: relative;
+    z-index: 3;
+}
+/**/
+
+.profile-page .profile {
+    text-align: center;
+}
+
+#pic {
+    max-width: 160px;
+    width: 100%;
+    margin: 0 auto;
+    transform: translate3d(0,-50%,0);
+    display: block;
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+}
+
+.rounded-circle {
+    border-radius: 50%;
+}
+
+#name {
+    margin-top: 30px;
+    margin-bottom: 25px;
+    min-height: 32px;
+    color: #3C4858;
+    font-weight: 700;
+    font-family: "Roboto Slab","Times New Roman",serif;
+}
+
+.profile-page .description {
+    padding: 1%;
+}
+
+.profile-page .profile .description{
+    margin-top: -110px;
+}
+
 
