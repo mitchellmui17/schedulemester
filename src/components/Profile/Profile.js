@@ -5,7 +5,7 @@ import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
 import {useAuth} from '../../context/AuthContext'
 
-
+export const db = Fire.db;
 export const closeModal = () => {
     let modal = document.getElementById("modal");
     modal.style.display = "none" 
@@ -23,16 +23,14 @@ export const DATA = [
     { name: 'Dec', 'Task Completed': 0, 'Task Todo': 10 }, //upon next meeting.
 ];
 export const TASKS = 3; // change later to # of tasks we want to show up in table
-
+    
 export default function Profile() {
-    const {currentUser} = useAuth()
-    const [name, setName] = useState("");
-    const [major, setMajor] = useState("");
-    const [semester, setSemester] = useState("");
-    let db = Fire.db;
+    const [name, setName] = React.useState("");
+    const [major, setMajor] = React.useState("");
+    const [semester, setSemester] = React.useState("");
+    const {currentUser} = useAuth();
 
-    db.getCollection('Users').doc(currentUser.email).get().then(
-        function(doc) {
+    db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
             if(doc.exists) {
                 setName(doc.data().name);
                 setMajor(doc.data().major);
@@ -41,7 +39,7 @@ export default function Profile() {
             else {
                 return;
             }
-    })
+    });
     
     /*
     let createTasks = () => {
