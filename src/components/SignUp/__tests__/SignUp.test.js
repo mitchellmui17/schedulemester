@@ -1,19 +1,18 @@
-import {getQueriesForElement} from "@testing-library/dom"
+import {render, screen, fireEvent} from '@testing-library/react';
+import toBeDisabled from '@testing-library/jest-dom'
 import React from 'react';
-import SignUp from '../SignUp';
+import SignUp from "../SignUp.js";
 import ReactDOM from 'react-dom';
 
-// describe("Tests for Frontend", () =>{
-//     it("rendered input", () =>{
-//         const root = document.createElement("div");
-//         ReactDOM.render(<SignUp/>, root);
+jest.mock('../SignUp', () =>{
+    const signup = 'placeholder';
+})
 
-//         const {getByText, getByLabelText } = getQueriesForElement(root);
+describe("Tests for Frontend", () =>{
+    test("renders without crashing", () =>{
+        const root = document.createElement("div");
+        render(SignUp, root);
+        
+    })
 
-//         expect(getByText("SignUp")).not.toBeNull();
-//     })
-// })
-
-test("dummy test case", () =>{
-    expect(true).toBe(true);
 })
