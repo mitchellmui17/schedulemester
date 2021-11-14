@@ -1,0 +1,21 @@
+How to simulate firebase using Firebase Emulator:
+
+First: make sure you have all the neccesary packages installed. 
+This includes:
+npm install mocha --save-dev
+npm install @firebase/testing --save-dev
+
+Second: Ensure you have two terminals avaiable to run.
+One will be running the simulator while the other allows you to run tests.
+
+On Both terminals ensure you are in the \schedulemester\emulator_unittest\ directory.
+
+Third: type in firebase emulators:start 
+
+NOTE* You may need to login to firebase through the terminal.
+You can do this by writing: Firebase login, and follow the prompts to login.*
+
+After you have logged in and see that the emulator has started,
+
+You can head over to the other terminal and do npm test like we usually do with jest. 
+It follows the same protocol like the unit testing we usually do.
