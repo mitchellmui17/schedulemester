@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
+import {Button} from "react-bootstrap"
 import './Profile.css'
 import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
 import {useAuth} from '../../context/AuthContext'
+import { Link, useHistory } from "react-router-dom"
 
 export const db = Fire.db;
 export const closeModal = () => {
@@ -25,10 +27,12 @@ export const DATA = [
 export const TASKS = 3; // change later to # of tasks we want to show up in table
     
 export default function Profile() {
+    const [error, setError] = useState("")
     const [name, setName] = React.useState("");
     const [major, setMajor] = React.useState("");
     const [semester, setSemester] = React.useState("");
-    const {currentUser} = useAuth();
+    const {currentUser, logout} = useAuth();
+    const history = useHistory()
 
     db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
             if(doc.exists) {
@@ -40,6 +44,17 @@ export default function Profile() {
                 return;
             }
     });
+
+    async function handleLogout() {
+        setError("")
+    
+        try {
+          await logout()
+          history.push("/Login")
+        } catch {
+          setError("Failed to log out")
+        }
+      }
     
     /*
     let createTasks = () => {
@@ -47,6 +62,7 @@ export default function Profile() {
         let row = document.createElement('tr');
         for (let i = 0; i < TASKS; i++) table.appendChild(row);
     }*/
+
 
     return( 
         <div className="profile-page">
@@ -56,8 +72,17 @@ export default function Profile() {
                             <img src={picture} id = 'pic' className="rounded-circle"/>
                             <div className="description">
                                 <h3 id="name">{name}</h3>
-                                <h5>{major}</h5>
-                                <h5>{semester}</h5>
+                                <h5>Major: {major}</h5>
+                                <h5>Semester: {semester}</h5>
+                                {console.log(currentUser.email)}
+                                {currentUser !== null?
+                                <div> 
+                                    <Button onClick={handleLogout} className="btn-primary">
+                                        Log Out
+                                    </Button>
+                                </div>:
+                                <div/>
+                                }
                             </div>
                         </div>
                 </div>
