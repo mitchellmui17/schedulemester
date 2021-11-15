@@ -41,4 +41,15 @@
   }
 }
 
-
+.btn-primary {
+  background-color: #84DAE7 !important;
+  border-color: #84DAE7 !important;
+  border: none !important;
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+  background-color: #6dcedd !important;
+  border-color: #6dcedd !important;
+}
