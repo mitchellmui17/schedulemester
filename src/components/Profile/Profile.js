@@ -27,34 +27,38 @@ export const DATA = [
 export const TASKS = 3; // change later to # of tasks we want to show up in table
     
 export default function Profile() {
-    const [error, setError] = useState("")
-    const [name, setName] = React.useState("");
-    const [major, setMajor] = React.useState("");
-    const [semester, setSemester] = React.useState("");
-    const {currentUser, logout} = useAuth();
-    const history = useHistory()
 
+    /* No need to test the initialization, useStates are empty to begin with */ 
+    /* istanbul ignore next */
+    const [error, setError] = useState("") /* istanbul ignore next */
+    const [name, setName] = React.useState(""); /* istanbul ignore next */
+    const [major, setMajor] = React.useState(""); /* istanbul ignore next */
+    const [semester, setSemester] = React.useState(""); /* istanbul ignore next */
+    const {currentUser, logout} = useAuth(); /* istanbul ignore next */
+    const history = useHistory();
+
+    /* istanbul ignore next */ 
     db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
-            if(doc.exists) {
-                setName(doc.data().name);
-                setMajor(doc.data().major);
-                setSemester(doc.data().semester);
-            }
-            else {
-                return;
-            }
+        if(doc.exists) {
+            setName(doc.data().name);
+            setMajor(doc.data().major);
+            setSemester(doc.data().semester);
+        }
+        else {
+            return;
+        }
     });
 
+    /* istanbul ignore next */
     async function handleLogout() {
         setError("")
-    
         try {
-          await logout()
-          history.push("/Login")
+            await logout()
+            history.push("/Login")
         } catch {
-          setError("Failed to log out")
+            setError("Failed to log out")
         }
-      }
+    }
     
     /*
     let createTasks = () => {
@@ -62,7 +66,6 @@ export default function Profile() {
         let row = document.createElement('tr');
         for (let i = 0; i < TASKS; i++) table.appendChild(row);
     }*/
-
 
     return( 
         <div className="profile-page">
