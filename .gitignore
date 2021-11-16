@@ -27,3 +27,9 @@ src/components/Landingpage/LandingPage.js
 src/components/Landingpage/LandingPage.css
 src/components/ContactUs/ContactUs.css
 *.log
+*.ps1
+UnitTest/node_modules/.bin/_mocha
+UnitTest/node_modules/.bin/_mocha
+UnitTest/node_modules/.bin/_mocha
+*.ps1
+UnitTest/node_modules/.bin/mocha

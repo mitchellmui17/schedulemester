@@ -4,6 +4,9 @@ import background from "../../assets/images/wallhaven-g8zvv3.png"
 import bottom_background from "../../assets/images/waveFont_Trim.png"
 import gallery_img1 from "../../assets/images/wallhaven-83dy9k.png"
 import "./../../assets/fonts/font.css"
+import Video from '../../videos/video_1.mp4';
+import {VideoBg} from './VideoBg';
+
 
 
 class LandingPage extends Component{
@@ -13,16 +16,17 @@ class LandingPage extends Component{
         return (
             <div className = "back font-style-JosefinSans backgroundsize" style = {{backgroundImage: `url(${background})`}}>
                 <div class="app-description">
-                <article>
-                        <h1>Welcome to the ScheduleMester</h1>
-                        <p> Schedulemester is an application for convenient planning of coursework by Users.</p>
-                </article>
+                    <VideoBg autoPlay loop muted src={Video} type ='video/mp4'
+                    />
                 </div>
                 <div className="layer1-left imgsize" style = {{backgroundImage: `url(${gallery_img1})`}}>
                     Image gallery
                 </div>
                 <div className="layer1-right">
-                    Undecided
+                
+                        <h1>Welcome to the ScheduleMester</h1>
+                        <p> Schedulemester is an application for convenient planning of coursework by Users.</p>
+                
                 </div>
                 <div className="layer2-left">
                     Events from the CUNY/SUNY
