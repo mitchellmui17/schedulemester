@@ -8,7 +8,7 @@ npm install @firebase/testing --save-dev
 Second: Ensure you have two terminals avaiable to run.
 One will be running the simulator while the other allows you to run tests.
 
-On Both terminals ensure you are in the \schedulemester\emulator_unittest\ directory.
+On Both terminals ensure you are in the \schedulemester\unittest\ directory.
 
 Third: type in firebase emulators:start 
 

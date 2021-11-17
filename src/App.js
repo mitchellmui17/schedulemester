@@ -9,7 +9,7 @@ import ResetPassword from './components/ResetPassword/ResetPassword.js';
 import React from "react"
 import { Container, NavItem } from 'react-bootstrap';
 import { AuthProvider } from './context/AuthContext.js';
-
+import PrivateRoute from './components/PrivateRoute.js'
 import { BrowserRouter as Router, Route, Redirect, Switch} from "react-router-dom";
 
 function App() {
@@ -34,9 +34,7 @@ function App() {
             <Route path="/Login" exact>
             <Login />
             </Route>
-            <Route path="/Profile" exact>
-              <Profile />
-            </Route>
+            <PrivateRoute exact path="/Profile" component ={Profile}/> 
             <Route path="/ResetPassword" exact>
               <ResetPassword />
             </Route>
