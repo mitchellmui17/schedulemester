@@ -52,7 +52,7 @@ export default function Login() {
 
     return (
         <div style = {{backgroundImage: `url(${background})`}}>
-        <div className= "grid-container font-style-JosefinSans">
+        <div className= "grid-container font-style-Alice">
             <div className = "grid-child first"> 
                 <Container className = "d-flex justify-content-center" style ={{minHeight: "100vh"}}>
                     <div  className= 'd-flex  align-items-center justify-content-center'>
