@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
 import './Profile.css'
 import picture from './../../assets/profile/default_profile_pic.jpg'
+import "./../../assets/fonts/font.css"
 
 
 export const closeModal = () => {
@@ -37,14 +38,14 @@ class Profile extends Component{
 
         return(
             <div>
-                <div id = 'student-info'>
+                <div id = 'student-info' className = "font-style-Alice">
                     <img className='profile-pic'src = {picture} alt='pfp'/> <br/>
                     <span id = 'username'>Welcome, {username}</span>
                     <span> Major: {major} </span> <br/>
                     <span> Current Semester: {semester} </span> 
                 </div>
                 <br/> <br/>
-                <div id = 'bar-graph-container'>
+                <div id = 'bar-graph-container' className = "font-style-Alice">
                     <BarChart id='bar-graph' width={500} height={500} data={DATA} >
                         <CartesianGrid />
                         <XAxis dataKey="name" />
@@ -55,7 +56,7 @@ class Profile extends Component{
                         <Legend />
                     </BarChart> 
                 </div>
-                <div id = 'course-container'>
+                <div id = 'course-container' className = "font-style-Alice">
                     <table>
                         <thead>
                             <tr>
@@ -72,7 +73,7 @@ class Profile extends Component{
                 </div>
                 <br/><br/><br/>
 
-                <table id = 'tasks-table'>
+                <table id = 'tasks-table' className = "font-style-Alice">
                     <thead>
                         <tr>
                             <th>Tasks</th>

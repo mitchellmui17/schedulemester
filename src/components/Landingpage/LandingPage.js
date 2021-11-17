@@ -11,7 +11,7 @@ class LandingPage extends Component{
     
     render() {
         return (
-            <div className = "back font-style-JosefinSans backgroundsize" style = {{backgroundImage: `url(${background})`}}>
+            <div className = "back font-style-Alice backgroundsize" style = {{backgroundImage: `url(${background})`}}>
                 <div class="app-description">
                 <article>
                         <h1>Welcome to the ScheduleMester</h1>
