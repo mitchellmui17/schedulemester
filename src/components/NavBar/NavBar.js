@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { MenuItems } from "./MenuItems"
+//import { MenuItems } from "./MenuItems"
 import logo from "../../assets/images/ScheduleMester-logo/default.png"
 import background from "../../assets/images/wallhaven-nkexld-2.png"
-import { Button } from "../Button/Button"
+//import { Button } from "../Button/Button"
 import './NavBar.css'
 import "./../../assets/fonts/font.css"
 
@@ -21,15 +21,31 @@ class Navbar extends Component {
           <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
         </div>
         <ul className={this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
-          {MenuItems.map((item, index) => {
-            return (
-              <li key ={index}>
-                <a className={item.cName} href={item.url}>
-                {item.title}
-                </a>
-              </li>
-            )
-          })}
+          <li>
+            <a className={'nav-links'} href={'/'}>
+              {'Home'}
+            </a>
+          </li>
+          <li>
+            <a className={'nav-links'} href={'/ContactUs'}>
+              {'About Us'}
+            </a>
+          </li>
+          <li>
+            <a className={'nav-links'} href={'/Calendar'}>
+              {'Calendar'}
+            </a>
+          </li>
+          <li>
+            <a className={'nav-links'} href={'/Profile'}>
+              {'Profile'}
+            </a>
+          </li>
+          <li>
+            <a className={'nav-links'} href={'/Login'}>
+              {'Login'}
+            </a>
+          </li>
         </ul>
       </nav>
     )
