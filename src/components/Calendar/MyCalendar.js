@@ -53,7 +53,7 @@ function MyCalendar() {
     }
 
     return (
-            <div className="App">
+            <div className="App font-style-Alice">
                 <div className="Container">
                     <div className="Cal_Header">
                         <h1 className="1_header">Calendar</h1>

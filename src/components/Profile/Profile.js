@@ -6,6 +6,7 @@ import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
 import {useAuth} from '../../context/AuthContext'
 import { Link, useHistory } from "react-router-dom"
+import "./../../assets/fonts/font.css"
 
 export const db = Fire.db;
 export const closeModal = () => {
@@ -68,7 +69,7 @@ export default function Profile() {
     }*/
 
     return( 
-        <div className="profile-page">
+        <div className="profile-page font-style-Alice">
             <div className="main main-raised">
                 <div className="profile-content">
                         <div className="profile">

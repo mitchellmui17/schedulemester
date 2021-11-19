@@ -58,7 +58,7 @@ export default function SignUp() {
     }
     return (
 
-        <div className = "font-style" style = {{backgroundImage: `url(${background})`}}>
+        <div className = "font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
         <Container className = "d-flex align-items-center justify-content-center" style ={{minHeight: "100vh"}}>
           <div className ="w-100" style = {{ maxWidth: '400px'}}>
             <Card>

@@ -15,7 +15,7 @@ class Navbar extends Component {
 
   render () {
     return (
-      <nav className="NavbarItems font-style-handwriting" style = {{backgroundImage: `url(${background})`}}>
+      <nav className="NavbarItems font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
         <h1 className="navbar-logo"><img className="image_1" src={logo} alt="Logo" /><i className="fab fa-react"></i></h1>
         <div className="menu-icon" onClick={this.handleClick}>
           <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
