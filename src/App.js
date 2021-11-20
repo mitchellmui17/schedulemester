@@ -19,7 +19,7 @@ function App() {
         <NavBar />
         <main>
           <Switch>   
-            <Route path="/Home" exact> 
+            <Route path="/" exact> 
               <LandingPage />
             </Route>
             <PrivateRoute exact path="/Calendar" component ={Calendar}/> 

@@ -23,7 +23,7 @@ export default function NavigationBar(){
         <h1 className="navbar-logo"><img className="image_1" src={logo} alt="Logo" /></h1>
         <ul className= 'nav-menu'>
         <li>
-            <a className={'nav-links'} href={'/Home'}>
+            <a className={'nav-links'} href={'/'}>
               {'Home'}
             </a>
           </li>
