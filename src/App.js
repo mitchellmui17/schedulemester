@@ -1,7 +1,7 @@
 import LandingPage from './components/Landingpage/LandingPage.js';
 import SignUp from './components/SignUp/SignUp.js';
 import ContactUs from './components/ContactUs/ContactUs';
-import Navbar from './components/NavBar/NavBar';
+import NavBar from './components/NavBar/NavBar';
 import Calendar from './components/Calendar/MyCalendar';
 import Profile from './components/Profile/Profile';
 import Login from './components/Login/Login'
@@ -16,15 +16,13 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Navbar />
+        <NavBar />
         <main>
           <Switch>   
             <Route path="/" exact> 
               <LandingPage />
             </Route>
-            <Route path="/Calendar" exact> 
-              <Calendar />
-            </Route>
+            <PrivateRoute exact path="/Calendar" component ={Calendar}/> 
             <Route path="/ContactUs" exact>
               <ContactUs />
             </Route>
