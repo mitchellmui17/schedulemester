@@ -81,7 +81,7 @@ export default function Profile() {
                                 {console.log(currentUser.email)}
                                 {currentUser !== null?
                                 <div> 
-                                    <Button onClick={handleLogout} className="btn-primary">
+                                    <Button onClick={handleLogout} className="btn-primary btn-outline-light">
                                         Log Out
                                     </Button>
                                 </div>:
