@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
-import {Button} from "react-bootstrap"
+import {Button, Card, Form, Alert, Container} from "react-bootstrap"
 import './Profile.css'
 import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
+import firebase from 'firebase/app';
 import {useAuth} from '../../context/AuthContext'
 import { Link, useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
@@ -16,6 +17,16 @@ export const closeModal = () => {
 
 export const openModal = () => {
     let modal = document.getElementById("modal");
+    modal.style.display = 'block'
+}
+
+export const closeCourseModal = () => {
+    let modal = document.getElementById("add-course-modal");
+    modal.style.display = "none" 
+}
+
+export const openCourseModal = () => {
+    let modal = document.getElementById("add-course-modal");
     modal.style.display = 'block'
 }
 
@@ -38,6 +49,16 @@ export default function Profile() {
     const [courseName, setCourseName] = useState(""); /* istanbul ignore next */
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
     const history = useHistory();
+
+    /* istanbul ignore next */
+    //consts here are for submission form to add courses to current users' document in Course collection.
+    const [loading, setLoading] = useState(false)
+    const courseNameRef = useRef();
+    const courseIDRef = useRef();
+    const examGRef = useRef();
+    const homeworkGRef = useRef();
+    const projectGRef = useRef();
+    const courseList = [];
 
     /* istanbul ignore next */ 
     db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
@@ -62,21 +83,6 @@ export default function Profile() {
         }
     }
 
-    
-    /*async function GetCourses(){
-        let courses[];
-        await db.getCollection('Course').doc(currentUser.email).get().then(function(doc){
-            if(doc.exists) {
-                const data = doc.data();
-                course.push(data.ListofCourses)
-                console.log(data);
-                
-            }
-            else {
-                return;
-            }
-        });
-    }*/
 
     const getData = async() =>{
         await db.getCollection("Course").get().then(snapshot => {
@@ -94,43 +100,31 @@ export default function Profile() {
             })
             setCourseName(tempcourseName);
         }).catch(error => console.log(error))
-        }          
+        }
+        
+    function pushContent(){
+        courseList.push(courseNameRef)
+        courseList.push(courseIDRef)
+        courseList.push(examGRef)
+        courseList.push(homeworkGRef)
+        courseList.push(projectGRef)
+    }
     
     useEffect(() =>{
         getData()
     },[])
-    
-
-    /*
-    let createTasks = () => {
-        let table = document.getElementById('table-table');
-        let row = document.createElement('tr');
-        for (let i = 0; i < TASKS; i++) table.appendChild(row);
-    }*/
-    //console.log("This is just courseName", courseName[0].ListofCourses[0].Course_Name);
-    //console.log(courseName[0].ListofCourses.length)
-
 
 
     function printTable(){
-
         try{
-    
         let courselength = courseName.length;
-        console.log("length: ", courseName.length)
-        // //console.log(course[0].ListofCourses.length)
-        console.log("length ", courseName)
-        
             
         const list = []
         let x;
         for(x = 0; x < courselength; x++){
             list.push(<li>{courseName[x].Course_id} - {courseName[x].Course_Name} </li>)
         }
-        
 
-
-        
         return(
             <div>
                 {list}
@@ -141,7 +135,42 @@ export default function Profile() {
         }
     }
 
-    return( 
+    function refreshPage() {
+        window.location.reload(false);
+    }
+
+    async function handleSubmit(e){
+        e.preventDefault()
+        try {
+            setError('')
+            setLoading(true)
+
+            db.getCollection('Course').doc(currentUser.email).update({
+                ListofCourses: firebase.firestore.FieldValue.arrayUnion(
+                    {   
+                        Course_Name: courseNameRef.current.value,
+                        Course_id: courseIDRef.current.value,
+                        Exams: examGRef.current.value,
+                        Homeworks: homeworkGRef.current.value,
+                        Projects: projectGRef.current.value
+                        }
+                    )
+                }).then(function() {// went through
+                    console.log("Document successfully written!");
+                    refreshPage()
+                })
+                .catch(function(error) { //broke down somewhere
+                    console.error("Error writing document: ", error);
+                });
+            history.push('/Profile')
+        } catch{
+            setError('Failed to add course')
+        }
+        setLoading(false)
+    }
+
+
+    return(
         <div className="profile-page font-style-Alice">
             <div className="main main-raised">
                 <div className="profile-content">
@@ -171,15 +200,11 @@ export default function Profile() {
                             </tr>
                         </thead>
                         <tbody>
-
-                            {/* {printTable(courseName)} */}
                             <tr><td><a href = '/Courses'>{printTable()}</a></td></tr>
-                            {/* <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
-                            <tr><td><a href = '/Courses'>CSC30400 - Introduction to Theoretical Computer Science</a></td></tr>
-                            <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr> */}
                         </tbody>
                     </table>
-                    <button>Add a course</button>
+                    <button onClick={ () => openCourseModal() }>Add a course</button>
+
                 </div>
             </div>
             
@@ -228,11 +253,13 @@ export default function Profile() {
                 </table>
             </div>
         
+    
+        
         <div id = 'tasks-container' className='child'>
             <div id = 'modal' className='modal'>
                 <div id = 'modal-content'>
                     <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>
-                    <b><span> Chem10301 Lab 4</span></b>
+                    <b><span> CSC33200 Lab 4</span></b>
                     <b> <span> Due 11/15</span></b>
                     <p> Write a special simple command interpreter that takes a command and its
                     arguments. This interpreter is a program where the main process creates a child
@@ -242,5 +269,46 @@ export default function Profile() {
                 </div>
             </div>
         </div>
+        
+        <div id = 'add-course-container' className ='child'>
+            <div id = "add-course-modal" className='modal'>
+                <div id = 'modal-content'>
+                <span onClick = { () => closeCourseModal() } id='modal-close' className="close">&times;</span>
+                    <Card>
+                        <Card.Body>
+                            <h2 className = "text-center mb-4">Add Course</h2>
+                            {error && <Alert variant ="danger">{error}</Alert>}
+                            <form onSubmit = {handleSubmit}>
+                            <Form.Group id = "courseName">
+                                <Form.Label>Course Name</Form.Label>
+                                <Form.Control type = "text" ref={courseNameRef} required/>                 
+                            </Form.Group>
+                            <Form.Group id = "courseID">
+                                <Form.Label>Course ID</Form.Label>
+                                <Form.Control type = "text" ref={courseIDRef} required/>                 
+                            </Form.Group>
+                            <Form.Group id = "examsGrade">
+                                <Form.Label>Exams Grade</Form.Label>
+                                <Form.Control type = "number" ref={examGRef} required/>                 
+                            </Form.Group>
+                            <Form.Group id = "homeworksGrade">
+                                <Form.Label>Homeworks Grade</Form.Label>
+                                <Form.Control type = "number" ref={homeworkGRef} required/>                 
+                            </Form.Group>
+                            <Form.Group id = "projectsGrade">
+                                <Form.Label>Projects Grade</Form.Label>
+                                <Form.Control type = "number" ref={projectGRef} required/>                 
+                            </Form.Group>
+                        <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
+                            Add Course
+                        </Button>
+                    </form>
+                </Card.Body>
+            </Card>
+        </div>
+        </div>
+    </div>
+
+
     </div>)
 }
