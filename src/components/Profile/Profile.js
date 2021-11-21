@@ -79,12 +79,16 @@ export default function Profile() {
     }*/
 
     const getData = async() =>{
-        db.getCollection("Course").get().then(snapshot => {
+        await db.getCollection("Course").get().then(snapshot => {
             const tempcourseName= [];
             snapshot.forEach(doc => {
                 const data = doc.data();
-                if (currentUser.email == doc.id){
-                    tempcourseName.push(data);
+                if (currentUser.email === doc.id){
+                    let x =0;
+                    for(x = 0; x < data.ListofCourses.length; x++){
+                        tempcourseName.push(data.ListofCourses[x]);
+                    }
+                    
                 }
 
             })
@@ -95,6 +99,7 @@ export default function Profile() {
     useEffect(() =>{
         getData()
     },[])
+    
 
     /*
     let createTasks = () => {
@@ -104,25 +109,28 @@ export default function Profile() {
     }*/
     //console.log("This is just courseName", courseName[0].ListofCourses[0].Course_Name);
     //console.log(courseName[0].ListofCourses.length)
-    async function printTable(){
+
+
+
+    function printTable(){
 
         try{
-        let course = courseName;
-        let courselength = course[0].ListofCourses.length;
+    
+        let courselength = courseName.length;
+        console.log("length: ", courseName.length)
         // //console.log(course[0].ListofCourses.length)
-        // console.log(courselength)
+        console.log("length ", courseName[0])
         
-            console.log(this)
+            
         const list = []
+        let x;
+        for(x = 0; x < courselength; x++){
+            list.push(<li>{courseName[x].Course_id} - {courseName[x].Course_Name} </li>)
+        }
+        
 
-        const courseList = courseName[0].ListofCourses
 
-
-        courseList.forEach((courseList) => {
-            list.push(<li>{courseList.Course_id} - {courseList.Course_Name}</li>)
-        });
-        console.log(courseList);
-
+        
         return(
             <div>
                 {list}
@@ -131,18 +139,8 @@ export default function Profile() {
         }catch(error){
             console.log(error)
         }
-
-
-        // for(let x = 0; x < courselength; x++){
-        //     return(
-        //     <div>
-        //         {courseName[0].ListofCourses[x].Course_id} - {course[0].ListofCourses[x].Course_Name}
-        //     </div>
-        //     )
-        // }
     }
 
-    getData()
     return( 
         <div className="profile-page font-style-Alice">
             <div className="main main-raised">
@@ -175,7 +173,7 @@ export default function Profile() {
                         <tbody>
 
                             {/* {printTable(courseName)} */}
-                            <tr><td><a href = '/Courses'>{printTable}</a></td></tr>
+                            <tr><td><a href = '/Courses'>{printTable()}</a></td></tr>
                             {/* <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
                             <tr><td><a href = '/Courses'>CSC30400 - Introduction to Theoretical Computer Science</a></td></tr>
                             <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr> */}
