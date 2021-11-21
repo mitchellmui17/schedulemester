@@ -5,6 +5,7 @@ import NavBar from './components/NavBar/NavBar';
 import Calendar from './components/Calendar/MyCalendar';
 import Profile from './components/Profile/Profile';
 import Login from './components/Login/Login'
+import Courses from './components/Courses/Courses.js'
 import ResetPassword from './components/ResetPassword/ResetPassword.js';
 import React from "react"
 import { Container, NavItem } from 'react-bootstrap';
@@ -32,6 +33,7 @@ function App() {
             <Route path="/Login" exact>
             <Login />
             </Route>
+            <PrivateRoute exact path="/Courses" component = {Courses}/>
             <PrivateRoute exact path="/Profile" component ={Profile}/> 
             <Route path="/ResetPassword" exact>
               <ResetPassword />

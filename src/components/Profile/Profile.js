@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
 import {Button} from "react-bootstrap"
 import './Profile.css'
@@ -35,6 +35,7 @@ export default function Profile() {
     const [name, setName] = React.useState(""); /* istanbul ignore next */
     const [major, setMajor] = React.useState(""); /* istanbul ignore next */
     const [semester, setSemester] = React.useState(""); /* istanbul ignore next */
+    const [courseName, setCourseName] = useState(""); /* istanbul ignore next */
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
     const history = useHistory();
 
@@ -60,14 +61,88 @@ export default function Profile() {
             setError("Failed to log out")
         }
     }
+
     
+    /*async function GetCourses(){
+        let courses[];
+        await db.getCollection('Course').doc(currentUser.email).get().then(function(doc){
+            if(doc.exists) {
+                const data = doc.data();
+                course.push(data.ListofCourses)
+                console.log(data);
+                
+            }
+            else {
+                return;
+            }
+        });
+    }*/
+
+    const getData = async() =>{
+        db.getCollection("Course").get().then(snapshot => {
+            const tempcourseName= [];
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (currentUser.email == doc.id){
+                    tempcourseName.push(data);
+                }
+
+            })
+            setCourseName(tempcourseName);
+        }).catch(error => console.log(error))
+        }          
+    
+    useEffect(() =>{
+        getData()
+    },[])
+
     /*
     let createTasks = () => {
         let table = document.getElementById('table-table');
         let row = document.createElement('tr');
         for (let i = 0; i < TASKS; i++) table.appendChild(row);
     }*/
+    //console.log("This is just courseName", courseName[0].ListofCourses[0].Course_Name);
+    //console.log(courseName[0].ListofCourses.length)
+    async function printTable(){
 
+        try{
+        let course = courseName;
+        let courselength = course[0].ListofCourses.length;
+        // //console.log(course[0].ListofCourses.length)
+        // console.log(courselength)
+        
+            console.log(this)
+        const list = []
+
+        const courseList = courseName[0].ListofCourses
+
+
+        courseList.forEach((courseList) => {
+            list.push(<li>{courseList.Course_id} - {courseList.Course_Name}</li>)
+        });
+        console.log(courseList);
+
+        return(
+            <div>
+                {list}
+            </div>
+        )
+        }catch(error){
+            console.log(error)
+        }
+
+
+        // for(let x = 0; x < courselength; x++){
+        //     return(
+        //     <div>
+        //         {courseName[0].ListofCourses[x].Course_id} - {course[0].ListofCourses[x].Course_Name}
+        //     </div>
+        //     )
+        // }
+    }
+
+    getData()
     return( 
         <div className="profile-page font-style-Alice">
             <div className="main main-raised">
@@ -78,7 +153,6 @@ export default function Profile() {
                                 <h3 id="name">{name}</h3>
                                 <h5>Major: {major}</h5>
                                 <h5>Semester: {semester}</h5>
-                                {console.log(currentUser.email)}
                                 {currentUser !== null?
                                 <div> 
                                     <Button onClick={handleLogout} className="btn-primary btn-outline-light">
@@ -99,10 +173,12 @@ export default function Profile() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td><a href = '/Courses'>CSC44800 - Artificial Intelligence</a></td></tr>
-                            <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
+
+                            {/* {printTable(courseName)} */}
+                            <tr><td><a href = '/Courses'>{printTable}</a></td></tr>
+                            {/* <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
                             <tr><td><a href = '/Courses'>CSC30400 - Introduction to Theoretical Computer Science</a></td></tr>
-                            <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr>
+                            <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr> */}
                         </tbody>
                     </table>
                 </div>
