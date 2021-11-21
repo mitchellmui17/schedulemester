@@ -119,7 +119,7 @@ export default function Profile() {
         let courselength = courseName.length;
         console.log("length: ", courseName.length)
         // //console.log(course[0].ListofCourses.length)
-        console.log("length ", courseName[0])
+        console.log("length ", courseName)
         
             
         const list = []
@@ -179,6 +179,7 @@ export default function Profile() {
                             <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr> */}
                         </tbody>
                     </table>
+                    <button>Add a course</button>
                 </div>
             </div>
             
