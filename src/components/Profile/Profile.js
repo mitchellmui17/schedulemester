@@ -30,14 +30,45 @@ export const openCourseModal = () => {
     modal.style.display = 'block'
 }
 
+// 0 = priorityLow
+// 1 = priorityMid
+// 2 = priorityHigh
+export const evaluatePriority = (priority) => {
+    if (priority === 0) return "priorityLow"
+    else if (priority === 1) return "priorityMid"
+    else return "priorityHigh"        
+
 export const DATA = [
     { name: 'Sept', 'Task Completed': 7, 'Task Todo': 0 }, //Template data table for graph.
     { name: 'Oct', 'Task Completed': 5, 'Task Todo': 3 },  //Waiting on making table on firebase to see what 
     { name: 'Nov', 'Task Completed': 2, 'Task Todo': 8 },  //fields the Courses table. Should have it done
     { name: 'Dec', 'Task Completed': 0, 'Task Todo': 10 }, //upon next meeting.
 ];
-export const TASKS = 3; // change later to # of tasks we want to show up in table
+
+export const updateModal = (task) => {
+    let title = document.getElementById('modal-title')
+    let desc = document.getElementById('modal-description')
+    let date = document.getElementById('modal-date')
+
+    title.innerHTML = task.Title
+    desc.innerHTML = task.Description
+    date.innerHTML = "Deadline: " + task.Date
+
+    openModal()
+}
     
+export const showTasks = (tasks) => {
+    let jsx = []
+    for (let i = 0; i < tasks.length; i++) {
+        jsx.push(
+            <tr>
+                <td> <button value = {i} className = 'task-btn' onClick = { () => updateModal(tasks[i])} > {tasks[i].Title} </button> </td>
+                <td> <div className = {evaluatePriority(tasks[i].Priority)}> </div> </td>
+            </tr> )
+    }
+    return (<tbody>{jsx}</tbody>)
+}
+
 export default function Profile() {
 
     /* No need to test the initialization, useStates are empty to begin with */ 
@@ -48,6 +79,7 @@ export default function Profile() {
     const [semester, setSemester] = React.useState(""); /* istanbul ignore next */
     const [courseName, setCourseName] = useState(""); /* istanbul ignore next */
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
+    const [tasks, setTasks] = useState([]) /* istanbul ignore next */
     const history = useHistory();
 
     /* istanbul ignore next */
@@ -65,12 +97,38 @@ export default function Profile() {
         if(doc.exists) {
             setName(doc.data().name);
             setMajor(doc.data().major);
-            setSemester(doc.data().semester);
+            setSemester(doc.data().semester);   
         }
         else {
             return;
         }
     });
+    
+    /* istanbul ignore next */
+    const getTasks = async () => {
+        await db.getCollection('Tasks').doc(currentUser.email).get().then((d) => {
+            if (d.exists)  setTasks(d.data().Tasks)           
+        })
+    }
+
+    /* istanbul ignore next */
+    useEffect(() => {
+        getTasks()
+    }, [])
+
+    /*
+    function showTasks() {
+        let jsx = []
+        for (let i = 0; i < tasks.length; i++ ) {
+            jsx.push(
+                <tr>
+                    <td> <button value = {i} className = 'task-btn' onClick = { () => updateModal(tasks[i])} > {tasks[i].Title} </button> </td>
+                    <td> <div className = {evaluatePriority(tasks[i].Priority)}> </div> </td>
+                </tr> )
+        }
+        return (<tbody>{jsx}</tbody>)
+    } */
+
 
     /* istanbul ignore next */
     async function handleLogout() {
@@ -113,7 +171,6 @@ export default function Profile() {
     useEffect(() =>{
         getData()
     },[])
-
 
     function printTable(){
         try{
@@ -215,22 +272,8 @@ export default function Profile() {
                             <th><h5>Tasks</h5></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><button onClick={ () => openModal() } className='task-btn'> Chem10301 Lab 4 </button></td>
-                            <td><div className = 'priorityHigh'> </div></td>
-                        </tr>
-                        <tr> 
-                            <td><button className='task-btn'> CSC44800 Midterm </button></td>
-                            <td><div className = 'priorityMid'> </div></td>
-                        </tr>
-                        <tr>
-                            <td><button className='task-btn'> CSC30100 Midterm </button></td>
-                            <td><div className = 'priorityLow'> </div></td>
-                        </tr>
-                    </tbody>
+                    {showTasks(tasks)}
                 </table>
-
 
                 {/* BAR GRAPH HERE */}
                 <table id = 'bar-table'>
@@ -240,15 +283,19 @@ export default function Profile() {
                         </tr>
                     </thead>
                     <tbody>
-                        <BarChart id='bar-graph' className = 'child' width={500} height={500} data={DATA} >
-                        <CartesianGrid />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
-                        <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
-                        <Tooltip />
-                        <Legend />
-                        </BarChart> 
+                        <tr>
+                            <td>
+                                <BarChart id='bar-graph' className = 'child' width={500} height={500} data={DATA} >
+                                    <CartesianGrid />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
+                                    <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
+                                    <Tooltip />
+                                    <Legend />
+                                </BarChart> 
+                            </td>
+                        </tr> 
                     </tbody>
                 </table>
             </div>
@@ -259,12 +306,9 @@ export default function Profile() {
             <div id = 'modal' className='modal'>
                 <div id = 'modal-content'>
                     <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>
-                    <b><span> CSC33200 Lab 4</span></b>
-                    <b> <span> Due 11/15</span></b>
-                    <p> Write a special simple command interpreter that takes a command and its
-                    arguments. This interpreter is a program where the main process creates a child
-                    process to execute the command using exec() family functions. </p>
-                    <br/> <br/>
+                    <b><span id = 'modal-title'> </span></b> <br/>
+                    <b> <span id = 'modal-date'> </span></b>
+                    <p id = 'modal-description'> </p> <br/> 
                     <a href='/Courses'> Go to Course</a>
                 </div>
             </div>
@@ -308,7 +352,6 @@ export default function Profile() {
         </div>
         </div>
     </div>
-
 
     </div>)
 }
