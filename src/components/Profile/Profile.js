@@ -37,6 +37,7 @@ export const evaluatePriority = (priority) => {
     if (priority === 0) return "priorityLow"
     else if (priority === 1) return "priorityMid"
     else return "priorityHigh"        
+}
 
 export const DATA = [
     { name: 'Sept', 'Task Completed': 7, 'Task Todo': 0 }, //Template data table for graph.
