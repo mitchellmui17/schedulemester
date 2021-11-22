@@ -52,8 +52,8 @@ td {
 }
 
 .task-btn {
-    background-color: #5ab6d3;
-    color:#fff; 
+    background-color: #78e2f0a1;
+    color:rgb(100, 100, 100); 
     border: none;
     height: 50px;
     width: 300px;
@@ -76,6 +76,7 @@ td {
 #course-container {
     padding: 2%;
     margin-top: 30%;
+    width: 1000px;
     /*
     width:400px;
     margin-left: auto;
@@ -182,14 +183,14 @@ td {
 
 .btn-primary {
     
-  background-color: #5ab6d3 !important;
-  border-radius: 6px;
+  background-color: #78e2f0a1 !important;
   font-family: Arial;
-  color: #ffffff;
+  color: #000000 !important;
+  font-weight: 600 !important;
   font-size: 20px;
   text-decoration: none !important;
   box-shadow: none !important;
-  outline: none !important;
+  outline-color: black !important;
 }
 .btn-primary:hover,
 .btn-primary:active,

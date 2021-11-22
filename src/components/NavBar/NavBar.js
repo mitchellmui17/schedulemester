@@ -1,39 +1,54 @@
-import React, { Component } from 'react'
-import { MenuItems } from "./MenuItems"
+import React, { Component, useState } from 'react'
 import logo from "../../assets/images/ScheduleMester-logo/default.png"
 import background from "../../assets/images/wallhaven-nkexld-2.png"
-import { Button } from "../Button/Button"
+import {Link} from 'react-router-dom'
+import {useAuth} from "../../context/AuthContext"
+import Fire from "../../firebase"
 import './NavBar.css'
 import "./../../assets/fonts/font.css"
+import { Navbar } from 'react-bootstrap'
 
-class Navbar extends Component {
-  state = { clicked: false }
+export default function NavigationBar(){
+  const { currentUser } = useAuth()  
+  let database = Fire.db
+  const [position, setPosition] = useState("");
 
-  handleClick = () => {
-      this.setState({ clicked: !this.state.clicked })
-  }
+  // handleClick = () => {
+  //     this.setState({ clicked: !this.state.clicked })
+  // }
 
-  render () {
     return (
-      <nav className="NavbarItems font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
-        <h1 className="navbar-logo"><img className="image_1" src={logo} alt="Logo" /><i className="fab fa-react"></i></h1>
-        <div className="menu-icon" onClick={this.handleClick}>
-          <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
-        </div>
-        <ul className={this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
-          {MenuItems.map((item, index) => {
-            return (
-              <li key ={index}>
-                <a className={item.cName} href={item.url}>
-                {item.title}
-                </a>
-              </li>
-            )
-          })}
+
+      <nav className="NavbarItems font-style-Alice">
+        <h1 className="navbar-logo"><img className="image_1" src={logo} alt="Logo" /></h1>
+        <ul className= 'nav-menu'>
+        <li>
+            <a className={'nav-links'} href={'/'}>
+              {'Home'}
+            </a>
+          </li>
+          {currentUser ? <li>
+            <a className={'nav-links'} href={'/Calendar'}>
+              {'Calendar'}
+            </a>
+          </li>:''}
+          <li>
+            <a className={'nav-links'} href={'/ContactUs'}>
+              {'About Us'}
+            </a>
+          </li>
+          {currentUser ? <li>
+            <a className={'nav-links'} href={'/Profile'}>
+              {'Profile'}
+            </a>
+          </li>:''}
+          {currentUser ? '':<li>
+            <a className={'nav-links'} href={'/Login'}>
+              {'Login'}
+            </a></li>}
         </ul>
       </nav>
     )
-  }
 }
 
-export default Navbar
+// export default Navbar

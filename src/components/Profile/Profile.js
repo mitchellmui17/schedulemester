@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
-import {Button} from "react-bootstrap"
+import {Button, Card, Form, Alert, Container} from "react-bootstrap"
 import './Profile.css'
 import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
+import firebase from 'firebase/app';
 import {useAuth} from '../../context/AuthContext'
 import { Link, useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
@@ -19,6 +20,16 @@ export const openModal = () => {
     modal.style.display = 'block'
 }
 
+export const closeCourseModal = () => {
+    let modal = document.getElementById("add-course-modal");
+    modal.style.display = "none" 
+}
+
+export const openCourseModal = () => {
+    let modal = document.getElementById("add-course-modal");
+    modal.style.display = 'block'
+}
+
 // 0 = priorityLow
 // 1 = priorityMid
 // 2 = priorityHigh
@@ -26,7 +37,6 @@ export const evaluatePriority = (priority) => {
     if (priority === 0) return "priorityLow"
     else if (priority === 1) return "priorityMid"
     else return "priorityHigh"        
-}
 
 export const DATA = [
     { name: 'Sept', 'Task Completed': 7, 'Task Todo': 0 }, //Template data table for graph.
@@ -59,7 +69,6 @@ export const showTasks = (tasks) => {
     return (<tbody>{jsx}</tbody>)
 }
 
-
 export default function Profile() {
 
     /* No need to test the initialization, useStates are empty to begin with */ 
@@ -68,9 +77,20 @@ export default function Profile() {
     const [name, setName] = React.useState(""); /* istanbul ignore next */
     const [major, setMajor] = React.useState(""); /* istanbul ignore next */
     const [semester, setSemester] = React.useState(""); /* istanbul ignore next */
+    const [courseName, setCourseName] = useState(""); /* istanbul ignore next */
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
     const [tasks, setTasks] = useState([]) /* istanbul ignore next */
     const history = useHistory();
+
+    /* istanbul ignore next */
+    //consts here are for submission form to add courses to current users' document in Course collection.
+    const [loading, setLoading] = useState(false)
+    const courseNameRef = useRef();
+    const courseIDRef = useRef();
+    const examGRef = useRef();
+    const homeworkGRef = useRef();
+    const projectGRef = useRef();
+    const courseList = [];
 
     /* istanbul ignore next */ 
     db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
@@ -120,8 +140,94 @@ export default function Profile() {
             setError("Failed to log out")
         }
     }
+
+
+    const getData = async() =>{
+        await db.getCollection("Course").get().then(snapshot => {
+            const tempcourseName= [];
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (currentUser.email === doc.id){
+                    let x =0;
+                    for(x = 0; x < data.ListofCourses.length; x++){
+                        tempcourseName.push(data.ListofCourses[x]);
+                    }
+                    
+                }
+
+            })
+            setCourseName(tempcourseName);
+        }).catch(error => console.log(error))
+        }
+        
+    function pushContent(){
+        courseList.push(courseNameRef)
+        courseList.push(courseIDRef)
+        courseList.push(examGRef)
+        courseList.push(homeworkGRef)
+        courseList.push(projectGRef)
+    }
     
-    return( 
+    useEffect(() =>{
+        getData()
+    },[])
+
+    function printTable(){
+        try{
+        let courselength = courseName.length;
+            
+        const list = []
+        let x;
+        for(x = 0; x < courselength; x++){
+            list.push(<li>{courseName[x].Course_id} - {courseName[x].Course_Name} </li>)
+        }
+
+        return(
+            <div>
+                {list}
+            </div>
+        )
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    function refreshPage() {
+        window.location.reload(false);
+    }
+
+    async function handleSubmit(e){
+        e.preventDefault()
+        try {
+            setError('')
+            setLoading(true)
+
+            db.getCollection('Course').doc(currentUser.email).update({
+                ListofCourses: firebase.firestore.FieldValue.arrayUnion(
+                    {   
+                        Course_Name: courseNameRef.current.value,
+                        Course_id: courseIDRef.current.value,
+                        Exams: examGRef.current.value,
+                        Homeworks: homeworkGRef.current.value,
+                        Projects: projectGRef.current.value
+                        }
+                    )
+                }).then(function() {// went through
+                    console.log("Document successfully written!");
+                    refreshPage()
+                })
+                .catch(function(error) { //broke down somewhere
+                    console.error("Error writing document: ", error);
+                });
+            history.push('/Profile')
+        } catch{
+            setError('Failed to add course')
+        }
+        setLoading(false)
+    }
+
+
+    return(
         <div className="profile-page font-style-Alice">
             <div className="main main-raised">
                 <div className="profile-content">
@@ -133,7 +239,7 @@ export default function Profile() {
                                 <h5>Semester: {semester}</h5>
                                 {currentUser !== null?
                                 <div> 
-                                    <Button onClick={handleLogout} className="btn-primary">
+                                    <Button onClick={handleLogout} className="btn-primary btn-outline-light">
                                         Log Out
                                     </Button>
                                 </div>:
@@ -151,12 +257,11 @@ export default function Profile() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td><a href = '/Courses'>CSC44800 - Artificial Intelligence</a></td></tr>
-                            <tr><td><a href = '/Courses'>CSC30100 - Numerical Issues in Scientific Programming</a></td></tr>
-                            <tr><td><a href = '/Courses'>CSC30400 - Introduction to Theoretical Computer Science</a></td></tr>
-                            <tr><td><a href = '/Courses'>Chem10301 - General Chemistry 1</a></td></tr>
+                            <tr><td><a href = '/Courses'>{printTable()}</a></td></tr>
                         </tbody>
                     </table>
+                    <button onClick={ () => openCourseModal() }>Add a course</button>
+
                 </div>
             </div>
             
@@ -195,6 +300,8 @@ export default function Profile() {
                 </table>
             </div>
         
+    
+        
         <div id = 'tasks-container' className='child'>
             <div id = 'modal' className='modal'>
                 <div id = 'modal-content'>
@@ -206,5 +313,45 @@ export default function Profile() {
                 </div>
             </div>
         </div>
+        
+        <div id = 'add-course-container' className ='child'>
+            <div id = "add-course-modal" className='modal'>
+                <div id = 'modal-content'>
+                <span onClick = { () => closeCourseModal() } id='modal-close' className="close">&times;</span>
+                    <Card>
+                        <Card.Body>
+                            <h2 className = "text-center mb-4">Add Course</h2>
+                            {error && <Alert variant ="danger">{error}</Alert>}
+                            <form onSubmit = {handleSubmit}>
+                            <Form.Group id = "courseName">
+                                <Form.Label>Course Name</Form.Label>
+                                <Form.Control type = "text" ref={courseNameRef} required/>                 
+                            </Form.Group>
+                            <Form.Group id = "courseID">
+                                <Form.Label>Course ID</Form.Label>
+                                <Form.Control type = "text" ref={courseIDRef} required/>                 
+                            </Form.Group>
+                            <Form.Group id = "examsGrade">
+                                <Form.Label>Exams Grade</Form.Label>
+                                <Form.Control type = "number" ref={examGRef} required/>                 
+                            </Form.Group>
+                            <Form.Group id = "homeworksGrade">
+                                <Form.Label>Homeworks Grade</Form.Label>
+                                <Form.Control type = "number" ref={homeworkGRef} required/>                 
+                            </Form.Group>
+                            <Form.Group id = "projectsGrade">
+                                <Form.Label>Projects Grade</Form.Label>
+                                <Form.Control type = "number" ref={projectGRef} required/>                 
+                            </Form.Group>
+                        <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
+                            Add Course
+                        </Button>
+                    </form>
+                </Card.Body>
+            </Card>
+        </div>
+        </div>
+    </div>
+
     </div>)
 }
