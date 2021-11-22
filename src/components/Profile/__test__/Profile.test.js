@@ -23,19 +23,6 @@ let tasks = [{
     Priority: 0}]
 
 describe("test for updateModal()", () => {
-    tasks = [{
-        Title: "Test Title 1",
-        Description: "Test Description 1",
-        Date: "Test Date 1",
-        Priority: 1
-    }, {Title: "Test Title 2",
-        Description: "Test Description 2",
-        Date: "Test Date 2",
-        Priority: 2
-    }, {Title: "Test Title 3",
-        Description: "Test Description 3",
-        Date: "Test Date 3",
-        Priority: 0}]
     document.body.innerHTML = "<div id = 'modal-title'>test</div>"
     + '<div id = "modal-description">test</div>'
     + '<div id = "modal-date">test</div>'
@@ -57,7 +44,6 @@ describe("test for updateModal()", () => {
 
 })
 
-
 describe("tests sort function", () => {
     let arr = getTasksByHighestPriority(tasks)
     it("should have highest priority as the first element", () => {
@@ -68,44 +54,12 @@ describe("tests sort function", () => {
     })
 })
 
-
-
 describe("tasks should show", () => {
     it("renders correctly", () => {
         const root = document.createElement("tbody");
         render(showTasks(tasks), root);
     })
 })
-
-/*
-describe("modal should update data fields", () => {
-    document.body.innerHTML = 
-        '<span id = "modal-title"> </span>' + 
-        '<span id = "modal-date"> </span>' + 
-        '<p id = "modal-description"> </p>' 
-    let index = 0
-    let task = {
-        Title: "Test Title",
-        Description: "Test Description",
-        Date: "Test Date"
-    }
-    let tasks = [task]
-    
-    it("should change content of modal title", () => {
-        const title = document.getElementById('modal-title')
-        const desc = document.getElementById('modal-description')
-        const date = document.getElementById('modal-date')
-        updateModal(task)
-        expect(title.innerHTML).toBe("Test Title")
-    })
-    /*
-    it("should change content of modal description", () => {
-        expect(desc.innerHTML).toBe("Test Description")
-    })
-    it("should change content of modal date", () => {
-        expect(date.innerHTML).toBe("Test Date")
-    })
-}) */
 
 describe("tests priority evaluation", () => {
     it("should return 'priorityLow", () => {
