@@ -85,6 +85,7 @@ export default function Profile() {
     const [tasks, setTasks] = useState([]) /* istanbul ignore next */
     const history = useHistory();
 
+    //consts here are for submission form to add courses to current users' document in Course collection.
     /* istanbul ignore next */
     const [loading, setLoading] = useState(false) /* istanbul ignore next */
     const courseNameRef = useRef(); /* istanbul ignore next */
