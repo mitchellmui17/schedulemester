@@ -51,13 +51,12 @@ export default function Profile() {
     const history = useHistory();
 
     /* istanbul ignore next */
-    //consts here are for submission form to add courses to current users' document in Course collection.
-    const [loading, setLoading] = useState(false)
-    const courseNameRef = useRef();
-    const courseIDRef = useRef();
-    const examGRef = useRef();
-    const homeworkGRef = useRef();
-    const projectGRef = useRef();
+    const [loading, setLoading] = useState(false) /* istanbul ignore next */
+    const courseNameRef = useRef(); /* istanbul ignore next */
+    const courseIDRef = useRef(); /* istanbul ignore next */
+    const examGRef = useRef(); /* istanbul ignore next */
+    const homeworkGRef = useRef(); /* istanbul ignore next */
+    const projectGRef = useRef(); /* istanbul ignore next */
 
     /* istanbul ignore next */ 
     db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
@@ -101,7 +100,6 @@ export default function Profile() {
         }).catch(error => console.log(error))
         }
         
-    
     useEffect(() =>{
         getData()
     },[])
