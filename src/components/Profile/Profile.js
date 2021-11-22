@@ -10,24 +10,23 @@ import { Link, useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
 
 export const db = Fire.db;
-export const closeModal = () => {
-    let modal = document.getElementById("modal");
+export const closeModal = (modalId) => {
+    let modal = document.getElementById(modalId);
     modal.style.display = "none" 
 }
 
-export const openModal = () => {
-    let modal = document.getElementById("modal");
+export const openModal = (modalId) => {
+    let modal = document.getElementById(modalId);
     modal.style.display = 'block'
 }
 
-export const closeCourseModal = () => {
-    let modal = document.getElementById("add-course-modal");
-    modal.style.display = "none" 
-}
-
-export const openCourseModal = () => {
-    let modal = document.getElementById("add-course-modal");
-    modal.style.display = 'block'
+// 0 = priorityLow
+// 1 = priorityMid
+// 2 = priorityHigh
+export const evaluatePriority = (priority) => {
+    if (priority === 0) return "priorityLow"
+    else if (priority === 1) return "priorityMid"
+    else return "priorityHigh"        
 }
 
 export const DATA = [
@@ -36,10 +35,45 @@ export const DATA = [
     { name: 'Nov', 'Task Completed': 2, 'Task Todo': 8 },  //fields the Courses table. Should have it done
     { name: 'Dec', 'Task Completed': 0, 'Task Todo': 10 }, //upon next meeting.
 ];
-export const TASKS = 3; // change later to # of tasks we want to show up in table
-    
-export default function Profile() {
 
+export const updateModal = (task, titleId, descId, dateId) => {
+    //let title = document.getElementById(titleId)
+    //let desc = document.getElementById(descId)
+    //let date = document.getElementById(dateId)
+
+    titleId.innerHTML = task.Title
+    descId.innerHTML = task.Description
+    dateId.innerHTML = "Deadline: " + task.Date
+
+    openModal("modal")
+}
+    
+export const showTasks = (tasks) => {
+    let arr = getTasksByHighestPriority(tasks)
+    let title = document.getElementById("modal-title")
+    let desc = document.getElementById("modal-description")
+    let date = document.getElementById("modal-date")
+    let jsx = []
+    for (let i = 0; i < arr.length; i++) {
+        jsx.push(
+            <tr key = {"tr"+i}>
+                <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
+                onClick = { () => updateModal(arr[i], title, desc, date)} > {arr[i].Title} </button> </td>
+                <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
+            </tr> )
+    }
+    return (<tbody>{jsx}</tbody>)
+}
+
+export const getTasksByHighestPriority = (tasks) => {
+    let arr = []
+    for (let i = 0; i < tasks.length; i++) arr.push(tasks[i])
+    return arr.sort( (a, b) => {
+        return b.Priority - a.Priority
+    })
+}
+
+export default function Profile() {
     /* No need to test the initialization, useStates are empty to begin with */ 
     /* istanbul ignore next */
     const [error, setError] = useState("") /* istanbul ignore next */
@@ -48,6 +82,7 @@ export default function Profile() {
     const [semester, setSemester] = React.useState(""); /* istanbul ignore next */
     const [courseName, setCourseName] = useState(""); /* istanbul ignore next */
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
+    const [tasks, setTasks] = useState([]) /* istanbul ignore next */
     const history = useHistory();
 
     /* istanbul ignore next */
@@ -63,12 +98,24 @@ export default function Profile() {
         if(doc.exists) {
             setName(doc.data().name);
             setMajor(doc.data().major);
-            setSemester(doc.data().semester);
+            setSemester(doc.data().semester);   
         }
         else {
             return;
         }
     });
+    
+    /* istanbul ignore next */
+    const getTasks = async () => {
+        await db.getCollection('Tasks').doc(currentUser.email).get().then((d) => {
+            if (d.exists)  setTasks(d.data().Tasks)           
+        })
+    }
+
+    /* istanbul ignore next */
+    useEffect(() => {
+        getTasks()
+    }, [])
 
     /* istanbul ignore next */
     async function handleLogout() {
@@ -81,7 +128,7 @@ export default function Profile() {
         }
     }
 
-
+    /* istanbul ignore next */
     const getData = async() =>{
         await db.getCollection("Course").get().then(snapshot => {
             const tempcourseName= [];
@@ -104,7 +151,7 @@ export default function Profile() {
         getData()
     },[])
 
-
+    
     function printTable(){
         try{
         let courselength = courseName.length;
@@ -129,6 +176,7 @@ export default function Profile() {
         window.location.reload(false);
     }
 
+    /* istanbul ignore next */
     async function handleSubmit(e){
         e.preventDefault()
         try {
@@ -193,7 +241,7 @@ export default function Profile() {
                             <tr><td><a href = '/Courses'>{printTable()}</a></td></tr>
                         </tbody>
                     </table>
-                    <button onClick={ () => openCourseModal() }>Add a course</button>
+                    <button onClick={ () => openModal("add-course-modal") }>Add a course</button>
 
                 </div>
             </div>
@@ -202,25 +250,11 @@ export default function Profile() {
                 <table id = 'tasks-table' className='child'>
                     <thead>
                         <tr>
-                            <th><h5>Tasks</h5></th>
+                            <th><h5>Upcoming Tasks</h5></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><button onClick={ () => openModal() } className='task-btn'> Chem10301 Lab 4 </button></td>
-                            <td><div className = 'priorityHigh'> </div></td>
-                        </tr>
-                        <tr> 
-                            <td><button className='task-btn'> CSC44800 Midterm </button></td>
-                            <td><div className = 'priorityMid'> </div></td>
-                        </tr>
-                        <tr>
-                            <td><button className='task-btn'> CSC30100 Midterm </button></td>
-                            <td><div className = 'priorityLow'> </div></td>
-                        </tr>
-                    </tbody>
+                    {showTasks(tasks)}
                 </table>
-
 
                 {/* BAR GRAPH HERE */}
                 <table id = 'bar-table'>
@@ -230,15 +264,19 @@ export default function Profile() {
                         </tr>
                     </thead>
                     <tbody>
-                        <BarChart id='bar-graph' className = 'child' width={500} height={500} data={DATA} >
-                        <CartesianGrid />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
-                        <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
-                        <Tooltip />
-                        <Legend />
-                        </BarChart> 
+                        <tr>
+                            <td>
+                                <BarChart id='bar-graph' className = 'child' width={500} height={500} data={DATA} >
+                                    <CartesianGrid />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
+                                    <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
+                                    <Tooltip />
+                                    <Legend />
+                                </BarChart> 
+                            </td>
+                        </tr> 
                     </tbody>
                 </table>
             </div>
@@ -248,13 +286,10 @@ export default function Profile() {
         <div id = 'tasks-container' className='child'>
             <div id = 'modal' className='modal'>
                 <div id = 'modal-content'>
-                    <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>
-                    <b><span> CSC33200 Lab 4</span></b>
-                    <b> <span> Due 11/15</span></b>
-                    <p> Write a special simple command interpreter that takes a command and its
-                    arguments. This interpreter is a program where the main process creates a child
-                    process to execute the command using exec() family functions. </p>
-                    <br/> <br/>
+                    <span onClick = { () => closeModal("modal") } id='modal-close' className="close">&times;</span>
+                    <b><span id = 'modal-title'> </span></b> <br/>
+                    <b> <span id = 'modal-date'> </span></b>
+                    <p id = 'modal-description'> </p> <br/> 
                     <a href='/Courses'> Go to Course</a>
                 </div>
             </div>
@@ -263,7 +298,7 @@ export default function Profile() {
         <div id = 'add-course-container' className ='child'>
             <div id = "add-course-modal" className='modal'>
                 <div id = 'modal-content'>
-                <span onClick = { () => closeCourseModal() } id='modal-close' className="close">&times;</span>
+                <span onClick = { () => closeModal("add-course-modal") } id='modal-close' className="close">&times;</span>
                     <Card>
                         <Card.Body>
                             <h2 className = "text-center mb-4">Add Course</h2>
@@ -295,10 +330,9 @@ export default function Profile() {
                     </form>
                 </Card.Body>
             </Card>
-        </div>
+        </div> 
         </div>
     </div>
-
 
     </div>)
 }
