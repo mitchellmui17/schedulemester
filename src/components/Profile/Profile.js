@@ -10,23 +10,13 @@ import { Link, useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
 
 export const db = Fire.db;
-export const closeModal = () => {
-    let modal = document.getElementById("modal");
+export const closeModal = (modalId) => {
+    let modal = document.getElementById(modalId);
     modal.style.display = "none" 
 }
 
-export const openModal = () => {
-    let modal = document.getElementById("modal");
-    modal.style.display = 'block'
-}
-
-export const closeCourseModal = () => {
-    let modal = document.getElementById("add-course-modal");
-    modal.style.display = "none" 
-}
-
-export const openCourseModal = () => {
-    let modal = document.getElementById("add-course-modal");
+export const openModal = (modalId) => {
+    let modal = document.getElementById(modalId);
     modal.style.display = 'block'
 }
 
@@ -55,19 +45,26 @@ export const updateModal = (task) => {
     desc.innerHTML = task.Description
     date.innerHTML = "Deadline: " + task.Date
 
-    openModal()
+    openModal("modal")
 }
     
 export const showTasks = (tasks) => {
+    let arr = getTasksByHighestPriority(tasks)
     let jsx = []
-    for (let i = 0; i < tasks.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         jsx.push(
-            <tr>
-                <td> <button value = {i} className = 'task-btn' onClick = { () => updateModal(tasks[i])} > {tasks[i].Title} </button> </td>
-                <td> <div className = {evaluatePriority(tasks[i].Priority)}> </div> </td>
+            <tr key = {"tr"+i}>
+                <td> <button key = {"btn"+i} value = {i} className = 'task-btn' onClick = { () => updateModal(arr[i])} > {arr[i].Title} </button> </td>
+                <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
             </tr> )
     }
     return (<tbody>{jsx}</tbody>)
+}
+
+export const getTasksByHighestPriority = (tasks) => {
+    return tasks.sort( (a, b) => {
+        return b.Priority - a.Priority
+    })
 }
 
 export default function Profile() {
@@ -116,20 +113,6 @@ export default function Profile() {
     useEffect(() => {
         getTasks()
     }, [])
-
-    /*
-    function showTasks() {
-        let jsx = []
-        for (let i = 0; i < tasks.length; i++ ) {
-            jsx.push(
-                <tr>
-                    <td> <button value = {i} className = 'task-btn' onClick = { () => updateModal(tasks[i])} > {tasks[i].Title} </button> </td>
-                    <td> <div className = {evaluatePriority(tasks[i].Priority)}> </div> </td>
-                </tr> )
-        }
-        return (<tbody>{jsx}</tbody>)
-    } */
-
 
     /* istanbul ignore next */
     async function handleLogout() {
@@ -261,7 +244,7 @@ export default function Profile() {
                             <tr><td><a href = '/Courses'>{printTable()}</a></td></tr>
                         </tbody>
                     </table>
-                    <button onClick={ () => openCourseModal() }>Add a course</button>
+                    <button onClick={ () => openModal("add-course-modal") }>Add a course</button>
 
                 </div>
             </div>
@@ -270,7 +253,7 @@ export default function Profile() {
                 <table id = 'tasks-table' className='child'>
                     <thead>
                         <tr>
-                            <th><h5>Tasks</h5></th>
+                            <th><h5>Upcoming Tasks</h5></th>
                         </tr>
                     </thead>
                     {showTasks(tasks)}
@@ -306,7 +289,7 @@ export default function Profile() {
         <div id = 'tasks-container' className='child'>
             <div id = 'modal' className='modal'>
                 <div id = 'modal-content'>
-                    <span onClick = { () => closeModal() } id='modal-close' className="close">&times;</span>
+                    <span onClick = { () => closeModal("modal") } id='modal-close' className="close">&times;</span>
                     <b><span id = 'modal-title'> </span></b> <br/>
                     <b> <span id = 'modal-date'> </span></b>
                     <p id = 'modal-description'> </p> <br/> 
@@ -318,7 +301,7 @@ export default function Profile() {
         <div id = 'add-course-container' className ='child'>
             <div id = "add-course-modal" className='modal'>
                 <div id = 'modal-content'>
-                <span onClick = { () => closeCourseModal() } id='modal-close' className="close">&times;</span>
+                <span onClick = { () => closeModal("add-course-modal") } id='modal-close' className="close">&times;</span>
                     <Card>
                         <Card.Body>
                             <h2 className = "text-center mb-4">Add Course</h2>
@@ -350,7 +333,7 @@ export default function Profile() {
                     </form>
                 </Card.Body>
             </Card>
-        </div>
+        </div> 
         </div>
     </div>
 
