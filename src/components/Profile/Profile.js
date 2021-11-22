@@ -36,25 +36,29 @@ export const DATA = [
     { name: 'Dec', 'Task Completed': 0, 'Task Todo': 10 }, //upon next meeting.
 ];
 
-export const updateModal = (task) => {
-    let title = document.getElementById('modal-title')
-    let desc = document.getElementById('modal-description')
-    let date = document.getElementById('modal-date')
+export const updateModal = (task, titleId, descId, dateId) => {
+    //let title = document.getElementById(titleId)
+    //let desc = document.getElementById(descId)
+    //let date = document.getElementById(dateId)
 
-    title.innerHTML = task.Title
-    desc.innerHTML = task.Description
-    date.innerHTML = "Deadline: " + task.Date
+    titleId.innerHTML = task.Title
+    descId.innerHTML = task.Description
+    dateId.innerHTML = "Deadline: " + task.Date
 
     openModal("modal")
 }
     
 export const showTasks = (tasks) => {
     let arr = getTasksByHighestPriority(tasks)
+    let title = document.getElementById("modal-title")
+    let desc = document.getElementById("modal-description")
+    let date = document.getElementById("modal-date")
     let jsx = []
     for (let i = 0; i < arr.length; i++) {
         jsx.push(
             <tr key = {"tr"+i}>
-                <td> <button key = {"btn"+i} value = {i} className = 'task-btn' onClick = { () => updateModal(arr[i])} > {arr[i].Title} </button> </td>
+                <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
+                onClick = { () => updateModal(arr[i], title, desc, date)} > {arr[i].Title} </button> </td>
                 <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
             </tr> )
     }
@@ -62,13 +66,14 @@ export const showTasks = (tasks) => {
 }
 
 export const getTasksByHighestPriority = (tasks) => {
-    return tasks.sort( (a, b) => {
+    let arr = []
+    for (let i = 0; i < tasks.length; i++) arr.push(tasks[i])
+    return arr.sort( (a, b) => {
         return b.Priority - a.Priority
     })
 }
 
 export default function Profile() {
-
     /* No need to test the initialization, useStates are empty to begin with */ 
     /* istanbul ignore next */
     const [error, setError] = useState("") /* istanbul ignore next */
@@ -80,15 +85,15 @@ export default function Profile() {
     const [tasks, setTasks] = useState([]) /* istanbul ignore next */
     const history = useHistory();
 
-    /* istanbul ignore next */
     //consts here are for submission form to add courses to current users' document in Course collection.
-    const [loading, setLoading] = useState(false)
-    const courseNameRef = useRef();
-    const courseIDRef = useRef();
-    const examGRef = useRef();
-    const homeworkGRef = useRef();
-    const projectGRef = useRef();
-    const courseList = [];
+    /* istanbul ignore next */
+    const [loading, setLoading] = useState(false) /* istanbul ignore next */
+    const courseNameRef = useRef(); /* istanbul ignore next */
+    const courseIDRef = useRef(); /* istanbul ignore next */
+    const examGRef = useRef(); /* istanbul ignore next */
+    const homeworkGRef = useRef(); /* istanbul ignore next */
+    const projectGRef = useRef(); /* istanbul ignore next */
+    const courseList = []; 
 
     /* istanbul ignore next */ 
     db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
@@ -125,7 +130,7 @@ export default function Profile() {
         }
     }
 
-
+    /* istanbul ignore next */
     const getData = async() =>{
         await db.getCollection("Course").get().then(snapshot => {
             const tempcourseName= [];
@@ -156,6 +161,7 @@ export default function Profile() {
         getData()
     },[])
 
+    
     function printTable(){
         try{
         let courselength = courseName.length;
@@ -180,6 +186,7 @@ export default function Profile() {
         window.location.reload(false);
     }
 
+    /* istanbul ignore next */
     async function handleSubmit(e){
         e.preventDefault()
         try {
