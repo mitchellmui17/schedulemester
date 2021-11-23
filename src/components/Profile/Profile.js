@@ -93,7 +93,6 @@ export default function Profile() {
     const examGRef = useRef(); /* istanbul ignore next */
     const homeworkGRef = useRef(); /* istanbul ignore next */
     const projectGRef = useRef(); /* istanbul ignore next */
-    const courseList = []; 
 
     /* istanbul ignore next */ 
     db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
@@ -149,14 +148,6 @@ export default function Profile() {
         }).catch(error => console.log(error))
         }
         
-    function pushContent(){
-        courseList.push(courseNameRef)
-        courseList.push(courseIDRef)
-        courseList.push(examGRef)
-        courseList.push(homeworkGRef)
-        courseList.push(projectGRef)
-    }
-    
     useEffect(() =>{
         getData()
     },[])
