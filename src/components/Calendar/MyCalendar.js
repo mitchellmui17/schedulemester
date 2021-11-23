@@ -15,6 +15,16 @@ import { Link, useHistory } from "react-router-dom"
 
 export const db = Fire.db;
 
+const locales = {
+    "en-US": require("date-fns/locale/en-US"),
+};
+const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales,
+});
 
 export default function MyCalendar() {
 
@@ -51,7 +61,7 @@ export default function MyCalendar() {
     });
 
     const getEvents = async () => {
-        await db.getCollection('Tasks').doc(currentUser.email).get().then((d) => {
+        await db.getCollection('Events').doc(currentUser.email).get().then((d) => {
             if (d.exists)  setTitle(d.data().allTitle)           
         })
     }
@@ -71,7 +81,7 @@ export default function MyCalendar() {
     }
 
     const getData = async() =>{
-        await db.getCollection("Course").get().then(snapshot => {
+        await db.getCollection("Events").get().then(snapshot => {
             const tempEventName= [];
             snapshot.forEach(doc => {
                 const data = doc.data();
@@ -133,8 +143,8 @@ export default function MyCalendar() {
             setError('')
             setLoading(true)
 
-            db.getCollection('Course').doc(currentUser.email).update({
-                ListofCourses: firebase.firestore.FieldValue.arrayUnion(
+            db.getCollection('Events').doc(currentUser.email).update({
+                ListofEvents: firebase.firestore.FieldValue.arrayUnion(
                     {   
                         Description: allDescriptionRef.current.value,
                         End: allEndRef.current.value,
@@ -159,10 +169,12 @@ export default function MyCalendar() {
     }
 
     return (
-            <div className="App font-style-Alice">
+            <div className="App">
                         <tbody>
-                            <tr><td><a href = '/Courses'>{printTable()}</a></td></tr>
+                            <tr><td><a href = '/Events'>{printTable()}</a></td></tr>
                         </tbody>
+                        <Calendar localizer={localizer} events={EventList} 
+                        startAccessor="Start" endAccessor="End" style={{ height: 500, margin: "50px" }} />         
             </div>
     );
 }

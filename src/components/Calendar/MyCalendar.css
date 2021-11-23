@@ -64,3 +64,14 @@
 .react-datepicker__header {
 	background: rgba(255,255,255,0.7);
 }
+
+.App {
+	text-align: center;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: linear-gradient(45deg, rgb(161, 252, 255),rgb(113, 24, 255));
+	overflow: hidden;
+}
