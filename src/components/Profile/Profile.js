@@ -73,6 +73,14 @@ export const getTasksByHighestPriority = (tasks) => {
     })
 }
 
+export const getTasksByCourse = (tasks, course) => {
+    let arr = getTasksByHighestPriority(tasks)
+    let courseArr = []
+    for (let i = 0; i < tasks.length; i++) 
+        if (arr[i].Course === course)  courseArr[i] = arr[i]
+    return courseArr
+}
+
 export default function Profile() {
     /* No need to test the initialization, useStates are empty to begin with */ 
     /* istanbul ignore next */
