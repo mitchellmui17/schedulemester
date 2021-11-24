@@ -1,7 +1,8 @@
 import {render, screen, fireEvent} from '@testing-library/react';
 import React, { createElement } from 'react';
 import Profile from '../Profile';
-import { closeModal, openModal,  evaluatePriority, updateModal, showTasks, getTasksByHighestPriority } from '../Profile';
+import { closeModal, openModal,  evaluatePriority, updateModal, showTasks,
+getTasksByHighestPriority, getTasksByCourse } from '../Profile';
 import ReactDOM from 'react-dom';
 
 //import Fire from '../../../firebase'
@@ -12,15 +13,45 @@ let tasks = [{
     Title: "Test Title 1",
     Description: "Test Description 1",
     Date: "Test Date 1",
-    Priority: 1
+    Priority: 1,
+    Course: "Test Course 1"
 }, {Title: "Test Title 2",
     Description: "Test Description 2",
     Date: "Test Date 2",
-    Priority: 2
+    Priority: 2,
+    Course: "Test Course 2"
 }, {Title: "Test Title 3",
     Description: "Test Description 3",
     Date: "Test Date 3",
-    Priority: 0}]
+    Priority: 0,
+    Course: "Test Course 3"}]
+
+describe("tests that we can get the tasks by course name from highest priority", () => {
+    let courseTasks = [{
+        Title: "Test Title 1",
+        Description: "Test Description 1",
+        Date: "Test Date 1",
+        Priority: 1,
+        Course: "Test Course 1"
+    }, {Title: "Test Title 2",
+        Description: "Test Description 2",
+        Date: "Test Date 2",
+        Priority: 2,
+        Course: "Test Course 1"
+    }, {Title: "Test Title 3",
+        Description: "Test Description 3",
+        Date: "Test Date 3",
+        Priority: 0,
+        Course: "Test Course 3"}]
+    let arr = getTasksByCourse(courseTasks, "Test Course 1")
+
+    it("gets an array of all courses with same name", () => {
+        expect(arr.length).toBe(2)
+    })
+    it("gets the course's tasks by highest priority", () => {
+        expect(arr[0].Priority).toBe(2)
+    }) 
+})
 
 describe("test for updateModal()", () => {
     document.body.innerHTML = "<div id = 'modal-title'>test</div>"
@@ -31,7 +62,7 @@ describe("test for updateModal()", () => {
     let date = document.getElementById('modal-date');
     test("the modal title is updated correctly ", () => {
         updateModal(tasks[0], title, desc, date)
-        expect(title.innerHTML).toBe("Test Title 1")
+        expect(title.innerHTML).toBe("Test Title 1 (Test Course 1)")
     })
     test("the modal title is updated correctly ", () => {
         updateModal(tasks[0], title, desc, date)
@@ -41,7 +72,6 @@ describe("test for updateModal()", () => {
         updateModal(tasks[0], title, desc, date)
         expect(date.innerHTML).toBe("Deadline: Test Date 1")
     })
-
 })
 
 describe("tests sort function", () => {
