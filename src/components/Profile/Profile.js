@@ -8,6 +8,7 @@ import firebase from 'firebase/app';
 import {useAuth} from '../../context/AuthContext'
 import { Link, useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
+import Course from '../Course/Course'
 
 export const db = Fire.db;
 export const closeModal = (modalId) => {
@@ -63,6 +64,22 @@ export const showTasks = (tasks) => {
             </tr> )
     }
     return (<tbody>{jsx}</tbody>)
+}
+
+export const printCoursesTable = (courseName) => {
+    let courselength = courseName
+    let title = document.getElementById("course-modal-title")
+    let desc = document.getElementById("modal-description") 
+    let date = document.getElementById("modal-date") 
+    let list = []
+    for (let z = 0; z < courselength.length; z++){
+        list.push(
+            <tr key = {"tr"+z}>
+            <td> <button key = {"btn"+z} value = {z} className = 'courses-btn' 
+            onClick = { () => updateModal(courselength[z], title, desc, date)} > {courselength[z].Course_Name} - {courselength[z].Course_Name} </button> </td>
+            </tr> )
+    }
+    return (<tbody>{list}</tbody>)
 }
 
 export const getTasksByHighestPriority = (tasks) => {
@@ -153,25 +170,28 @@ export default function Profile() {
     },[])
 
     
-    function printTable(){
-        try{
-        let courselength = courseName.length;
+    // function printTable(){
+    //     try{
+    //     let courselength = courseName.length;
             
-        const list = []
-        let x;
-        for(x = 0; x < courselength; x++){
-            list.push(<li>{courseName[x].Course_id} - {courseName[x].Course_Name} </li>)
-        }
+    //     const list = []
+    //     let x;
+    //     for(x = 0; x < courselength; x++){
+    //         list.push(<li>{courseName[x].Course_id} - {courseName[x].Course_Name} </li>);
+    //         //<Course key = {x} name = {courseName[x].Course_Name} data={"hello"} id = {courseName[x].Course_id}> </Course>
+            
+    //     }
 
-        return(
-            <div>
-                {list}
-            </div>
-        )
-        }catch(error){
-            console.log(error)
-        }
-    }
+    //     return(
+    //         <div>
+    //             {list}
+    //             {/* <Course key = {x} name = {courseName[x].Course_Name} data={"hello"} id = {courseName[x].Course_id}> </Course> */}
+    //         </div>
+    //     )
+    //     }catch(error){
+    //         console.log(error)
+    //     }
+    // }
 
     function refreshPage() {
         window.location.reload(false);
@@ -230,20 +250,16 @@ export default function Profile() {
                             </div>
                         </div>
                 </div>
-
-                <div id = 'course-container'>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><h5>Courses</h5></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><a href = '/Courses'>{printTable()}</a></td></tr>
-                        </tbody>
-                    </table>
+                
+                
+                <div id = 'courses-table' className='child'>
+                    <thead>
+                        <tr>
+                            <th><h5>Courses</h5></th>
+                        </tr>
+                    </thead>
+                    {printCoursesTable(courseName)}
                     <button onClick={ () => openModal("add-course-modal") }>Add a course</button>
-
                 </div>
             </div>
             
@@ -292,6 +308,17 @@ export default function Profile() {
                     <b> <span id = 'modal-date'> </span></b>
                     <p id = 'modal-description'> </p> <br/> 
                     <a href='/Courses'> Go to Course</a>
+                </div>
+            </div>
+        </div>
+
+        <div id = 'courses-container'>
+            <div id = 'course-modal' className = 'modal'> 
+                <div id = 'modal-content'>
+                    <span onClick = { () => closeModal("modal") } id='modal-close' className="close">&times;</span>
+                    <b><span id = 'course-modal-title'> </span></b> <br/>
+                    <b> <span id = 'modal-date'> </span></b>
+                    <p id = 'modal-description'> </p> <br/>
                 </div>
             </div>
         </div>
