@@ -81,7 +81,7 @@ export const printCoursesTable = (courseName) => {
         list.push(
             <tr key = {"tr"+z}>
             <td> <button key = {"btn"+z} value = {z} className = 'courses-btn' 
-            onClick = { () => updateCoursesModal(courselength[z], courseTitle, courseID)} > {courselength[z].Course_Name} - {courselength[z].Course_Name} </button> </td>
+            onClick = { () => updateCoursesModal(courselength[z], courseTitle, courseID)} > {courselength[z].Course_id} - {courselength[z].Course_Name} </button> </td>
             </tr> )
     }
     return (<tbody>{list}</tbody>)
