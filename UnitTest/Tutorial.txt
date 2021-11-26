@@ -19,3 +19,6 @@ After you have logged in and see that the emulator has started,
 
 You can head over to the other terminal and do npm test like we usually do with jest. 
 It follows the same protocol like the unit testing we usually do.
+
+**import the .js file in the .test.js
+EX: import ResetPassword from './../ResetPassword'; 

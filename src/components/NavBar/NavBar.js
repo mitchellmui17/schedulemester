@@ -19,7 +19,7 @@ export default function NavigationBar(){
 
     return (
 
-      <nav className="NavbarItems font-style-Alice">
+      <nav className="NavbarItems font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
         <h1 className="navbar-logo"><img className="image_1" src={logo} alt="Logo" /></h1>
         <ul className= 'nav-menu'>
         <li>
