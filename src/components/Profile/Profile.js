@@ -48,6 +48,12 @@ export const updateModal = (task, titleId, descId, dateId) => {
 
     openModal("modal")
 }
+
+export const updateCoursesModal = (course, courseTitleID, courseNumID) => {
+    courseTitleID.innerHTML = course.Course_Name
+    courseNumID.innerHTML = course.Course_id
+    openModal("course-modal")
+}
     
 export const showTasks = (tasks) => {
     let arr = getTasksByHighestPriority(tasks)
@@ -68,15 +74,14 @@ export const showTasks = (tasks) => {
 
 export const printCoursesTable = (courseName) => {
     let courselength = courseName
-    let title = document.getElementById("course-modal-title")
-    let desc = document.getElementById("modal-description") 
-    let date = document.getElementById("modal-date") 
+    let courseTitle = document.getElementById("course-modal-title")
+    let courseID = document.getElementById("course-modal-ID") 
     let list = []
     for (let z = 0; z < courselength.length; z++){
         list.push(
             <tr key = {"tr"+z}>
             <td> <button key = {"btn"+z} value = {z} className = 'courses-btn' 
-            onClick = { () => updateModal(courselength[z], title, desc, date)} > {courselength[z].Course_Name} - {courselength[z].Course_Name} </button> </td>
+            onClick = { () => updateCoursesModal(courselength[z], courseTitle, courseID)} > {courselength[z].Course_Name} - {courselength[z].Course_Name} </button> </td>
             </tr> )
     }
     return (<tbody>{list}</tbody>)
@@ -315,10 +320,10 @@ export default function Profile() {
         <div id = 'courses-container'>
             <div id = 'course-modal' className = 'modal'> 
                 <div id = 'modal-content'>
-                    <span onClick = { () => closeModal("modal") } id='modal-close' className="close">&times;</span>
-                    <b><span id = 'course-modal-title'> </span></b> <br/>
-                    <b> <span id = 'modal-date'> </span></b>
-                    <p id = 'modal-description'> </p> <br/>
+                    <span onClick = { () => closeModal("course-modal") } id='modal-close' className="close">&times;</span>
+                    <b><span id = 'course-modal-ID'> </span> - <span id = 'course-modal-title'> </span></b> <br/>
+                    {/* <b> <span id = 'course-modal-ID'> </span></b> Add Tasks that are part of this course below
+                    <p id = 'modal-description'> </p> <br/> */}
                 </div>
             </div>
         </div>
