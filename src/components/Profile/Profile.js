@@ -322,6 +322,9 @@ export default function Profile() {
                 <div id = 'modal-content'>
                     <span onClick = { () => closeModal("course-modal") } id='modal-close' className="close">&times;</span>
                     <b><span id = 'course-modal-ID'> </span> - <span id = 'course-modal-title'> </span></b> <br/>
+                    {/* I think I should add grades somewhere around here
+                    I also have to handle the issue of allowing user to delete courses and tasks here. Not sure how to do that yet*/}
+                    <h5>Tasks</h5>
                     {/* <b> <span id = 'course-modal-ID'> </span></b> Add Tasks that are part of this course below
                     <p id = 'modal-description'> </p> <br/> */}
                 </div>
