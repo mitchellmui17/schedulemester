@@ -12,7 +12,7 @@ class LandingPage extends Component{
     render() {
         return (
             <div className = "back font-style-Alice backgroundsize" style = {{backgroundImage: `url(${background})`}}>
-                <div class="app-description">
+                <div className="app-description">
                 <article>
                         <h1>Welcome to the ScheduleMester</h1>
                         <p> Schedulemester is an application for convenient planning of coursework by Users.</p>
