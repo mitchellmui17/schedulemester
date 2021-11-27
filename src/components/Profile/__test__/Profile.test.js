@@ -170,6 +170,12 @@ describe("test for updateCoursesModal()", () => {
     })
 })
 
+describe("courses should show", () => {
+    it("renders correctly", () => {
+        const root = document.createElement("tbody");
+        render(printCoursesTable(courses), root);
+    })
+})
 
 
 
