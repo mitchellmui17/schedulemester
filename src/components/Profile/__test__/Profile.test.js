@@ -3,6 +3,7 @@ import React, { createElement } from 'react';
 import Profile from '../Profile';
 import { closeModal, openModal,  evaluatePriority, updateModal, showTasks,
 getTasksByHighestPriority, getTasksByCourse, showTasksByCourse, createTaskButton, createTaskRow } from '../Profile';
+
 import ReactDOM from 'react-dom';
 
 //import Fire from '../../../firebase'
@@ -164,7 +165,42 @@ describe("Tests for Frontend", () =>{
     })
 })
 
+let courses = [
+    {
+        Course_Name: "Test Course 1",
+        Course_ID: "Test Course ID 1",
+    },
+    {
+        Course_Name: "Test Course 2",
+        Course_ID: "Test Course ID 2",
+    },
+    {
+        Course_Name: "Test Course 3",
+        Course_ID: "Test Course ID 3",
+    }]
 
+describe("test for updateCoursesModal()", () => {
+    document.body.innerHTML = "<div id = 'course-modal-title'>test</div>"
+        + '<div id = "course-modal-ID">test</div>'
+    let courselength = courses;
+    let courseTitle = document.getElementById("course-modal-title");
+    let courseID = document.getElementById("course-modal-ID");
+    test("the course modal name is updated correctly ", () => {
+        updateCoursesModal(courses[0], courseTitle, courseID)
+        expect(courseTitle.innerHTML).toBe("Test Course 1")
+    })
+    test("the course modal ID is updated correctly ", () => {
+        updateCoursesModal(courses[0], courseTitle, courseID)
+        expect(courseID.innerHTML).toBe("Test Course ID 1")
+    })
+})
+
+describe("courses should show", () => {
+    it("renders correctly", () => {
+        const root = document.createElement("tbody");
+        render(printCoursesTable(courses), root);
+    })
+})
 
 
 
