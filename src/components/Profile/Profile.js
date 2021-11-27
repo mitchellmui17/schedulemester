@@ -10,8 +10,6 @@ import { Link, useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
 import Course from '../Course/Course'
 
-let currentCourse
-
 export const db = Fire.db;
 export const closeModal = (modalId) => {
     let modal = document.getElementById(modalId);
@@ -50,8 +48,7 @@ export const updateModal = (task, elems) => {
 export const updateCoursesModal = (tasks, course, courseTitleID, courseNumID, elems) => {
     courseTitleID.innerHTML = course.Course_Name
     courseNumID.innerHTML = course.Course_id
-    currentCourse = course.Course_id    
-    showTasksByCourse(tasks, currentCourse, elems)
+    showTasksByCourse(tasks, course.Course_id, elems)
     openModal("course-modal")
 }
     
@@ -213,33 +210,11 @@ export default function Profile() {
         }).catch(error => console.log(error))
         }
         
+    /* istanbul ignore next */
     useEffect(() =>{
         getData()
     },[])
 
-    
-    // function printTable(){
-    //     try{
-    //     let courselength = courseName.length;
-            
-    //     const list = []
-    //     let x;
-    //     for(x = 0; x < courselength; x++){
-    //         list.push(<li>{courseName[x].Course_id} - {courseName[x].Course_Name} </li>);
-    //         //<Course key = {x} name = {courseName[x].Course_Name} data={"hello"} id = {courseName[x].Course_id}> </Course>
-            
-    //     }
-
-    //     return(
-    //         <div>
-    //             {list}
-    //             {/* <Course key = {x} name = {courseName[x].Course_Name} data={"hello"} id = {courseName[x].Course_id}> </Course> */}
-    //         </div>
-    //     )
-    //     }catch(error){
-    //         console.log(error)
-    //     }
-    // }
 
     function refreshPage() {
         window.location.reload(false);
@@ -367,15 +342,13 @@ export default function Profile() {
                     {/* I think I should add grades somewhere around here
                     I also have to handle the issue of allowing user to delete courses and tasks here. Not sure how to do that yet*/}
                     
-                    <table>
+                    <table id = 'course-task-table'>
                         <thead>
                             <tr><th><h5>Tasks</h5></th></tr>
                         </thead>
                         <tbody id = 'course-tasks'>
                         </tbody>
                     </table>
-                    {/* <b> <span id = 'course-modal-ID'> </span></b> Add Tasks that are part of this course below
-                    <p id = 'modal-description'> </p> <br/> */}
                 </div>
             </div>
         </div>
