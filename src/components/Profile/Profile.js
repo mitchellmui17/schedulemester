@@ -41,7 +41,7 @@ export const updateModal = (task, titleId, descId, dateId) => {
     //let desc = document.getElementById(descId)
     //let date = document.getElementById(dateId)
 
-    titleId.innerHTML = task.Title
+    titleId.innerHTML = task.Title + " (" + task.Course + ")"
     descId.innerHTML = task.Description
     dateId.innerHTML = "Deadline: " + task.Date
 
@@ -58,7 +58,7 @@ export const showTasks = (tasks) => {
         jsx.push(
             <tr key = {"tr"+i}>
                 <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
-                onClick = { () => updateModal(arr[i], title, desc, date)} > {arr[i].Title} </button> </td>
+                onClick = { () => updateModal(arr[i], title, desc, date)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
                 <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
             </tr> )
     }
@@ -71,6 +71,14 @@ export const getTasksByHighestPriority = (tasks) => {
     return arr.sort( (a, b) => {
         return b.Priority - a.Priority
     })
+}
+
+export const getTasksByCourse = (tasks, course) => {
+    let arr = getTasksByHighestPriority(tasks)
+    let courseArr = []
+    for (let i = 0; i < tasks.length; i++) 
+        if (arr[i].Course === course)  courseArr[i] = arr[i]
+    return courseArr
 }
 
 export default function Profile() {
