@@ -147,10 +147,10 @@ export default function MyCalendar() {
                 ListofEvents: firebase.firestore.FieldValue.arrayUnion(
                     {   
                         Description: allDescriptionRef.current.value,
-                        End: allEndRef.current.value,
+                        End: allEndRef.current.time,
                         Priority: allPriorityRef.current.value,
                         Progress: allProgressRef.current.value,
-                        Start: allStartRef.current.value,
+                        Start: allStartRef.current.time,
                         Title: allTitleRef.current.value
                         }
                     )
@@ -161,7 +161,7 @@ export default function MyCalendar() {
                 .catch(function(error) { //broke down somewhere
                     console.error("Error writing document: ", error);
                 });
-            history.push('/Profile')
+            history.push('/Events')
         } catch{
             setError('Failed to add event')
         }
@@ -180,7 +180,8 @@ export default function MyCalendar() {
 }
 
 /*
-                            <input className="DataPicker_1" type="text" placeholder="Add Title" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />                                <DatePicker className="DataPicker_1" placeholderText="Start Date" selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
+                            <input className="DataPicker_1" type="text" placeholder="Add Title" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />                                
+                            <DatePicker className="DataPicker_1" placeholderText="Start Date" selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
                             <DatePicker className="DataPicker_1" placeholderText="End Date" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
                             <button className="Button" onClick={handleAddEvent}>
                                 Add Event
