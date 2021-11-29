@@ -20,6 +20,7 @@ export const printEventsTable = (EventName) => {
       list.push(
         <div>          
           Event - {eventlength[z].Title} Description - {eventlength[z].Description} 
+          Start {eventlength[z].Start.toString()}  End {eventlength[z].End.toString()} 
         </div>
       )
   }
