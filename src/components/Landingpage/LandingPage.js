@@ -13,23 +13,14 @@ class LandingPage extends Component{
     
     render() {
         return (
-
             <div className = "back font-style-JosefinSans backgroundsize" style = {{backgroundImage: `url(${background})`}}>
                 <div class="Video">
                      <video autoPlay loop muted >
                          <source src={Video}type = "video/mp4"/> 
                      </video>
-
-            <div className = "back font-style-Alice backgroundsize" style = {{backgroundImage: `url(${background})`}}>
-                <div className="app-description">
-                <article>
-                        <h1>Welcome to the ScheduleMester</h1>
-                        <p> Schedulemester is an application for convenient planning of coursework by Users.</p>
-                </article>
-
                 </div>
                 <div className="layer1-left imgsize" style = {{backgroundImage: `url(${gallery_img1})`}}>
-                
+
                 </div>
                 <div className="layer1-right">
                 
