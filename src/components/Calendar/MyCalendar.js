@@ -1,192 +1,102 @@
-import format from "date-fns/format";
-import getDay from "date-fns/getDay";
-import parse from "date-fns/parse";
-import startOfWeek from "date-fns/startOfWeek";
 import React, {useState, useEffect, useRef} from "react";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import DatePicker from "react-datepicker";
+import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import "./MyCalendar.css";
 import {useAuth} from '../../context/AuthContext';
-import Fire from '../../firebase';
 import firebase from 'firebase/app';
 import { Link, useHistory } from "react-router-dom"
+import Fire from '../../firebase';
 
 export const db = Fire.db;
 
-const locales = {
-    "en-US": require("date-fns/locale/en-US"),
-};
-const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales,
-});
+export const printEventsTable = (EventName) => {
+  let eventlength = EventName
+  let list = []
+  let Title = document.getElementById("course-modal-title")
+  let Description = document.getElementById("course-modal-ID") 
+  for (let z = 0; z < eventlength.length; z++){
+      list.push(
+        <div>          
+          Event - {eventlength[z].Title} Description - {eventlength[z].Description} 
+        </div>
+      )
+  }
+  return (<tbody>{list}</tbody>)
+}
+
+export const closeModal = (modalId) => {
+  let modal = document.getElementById(modalId);
+  modal.style.display = "none" 
+}
+
+export const openModal = (modalId) => {
+  let modal = document.getElementById(modalId);
+  modal.style.display = 'block'
+}
+
+export const updateEventModal = (event, eventTitle, eventDescription) => {
+  eventTitle.innerHTML = event.Title
+  eventDescription.innerHTML = event.Description
+  openModal("course-modal")
+}
 
 export default function MyCalendar() {
 
-    const [ allTitle, setTitle ] = useState([])
+  const [ allTitle, setTitle ] = useState([])
 	const [ allDescription, setDescription ] = useState([])
 	const [ allProgress, setProgress ] = useState([])
-    const [ allStart, setStart ] = useState([])
-    const [ allEnd, setEnd ] = useState([])
-    const [ allPriority, setPriority ] = useState([])
-    const [ error, setError] = useState("")
-    const { currentUser, logout } = useAuth()
-    const history = useHistory();
-    const [loading, setLoading] = useState(false)
+  const [ allStart, setStart ] = useState([])
+  const [ allEnd, setEnd ] = useState([])
+  const [ allPriority, setPriority ] = useState([])
+  const { currentUser } = useAuth()
 
-    const allTitleRef = useRef();
-    const allDescriptionRef = useRef();
-    const allProgressRef = useRef();
-    const allStartRef = useRef();
-    const allEndRef = useRef();
-    const allPriorityRef = useRef();
-    const EventList = [];
+  const localizer = momentLocalizer(moment);
 
-    db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
-        if(doc.exists) {
-            setTitle(doc.data().allTitle);
-            setDescription(doc.data().allDescription);
-            setPriority(doc.data().allPriority);   
-            setStart(doc.data().allStart);  
-            setEnd(doc.data().allEnd);  
+  const getData = async() =>{
+    await db.getCollection("Events").get().then(snapshot => {
+      const tempEventName= [];
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        if (currentUser.email === doc.id){
+          let x =0;
+          for(x = 0; x < data.ListOfEvents.length; x++){
+            tempEventName.push(data.ListOfEvents[x]);
+          }
         }
-        else {
-            return;
-        }
-    });
+      })
+      setTitle(tempEventName);
+    }).catch(error => console.log(error))
+  }
+  useEffect(() =>{
+      getData()
+  },[])
 
-    const getEvents = async () => {
-        await db.getCollection('Events').doc(currentUser.email).get().then((d) => {
-            if (d.exists)  setTitle(d.data().allTitle)           
-        })
-    }
-
-    useEffect(() => {
-        getEvents()
-    }, [])
-
-    async function handleLogout() {
-        setError("")
-        try {
-            await logout()
-            history.push("/Login")
-        } catch {
-            setError("Failed to log out")
-        }
-    }
-
-    const getData = async() =>{
-        await db.getCollection("Events").get().then(snapshot => {
-            const tempEventName= [];
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                if (currentUser.email === doc.id){
-                    let x =0;
-                    for(x = 0; x < data.ListofEvents.length; x++){
-                        tempEventName.push(data.ListofEvents[x]);
-                    }
-                    
-                }
-
-            })
-            setTitle(tempEventName);
-        }).catch(error => console.log(error))
-        }
-        
-    function pushContent(){
-        EventList.push(allTitleRef)
-        EventList.push(allDescriptionRef)
-        EventList.push(allProgressRef)
-        EventList.push(allStartRef)
-        EventList.push(allEndRef)
-        EventList.push(allPriorityRef)
-    }
-    
-    useEffect(() =>{
-        getData()
-    },[])
-
-    /* bla bla*/
-
-    function printTable(){
-        try{
-        let eventslength = EventList.length;
-            
-        const list = []
-        let x;
-        for(x = 0; x < eventslength; x++){
-            list.push(<li>{EventList[x].Title} - {EventList[x].Description} </li>)
-        }
-
-        return(
-            <div>
-                {list}
-            </div>
-        )
-        }catch(error){
-            console.log(error)
-        }
-    }
-
-    function refreshPage() {
-        window.location.reload(false);
-    }
-
-    async function handleSubmit(e){
-        e.preventDefault()
-        try {
-            setError('')
-            setLoading(true)
-
-            db.getCollection('Events').doc(currentUser.email).update({
-                ListofEvents: firebase.firestore.FieldValue.arrayUnion(
-                    {   
-                        Description: allDescriptionRef.current.value,
-                        End: allEndRef.current.time,
-                        Priority: allPriorityRef.current.value,
-                        Progress: allProgressRef.current.value,
-                        Start: allStartRef.current.time,
-                        Title: allTitleRef.current.value
-                        }
-                    )
-                }).then(function() {// went through
-                    console.log("Document successfully written!");
-                    refreshPage()
-                })
-                .catch(function(error) { //broke down somewhere
-                    console.error("Error writing document: ", error);
-                });
-            history.push('/Events')
-        } catch{
-            setError('Failed to add event')
-        }
-        setLoading(false)
-    }
-
-    return (
-            <div className="App">
-                        <tbody>
-                            <tr><td><a href = '/Events'>{printTable()}</a></td></tr>
-                        </tbody>
-                        <Calendar localizer={localizer} events={EventList} 
-                        startAccessor="Start" endAccessor="End" style={{ height: 500, margin: "50px" }} />         
-            </div>
-    );
+  return (
+    <div>
+      <div>
+        <thead>
+          <tr>
+            <th><h5>Events</h5></th>
+          </tr>
+        </thead>
+        {printEventsTable(allTitle)}
+        <button onClick={ () => openModal("add-course-modal") }>Add a event</button>
+      </div>
+      
+      <div>
+      </div>
+    </div>
+  );
 }
-
-/*
-                            <input className="DataPicker_1" type="text" placeholder="Add Title" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />                                
-                            <DatePicker className="DataPicker_1" placeholderText="Start Date" selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
-                            <DatePicker className="DataPicker_1" placeholderText="End Date" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
-                            <button className="Button" onClick={handleAddEvent}>
-                                Add Event
-                            </button>
-
-                            <Calendar className="Calen" localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
-                
+/* 
+      <div>
+        <Calendar
+          localizer={localizer}
+          events={allTitle}
+          defaultDate={new Date()}
+          style={{ height: 500 }}
+        />
+      </div>
 */
