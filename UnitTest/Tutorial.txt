@@ -2,6 +2,7 @@ How to simulate firebase using Firebase Emulator:
 
 First: make sure you have all the neccesary packages installed. 
 This includes:
+CD UnitTest
 npm install mocha --save-dev
 npm install @firebase/testing --save-dev
 
