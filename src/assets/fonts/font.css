@@ -4,6 +4,9 @@
 .font-style-handwriting{
     font-family: 'handwriting';
 }
+.font-style-Alice{
+    font-family: 'Alice';
+}
 
 @font-face {
     font-family: 'JosefinSans';
@@ -13,4 +16,9 @@
 @font-face {
     font-family: 'handwriting';
     src:local('handwriting'),url(./handwriting-draft_free-version.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Alice';
+    src:local('Alice'),url(./Alice-Regular.ttf) format('truetype');
 }

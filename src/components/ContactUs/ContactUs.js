@@ -1,15 +1,15 @@
 import React, {Component} from "react";
 import about from "../../assets/images/about.jpg"
-
+import "./../../assets/fonts/font.css"
 
 class ContactUs extends Component{
         render() {
             return (
-                <div className = "back">
-                    <div class="left-half">
+                <div className = "back font-style-Alice">
+                    <div className="left-half">
                         <img className="image_time" src={about} alt="about"/>
                     </div>
-                    <div class="right-half">
+                    <div className="right-half">
                         <article>
                             <h1>About Us</h1>
                             <p>Tracker is keeping track of everyone progress status, and the documenting how the way how they measure and track.</p>
