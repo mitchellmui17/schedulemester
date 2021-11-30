@@ -89,7 +89,7 @@ export default function MyCalendar() {
     </div>
   );
 }
-/* 
+/*
       <div>
         <Calendar
           localizer={localizer}
