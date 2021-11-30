@@ -20,7 +20,7 @@ export const printEventsTable = (EventName) => {
       list.push(
         <div>          
           Event - {eventlength[z].Title} Description - {eventlength[z].Description} 
-          Start {eventlength[z].Start.toString()}  End {eventlength[z].End.toString()} 
+          Start {eventlength[z].Start.toString()}  End {eventlength[z].End.toString()}
         </div>
       )
   }
@@ -44,7 +44,6 @@ export const updateEventModal = (event, eventTitle, eventDescription) => {
 }
 
 export default function MyCalendar() {
-
   const [ allTitle, setTitle ] = useState([])
 	const [ allDescription, setDescription ] = useState([])
 	const [ allProgress, setProgress ] = useState([])
@@ -85,7 +84,6 @@ export default function MyCalendar() {
         {printEventsTable(allTitle)}
         <button onClick={ () => openModal("add-course-modal") }>Add a event</button>
       </div>
-      
       <div>
       </div>
     </div>
