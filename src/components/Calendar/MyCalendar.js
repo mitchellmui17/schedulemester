@@ -5,22 +5,39 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import "./MyCalendar.css";
 import {useAuth} from '../../context/AuthContext';
-import firebase from 'firebase/app';
-import { Link, useHistory } from "react-router-dom"
 import Fire from '../../firebase';
 
 export const db = Fire.db;
 
+export const formatDate = (date_time) => {
+  var timestamp = date_time;
+  var date = new Date(timestamp.seconds * 1000);
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+  
+  return (year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds)
+}
+
+export const events  = [
+  {
+    title: "123",
+    start: new Date(2021, 12, 1),
+    end: new Date(2021, 12, 2),
+    allDay: true,
+  },
+]
+
 export const printEventsTable = (EventName) => {
   let eventlength = EventName
   let list = []
-  let Title = document.getElementById("course-modal-title")
-  let Description = document.getElementById("course-modal-ID") 
   for (let z = 0; z < eventlength.length; z++){
       list.push(
         <div>          
-          Event - {eventlength[z].Title} Description - {eventlength[z].Description} 
-          Start {eventlength[z].Start.toString()}  End {eventlength[z].End.toString()}
+          Event - {eventlength[z].Title} Description - {eventlength[z].Description} Start {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')} End {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')}
         </div>
       )
   }
@@ -44,6 +61,7 @@ export const updateEventModal = (event, eventTitle, eventDescription) => {
 }
 
 export default function MyCalendar() {
+
   const [ allTitle, setTitle ] = useState([])
 	const [ allDescription, setDescription ] = useState([])
 	const [ allProgress, setProgress ] = useState([])
@@ -53,6 +71,9 @@ export default function MyCalendar() {
   const { currentUser } = useAuth()
 
   const localizer = momentLocalizer(moment);
+
+
+  
 
   const getData = async() =>{
     await db.getCollection("Events").get().then(snapshot => {
@@ -85,17 +106,16 @@ export default function MyCalendar() {
         <button onClick={ () => openModal("add-course-modal") }>Add a event</button>
       </div>
       <div>
-      </div>
-    </div>
-  );
-}
-/*
-      <div>
         <Calendar
           localizer={localizer}
-          events={allTitle}
+          events={events}
+          defaultView="week"
           defaultDate={new Date()}
           style={{ height: 500 }}
         />
       </div>
-*/
+      <div>
+      </div>
+    </div>
+  );
+}
