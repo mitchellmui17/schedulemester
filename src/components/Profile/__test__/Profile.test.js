@@ -2,7 +2,8 @@ import {render, screen, fireEvent} from '@testing-library/react';
 import React, { createElement } from 'react';
 import Profile from '../Profile';
 import { closeModal, openModal,  evaluatePriority, updateModal, showTasks,
-getTasksByHighestPriority, getTasksByCourse, updateCoursesModal, printCoursesTable } from '../Profile';
+getTasksByHighestPriority, getTasksByCourse, showTasksByCourse, createTaskButton, createTaskRow } from '../Profile';
+
 import ReactDOM from 'react-dom';
 
 //import Fire from '../../../firebase'
@@ -25,6 +26,29 @@ let tasks = [{
     Date: "Test Date 3",
     Priority: 0,
     Course: "Test Course 3"}]
+
+describe("tests that we can show the tasks by course name", () => {
+    document.body.innerHTML = "<div id = 'modal-title'>test</div>"
+        + '<div id = "modal-description">test</div>'
+        + '<div id = "modal-date">test</div>'
+        + '<div id = "course-tasks"> </div>'
+    let elems = [document.getElementById('modal-title'),
+    document.getElementById('modal-description'),
+    document.getElementById('modal-date'), document.getElementById('course-tasks')]
+    it("creates a task button correctly", () => {
+        let btn = createTaskButton(tasks[0], elems)
+        expect(btn.innerHTML).toBe("Test Title 1")
+    })
+    it("creates a row properly", () => {
+        let btn = createTaskButton(tasks[0], elems)
+        let row = createTaskRow(tasks[0], btn)
+        expect(row.innerHTML).toBe("<td><button class=\"task-btn\">Test Title 1</button></td><td><div class=\"priorityMid\"></div></td>");
+    })
+    it("adds the rows properly", () => {
+        showTasksByCourse(tasks, "Test Course 1", elems)
+        expect(elems[3].innerHTML).toBe("<tr><td><button class=\"task-btn\">Test Title 1</button></td><td><div class=\"priorityMid\"></div></td></tr>")
+    })
+})
 
 describe("tests that we can get the tasks by course name from highest priority", () => {
     let courseTasks = [{
@@ -60,16 +84,17 @@ describe("test for updateModal()", () => {
     let title = document.getElementById('modal-title');
     let desc = document.getElementById('modal-description');
     let date = document.getElementById('modal-date');
+
     test("the modal title is updated correctly ", () => {
-        updateModal(tasks[0], title, desc, date)
+        updateModal(tasks[0], [title, desc, date])
         expect(title.innerHTML).toBe("Test Title 1 (Test Course 1)")
     })
     test("the modal title is updated correctly ", () => {
-        updateModal(tasks[0], title, desc, date)
+        updateModal(tasks[0], [title, desc, date])
         expect(desc.innerHTML).toBe("Test Description 1")
     })
     test("the modal title is updated correctly ", () => {
-        updateModal(tasks[0], title, desc, date)
+        updateModal(tasks[0], [title, desc, date])
         expect(date.innerHTML).toBe("Deadline: Test Date 1")
     })
 })

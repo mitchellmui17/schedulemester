@@ -37,51 +37,48 @@ export const DATA = [
     { name: 'Dec', 'Task Completed': 0, 'Task Todo': 10 }, //upon next meeting.
 ];
 
-export const updateModal = (task, titleId, descId, dateId) => {
-    //let title = document.getElementById(titleId)
-    //let desc = document.getElementById(descId)
-    //let date = document.getElementById(dateId)
-
-    titleId.innerHTML = task.Title + " (" + task.Course + ")"
-    descId.innerHTML = task.Description
-    dateId.innerHTML = "Deadline: " + task.Date
+export const updateModal = (task, elems) => {
+    elems[0].innerHTML = task.Title + " (" + task.Course + ")"
+    elems[1].innerHTML = task.Description
+    elems[2].innerHTML = "Deadline: " + task.Date
 
     openModal("modal")
 }
 
-export const updateCoursesModal = (course, courseTitleID, courseNumID) => {
+export const updateCoursesModal = (tasks, course, courseTitleID, courseNumID, elems) => {
     courseTitleID.innerHTML = course.Course_Name
     courseNumID.innerHTML = course.Course_id
+    showTasksByCourse(tasks, course.Course_id, elems)
     openModal("course-modal")
 }
     
 export const showTasks = (tasks) => {
     let arr = getTasksByHighestPriority(tasks)
-    let title = document.getElementById("modal-title")
-    let desc = document.getElementById("modal-description")
-    let date = document.getElementById("modal-date")
+    let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date")]
     let jsx = []
     for (let i = 0; i < arr.length; i++) {
         jsx.push(
             <tr key = {"tr"+i}>
                 <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
-                onClick = { () => updateModal(arr[i], title, desc, date)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
+                onClick = { () => updateModal(arr[i], elems)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
                 <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
             </tr> )
     }
     return (<tbody>{jsx}</tbody>)
 }
 
-export const printCoursesTable = (courseName) => {
+export const printCoursesTable = (tasks, courseName) => {
     let courselength = courseName
     let courseTitle = document.getElementById("course-modal-title")
     let courseID = document.getElementById("course-modal-ID") 
+    let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"),
+    document.getElementById("modal-date"), document.getElementById("course-tasks")]
     let list = []
     for (let z = 0; z < courselength.length; z++){
         list.push(
             <tr key = {"tr"+z}>
             <td> <button key = {"btn"+z} value = {z} className = 'courses-btn' 
-            onClick = { () => updateCoursesModal(courselength[z], courseTitle, courseID)} > {courselength[z].Course_id} - {courselength[z].Course_Name} </button> </td>
+            onClick = { () => updateCoursesModal(tasks, courselength[z], courseTitle, courseID, elems)} > {courselength[z].Course_id} - {courselength[z].Course_Name} </button> </td>
             </tr> )
     }
     return (<tbody>{list}</tbody>)
@@ -97,10 +94,45 @@ export const getTasksByHighestPriority = (tasks) => {
 
 export const getTasksByCourse = (tasks, course) => {
     let arr = getTasksByHighestPriority(tasks)
+    let idx = 0
     let courseArr = []
     for (let i = 0; i < tasks.length; i++) 
-        if (arr[i].Course === course)  courseArr[i] = arr[i]
+        if (arr[i].Course === course)  courseArr[idx++] = arr[i]
     return courseArr
+}
+
+// elems is an array of the elements: title, desc, date, and tbody
+// need this parameter for unit testing
+export const showTasksByCourse = (tasks, currentCourse, elems) => {
+    let arr = getTasksByCourse(tasks, currentCourse)
+    elems[3].innerHTML = ''
+    console.log(arr.length)
+
+    arr.forEach(task => {
+        let row = createTaskRow(task, createTaskButton(task, elems))
+        elems[3].appendChild(row)
+    })
+}
+
+export const createTaskRow = (task, taskBtn) => {
+    let row = document.createElement('tr')
+    let div = document.createElement('div')
+    let td1 = document.createElement('td')
+    let td2 = document.createElement('td')
+    td1.appendChild(taskBtn)
+    td2.appendChild(div)
+    row.appendChild(td1)
+    row.appendChild(td2)
+    div.className = evaluatePriority(task.Priority)
+    return row
+}
+
+export const createTaskButton = (task, elems) => {
+    let btn = document.createElement('button')
+    btn.className = "task-btn"
+    btn.innerHTML = task.Title
+    btn.addEventListener('click', () => updateModal(task, elems))
+    return btn
 }
 
 export default function Profile() {
@@ -178,33 +210,11 @@ export default function Profile() {
         }).catch(error => console.log(error))
         }
         
+    /* istanbul ignore next */
     useEffect(() =>{
         getData()
     },[])
 
-    
-    // function printTable(){
-    //     try{
-    //     let courselength = courseName.length;
-            
-    //     const list = []
-    //     let x;
-    //     for(x = 0; x < courselength; x++){
-    //         list.push(<li>{courseName[x].Course_id} - {courseName[x].Course_Name} </li>);
-    //         //<Course key = {x} name = {courseName[x].Course_Name} data={"hello"} id = {courseName[x].Course_id}> </Course>
-            
-    //     }
-
-    //     return(
-    //         <div>
-    //             {list}
-    //             {/* <Course key = {x} name = {courseName[x].Course_Name} data={"hello"} id = {courseName[x].Course_id}> </Course> */}
-    //         </div>
-    //     )
-    //     }catch(error){
-    //         console.log(error)
-    //     }
-    // }
 
     function refreshPage() {
         window.location.reload(false);
@@ -265,15 +275,15 @@ export default function Profile() {
                 </div>
                 
                 
-                <div id = 'courses-table' className='child'>
+                <table id = 'courses-table' className='child'>
                     <thead>
                         <tr>
                             <th><h5>Courses</h5></th>
                         </tr>
                     </thead>
-                    {printCoursesTable(courseName)}
+                    {printCoursesTable(tasks, courseName)}
                     <button onClick={ () => openModal("add-course-modal") }>Add a course</button>
-                </div>
+                </table>
             </div>
             
             <div className = 'parent'>
@@ -283,6 +293,7 @@ export default function Profile() {
                             <th><h5>Upcoming Tasks</h5></th>
                         </tr>
                     </thead>
+                 
                     {showTasks(tasks)}
                 </table>
 
@@ -311,8 +322,6 @@ export default function Profile() {
                 </table>
             </div>
         
-    
-        
         <div id = 'tasks-container' className='child'>
             <div id = 'modal' className='modal'>
                 <div id = 'modal-content'>
@@ -332,9 +341,14 @@ export default function Profile() {
                     <b><span id = 'course-modal-ID'> </span> - <span id = 'course-modal-title'> </span></b> <br/>
                     {/* I think I should add grades somewhere around here
                     I also have to handle the issue of allowing user to delete courses and tasks here. Not sure how to do that yet*/}
-                    <h5>Tasks</h5>
-                    {/* <b> <span id = 'course-modal-ID'> </span></b> Add Tasks that are part of this course below
-                    <p id = 'modal-description'> </p> <br/> */}
+                    
+                    <table id = 'course-task-table'>
+                        <thead>
+                            <tr><th><h5>Tasks</h5></th></tr>
+                        </thead>
+                        <tbody id = 'course-tasks'>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

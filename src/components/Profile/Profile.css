@@ -73,6 +73,10 @@ td {
     margin-left: 10%;
 }
 
+#course-modal {
+    z-index: 100
+}
+
 #courses-table {
     padding: 2%;
     margin-top: 30%;
