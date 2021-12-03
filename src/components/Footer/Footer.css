@@ -1,0 +1,11 @@
+body{
+    margin: 0;
+  }
+  .footer {
+    position: fixed;
+    overflow: hidden;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+   }   
