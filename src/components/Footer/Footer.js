@@ -19,9 +19,8 @@ function Footer(){
                         <h6>Quick Link</h6>
                         <hr/>
                         <div><Link to ="/">Home</Link></div>
-                        <div><Link to ="/about">about</Link></div>
-                        <div><Link to ="/">Contack</Link></div>
-                        <div><Link to ="/">SignUp</Link></div>
+                        <div><Link to ="/ContactUs">about</Link></div>
+                        <div><Link to ="/SignUp">SignUp</Link></div>
                     </div> 
 
                     <div className ="col-md-4">
