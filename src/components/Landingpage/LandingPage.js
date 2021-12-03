@@ -15,15 +15,14 @@ class LandingPage extends Component{
     render() {
         return (
             <div className = "back font-style-Alice backgroundsize" style = {{backgroundImage: `url(${background})`}}>
-                
-                <div className="layer1-left imgsize" style = {{backgroundImage: `url(${gallery_img1})`}}>
-                    <div class="Video">
+                     <div class="Video">
                         <video autoPlay loop muted >
                             <source src={Video}type = "video/mp4"/> 
                         </video>
+                       </div> 
+                       <div className="layer1-left imgsize" style = {{backgroundImage: `url(${gallery_img1})`}}>
                 </div>
 
-                </div>
                 <div className="layer1-right">
                 
                 <h1>Welcome to the ScheduleMester</h1>
