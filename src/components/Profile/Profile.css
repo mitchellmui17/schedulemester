@@ -148,6 +148,7 @@ td {
 .main {
     position: relative;
     z-index: 3;
+    
 }
 /**/
 
@@ -202,4 +203,17 @@ td {
 .btn-primary:focus {
   background-color: #6dcedd !important;
   border-color: #6dcedd !important;
+}
+
+html, body, div{
+    height:100%;
+    width:100%
+    
+  }
+  Footer{
+    position:absolute;
+    bottom:0;
+    display:block;  
+    width:100%
+    
 }
