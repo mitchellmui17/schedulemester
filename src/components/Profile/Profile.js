@@ -62,7 +62,7 @@ export const getIndexOfTask = (tasks, task) => {
     
 // onclick function for marking a task as complete. takes in the email to search for it in db 
 /* istanbul ignore next */
-export const markTaskAsComplete = (email, task) => {    
+const markTaskAsComplete = (email, task) => {    
     db.getCollection('Tasks').doc(email).get().then((d) => {
         if (d.exists) {
             let tasks = d.data().Tasks
@@ -76,11 +76,27 @@ export const markTaskAsComplete = (email, task) => {
                 Priority: task.Priority
             }
             tasks[idx] = data
-            d.ref.update({Tasks: tasks})
-            if (window.confirm("Are you sure that you want to mark this task as completed?"))
+            if (window.confirm("Are you sure that you want to mark this task as completed?")) {
+                d.ref.update({Tasks: tasks})
                 setTimeout(() => {window.location.reload(false)},500);
+            }
         }                               
     }) 
+}
+
+/* istanbul ignore next */
+const deleteTask = (email, task) => {
+    db.getCollection('Tasks').doc(email).get().then((d) => {
+        if (d.exists) {
+            let tasks = d.data().Tasks
+            let idx = getIndexOfTask(tasks, task)
+            tasks.splice(idx, 1) // remove the index of where the desired task to delete is from the data array
+            if (window.confirm("Are you sure that you want to delete this task? This cannot be reversed!")) {
+                d.ref.update({Tasks: tasks})
+                setTimeout(() => {window.location.reload(false)},500);
+            }
+        }
+    })
 }
 
 export const showTasks = (tasks, email) => {
@@ -96,7 +112,7 @@ export const showTasks = (tasks, email) => {
                 onClick = { () => updateModal(arr[i], elems)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
                 <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
                 <td><button className='task-btn' onClick = {() => markTaskAsComplete(email, arr[i])} id='complete-task'>Complete</button> <br/> 
-                <button className='task-btn'id='remove-task'>Delete</button></td>
+                <button className='task-btn' onClick = {() => deleteTask(email, arr[i])} id='remove-task'>Delete</button></td>
             </tr> )
     }
     return (<tbody>{jsx}</tbody>)
@@ -245,13 +261,11 @@ export default function Profile() {
                     for(x = 0; x < data.ListofCourses.length; x++){
                         tempcourseName.push(data.ListofCourses[x]);
                     }
-                    
                 }
-
             })
             setCourseName(tempcourseName);
         }).catch(error => console.log(error))
-        }
+    }
         
     /* istanbul ignore next */
     useEffect(() =>{
@@ -336,9 +350,9 @@ export default function Profile() {
                             <th><h5>Upcoming Tasks</h5></th>
                         </tr>
                     </thead>
-                 
                     {showTasks(getUncompletedTasks(tasks), currentUser.email)}
                 </table>
+                
 
                 {/* BAR GRAPH HERE */}
                 <table id = 'bar-table'>
@@ -364,7 +378,7 @@ export default function Profile() {
                     </tbody>
                 </table>
             </div>
-        
+
         <div id = 'tasks-container' className='child'>
             <div id = 'modal' className='modal'>
                 <div id = 'modal-content'>

@@ -7,7 +7,6 @@
 
 .child {
     display: inline-block;
-    height: 100%;
 }
 
 /**/
@@ -23,26 +22,26 @@ h5 {
 
 /* Priority Shapes */
 .priorityHigh {
-    border: solid 10px red;
+    border: solid 2px white;
     background-color: red;
     height:65px;
-    width:10px;
+    width:30px;
     box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 
 .priorityMid {
-    border: solid 10px yellow;
+    border: solid 2px white;
     background-color: yellow;
     height:65px;
-    width:10px;
+    width:30px;
     box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 
 .priorityLow {
-    border: solid 10px green;
+    border: solid 2px white;
     background-color: green;
     height:65px;
-    width:10px;
+    width:30px;
     box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 /**/
@@ -71,27 +70,12 @@ td {
 
 #tasks-table {
     margin-top: 5%;
-    margin-left: 10%;
+    margin-left: 5%;
 }
 
 #complete-task, #remove-task {
     width:  120px;
     height: 32.5px;
-}
-
-/*
-#complete-task {
-    background-image: url('./../../assets/profile/checkmark-icon.jpg');
-    background-size: contain;
-}
-
-#remove-task {
-    background-image: url('./../../assets/profile/trash-bin-icon.png');
-    background-size: contain;
-}*/
-
-#remove-task {
-   
 }
 
 #course-modal {
