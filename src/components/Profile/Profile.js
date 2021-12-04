@@ -1,17 +1,15 @@
 import React, {useState, useEffect, useRef} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
-import {Button, Card, Form, Alert, Container} from "react-bootstrap"
+import {Button, Card, Form, Alert} from "react-bootstrap"
 import './Profile.css'
 import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
 import firebase from 'firebase/app';
 import {useAuth} from '../../context/AuthContext'
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
-import Course from '../Course/Course'
 
 export const db = Fire.db;
-
 export const closeModal = (modalId) => {
     let modal = document.getElementById(modalId);
     modal.style.display = "none" 
@@ -101,9 +99,7 @@ const deleteTask = (email, task) => {
 
 export const showTasks = (tasks, email) => {
     let arr = getTasksByHighestPriority(tasks)
-    let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date"),
-    document.getElementById('complete-task'), document.getElementById('remove-task')]
-
+    let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date")]
     let jsx = []
     for (let i = 0; i < arr.length; i++) {
         jsx.push(
@@ -156,7 +152,6 @@ export const getUncompletedTasks = (tasks) => {
     let arr = []
     for (let i = 0; i < tasks.length; i++) 
         if (!tasks[i].isComplete) arr.push(tasks[i])
-
     return arr
 }
 
@@ -272,11 +267,6 @@ export default function Profile() {
         getData()
     },[])
 
-
-    function refreshPage() {
-        window.location.reload(false);
-    }
-
     /* istanbul ignore next */
     async function handleSubmit(e){
         e.preventDefault()
@@ -296,7 +286,7 @@ export default function Profile() {
                     )
                 }).then(function() {// went through
                     console.log("Document successfully written!");
-                    refreshPage()
+                    window.location.reload(false);
                 })
                 .catch(function(error) { //broke down somewhere
                     console.error("Error writing document: ", error);
@@ -307,7 +297,6 @@ export default function Profile() {
         }
         setLoading(false)
     }
-
 
     return(
         <div className="profile-page font-style-Alice">
@@ -331,7 +320,6 @@ export default function Profile() {
                         </div>
                 </div>
                 
-                
                 <table id = 'courses-table' className='child'>
                     <thead>
                         <tr>
@@ -353,7 +341,6 @@ export default function Profile() {
                     {showTasks(getUncompletedTasks(tasks), currentUser.email)}
                 </table>
                 
-
                 {/* BAR GRAPH HERE */}
                 <table id = 'bar-table'>
                     <thead>

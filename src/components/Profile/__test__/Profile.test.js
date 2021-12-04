@@ -1,11 +1,8 @@
-import {render, screen, fireEvent} from '@testing-library/react';
-import React, { createElement } from 'react';
+import {render} from '@testing-library/react';
 import Profile from '../Profile';
 import { closeModal, openModal,  evaluatePriority, updateModal, showTasks,
 getTasksByHighestPriority, getTasksByCourse, showTasksByCourse, createTaskButton, createTaskRow,
 getIndexOfTask, getUncompletedTasks } from '../Profile';
-
-import ReactDOM from 'react-dom';
 
 let tasks = [{
     Title: "Test Title 1",
