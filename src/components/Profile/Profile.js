@@ -11,6 +11,7 @@ import "./../../assets/fonts/font.css"
 import Course from '../Course/Course'
 
 export const db = Fire.db;
+
 export const closeModal = (modalId) => {
     let modal = document.getElementById(modalId);
     modal.style.display = "none" 
@@ -41,7 +42,6 @@ export const updateModal = (task, elems) => {
     elems[0].innerHTML = task.Title + " (" + task.Course + ")"
     elems[1].innerHTML = task.Description
     elems[2].innerHTML = "Deadline: " + task.Date
-
     openModal("modal")
 }
 
@@ -51,10 +51,43 @@ export const updateCoursesModal = (tasks, course, courseTitleID, courseNumID, el
     showTasksByCourse(tasks, course.Course_id, elems)
     openModal("course-modal")
 }
+
+export const getIndexOfTask = (tasks, task) => {
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].Title === task.Title && tasks[i].Description === task.Description && tasks[i].Course === task.Course) {
+            return i
+        }
+    }
+}
     
-export const showTasks = (tasks) => {
+// onclick function for marking a task as complete. takes in the email to search for it in db 
+/* istanbul ignore next */
+export const markTaskAsComplete = (email, task) => {    
+    db.getCollection('Tasks').doc(email).get().then((d) => {
+        if (d.exists) {
+            let tasks = d.data().Tasks
+            let idx = getIndexOfTask(tasks, task)
+            let data = {
+                Title: task.Title,
+                Description: task.Description, 
+                Course: task.Course,
+                Date: task.Date,
+                isComplete: true,
+                Priority: task.Priority
+            }
+            tasks[idx] = data
+            d.ref.update({Tasks: tasks})
+            if (window.confirm("Are you sure that you want to mark this task as completed?"))
+                setTimeout(() => {window.location.reload(false)},500);
+        }                               
+    }) 
+}
+
+export const showTasks = (tasks, email) => {
     let arr = getTasksByHighestPriority(tasks)
-    let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date")]
+    let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date"),
+    document.getElementById('complete-task'), document.getElementById('remove-task')]
+
     let jsx = []
     for (let i = 0; i < arr.length; i++) {
         jsx.push(
@@ -62,6 +95,8 @@ export const showTasks = (tasks) => {
                 <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
                 onClick = { () => updateModal(arr[i], elems)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
                 <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
+                <td><button className='task-btn' onClick = {() => markTaskAsComplete(email, arr[i])} id='complete-task'>Complete</button> <br/> 
+                <button className='task-btn'id='remove-task'>Delete</button></td>
             </tr> )
     }
     return (<tbody>{jsx}</tbody>)
@@ -99,6 +134,14 @@ export const getTasksByCourse = (tasks, course) => {
     for (let i = 0; i < tasks.length; i++) 
         if (arr[i].Course === course)  courseArr[idx++] = arr[i]
     return courseArr
+}
+
+export const getUncompletedTasks = (tasks) => {
+    let arr = []
+    for (let i = 0; i < tasks.length; i++) 
+        if (!tasks[i].isComplete) arr.push(tasks[i])
+
+    return arr
 }
 
 // elems is an array of the elements: title, desc, date, and tbody
@@ -171,7 +214,7 @@ export default function Profile() {
     /* istanbul ignore next */
     const getTasks = async () => {
         await db.getCollection('Tasks').doc(currentUser.email).get().then((d) => {
-            if (d.exists)  setTasks(d.data().Tasks)           
+            if (d.exists)  setTasks(d.data().Tasks)                                
         })
     }
 
@@ -294,7 +337,7 @@ export default function Profile() {
                         </tr>
                     </thead>
                  
-                    {showTasks(tasks)}
+                    {showTasks(getUncompletedTasks(tasks), currentUser.email)}
                 </table>
 
                 {/* BAR GRAPH HERE */}
@@ -329,7 +372,6 @@ export default function Profile() {
                     <b><span id = 'modal-title'> </span></b> <br/>
                     <b> <span id = 'modal-date'> </span></b>
                     <p id = 'modal-description'> </p> <br/> 
-                    <a href='/Courses'> Go to Course</a>
                 </div>
             </div>
         </div>
