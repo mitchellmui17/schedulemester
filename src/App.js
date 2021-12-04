@@ -40,8 +40,8 @@ function App() {
               <ResetPassword />
             </Route>
           </Switch>
-          <Footer />
         </main>
+        <Footer />
       </Router>
     </AuthProvider>
   );
