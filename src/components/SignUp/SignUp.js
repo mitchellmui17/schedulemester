@@ -7,6 +7,10 @@ import {Link, useHistory} from 'react-router-dom'
 import "./SignUp.css"
 import background from '../../assets/images/wallhaven-nme3w9.png';
 
+export const SignUpButton = () => (
+    <Button data-testid="btn-test"  className = "button-test w-100" type = "submit" >Sign Up</Button>
+  );
+  
 export default function SignUp() {
 
     const emailRef = useRef();
@@ -16,7 +20,7 @@ export default function SignUp() {
     const userRef = useRef();
     const {signup} = useAuth();
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false)
+   // const [loading, setLoading] = useState(false)
     const history = useHistory();
     let db = Fire.db;
 
@@ -28,7 +32,7 @@ export default function SignUp() {
 
         try{
             setError('')
-            setLoading(true) //prevents users from creating multiple accounts on submit
+           // setLoading(true) //prevents users from creating multiple accounts on submit
             await signup(emailRef.current.value, passwordRef.current.value)
                 db.getCollection('Users').doc(emailRef.current.value).set({
                     username: userRef.current.value,
@@ -52,7 +56,7 @@ export default function SignUp() {
             console.log(error)
         
         }
-        setLoading(false)
+        //setLoading(false)
 
        
     }
@@ -90,9 +94,10 @@ export default function SignUp() {
                             <Form.Label>Name</Form.Label>
                             <Form.Control type = "text" ref={nameRef} required/>                 
                         </Form.Group> */}
-                        <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
+                        {/* <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
                             Sign Up
-                        </Button>
+                        </Button> */}
+                        {SignUpButton()}
                         <div className="w-100 text-center mt-2">
                             <Link className="links" to='/Login'>》Login Here《</Link>
                         </div>
