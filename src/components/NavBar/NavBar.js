@@ -1,21 +1,11 @@
-import React, { Component, useState } from 'react'
+import React from 'react'
 import logo from "../../assets/images/ScheduleMester-logo/default.png"
-import background from "../../assets/images/wallhaven-0jp1j5_trim2.png"
-import {Link} from 'react-router-dom'
+import background from "../../assets/images/wallhaven-nkexld-2.png"
 import {useAuth} from "../../context/AuthContext"
-import Fire from "../../firebase"
 import './NavBar.css'
 import "./../../assets/fonts/font.css"
-import { Navbar } from 'react-bootstrap'
-
 export default function NavigationBar(){
-  const { currentUser } = useAuth()  
-  let database = Fire.db
-  const [position, setPosition] = useState("");
-
-  // handleClick = () => {
-  //     this.setState({ clicked: !this.state.clicked })
-  // }
+  const { currentUser } = useAuth();  
 
     return (
 

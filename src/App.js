@@ -8,11 +8,10 @@ import Login from './components/Login/Login'
 import Courses from './components/Courses/Courses.js'
 import ResetPassword from './components/ResetPassword/ResetPassword.js';
 import React from "react"
-import { Container, NavItem } from 'react-bootstrap';
 import { AuthProvider } from './context/AuthContext.js';
 import Footer from './components/Footer/Footer.js';
 import PrivateRoute from './components/PrivateRoute.js'
-import { BrowserRouter as Router, Route, Redirect, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 function App() {
   return (
