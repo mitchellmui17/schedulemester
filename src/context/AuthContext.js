@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import React, { useContext, useState, useEffect } from 'react';
-import { auth } from '../firebase'
+import firebase, { auth } from '../firebase'
 
 
 const AuthContext = React.createContext();
@@ -12,6 +12,7 @@ export function AuthProvider({children}){
 
     const [ currentUser, setCurrentUser ] = useState()
     const [loading, setLoading] = useState(true)
+
 
     function signup(email, password){
         return auth.createUserWithEmailAndPassword(email, password)
@@ -33,6 +34,14 @@ export function AuthProvider({children}){
 
     }
 
+    function updateProfilePicture(profilePicture) {
+        currentUser.updateProfile({ photoURL: profilePicture });
+        firebase.database().ref('users/').child(currentUser.uid).update({
+            "photoURL": profilePicture
+        });
+        console.log("Photo in Database uploaded " + currentUser.photoURL);
+    }
+
     useEffect(()=>{
         const unsubscribe = auth.onAuthStateChanged(user =>{
             setCurrentUser(user)
@@ -49,7 +58,8 @@ export function AuthProvider({children}){
         logout,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        updateProfilePicture,
     }
     return(
         <AuthContext.Provider value ={value}>
