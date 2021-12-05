@@ -2,6 +2,7 @@
   background-color: #ffffff;
   min-height: 100vh;
   text-align: center;
+  overflow: hidden;
 }
 .image_time {
 width: 50%;
@@ -22,41 +23,43 @@ max-height: 50vh;
 background-size: cover;
 background-repeat: no-repeat;
 background-position: top center;
+overflow: hidden;
 }
 .backgroundsize{
-min-height: 190vh;
+min-height: 160vh;
 background-size:auto;
-
 
 }
 
 .layer1-left {
 background-color: #ffffff;
 position: absolute;
-top: 420px;
+top: 20%;
 left: 96px;
-width: 30%;
+width: 30.5%;
 min-height: 50vh;
 box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
+
 }
 
 .layer1-right {
 background-color: #ffffff;
 position: absolute;
-top: 420px;
-right: 88px;
-width: 58.5%;
-min-height: 50vh;
+top: 20%;
+left: 36.7%;
+width: 58.51%;
+height: 50vh;
 box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
 }
 
 .layer2-left {
 background-color: #ffffff;
 position: absolute;
-top: 935px; 
+top: 72%; 
 left: 96px;
-width: 43.4%;
+width: 44.5%;
 min-height: 80vh;
+
 box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
 
 }
@@ -64,19 +67,9 @@ box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
 .layer2-right {
 background-color: #ffffff;
 position: absolute;
-top: 935px;
-right: 88px;
-width: 45%;
+top: 72%;
+left: 50.75%;
+width: 44.45%;
 min-height: 80vh;
 box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
-}
-
-.bottom {
-background-color: #000000;
-position: absolute;
-top: 1800px;
-bottom: -100px;
-width: 100%;
-min-height: 19vh;
-box-shadow: 0 0 0 10px rgb(0, 0, 0);
 }

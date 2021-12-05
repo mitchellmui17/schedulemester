@@ -4,6 +4,7 @@ import {Button, Card, Form, Alert} from "react-bootstrap"
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import "./MyCalendar.css";
+import background from "../../assets/images/wallhaven-0prd9n.jpg"
 import {useAuth} from '../../context/AuthContext';
 import Fire from '../../firebase';
 import firebase from 'firebase/app';
@@ -121,7 +122,7 @@ export default function MyCalendar() {
   }
 
   return (
-    <div>
+    <div style = {{backgroundImage: `url(${background})`}}>
       <div>
         <Calendar
           views={['month', 'agenda']}
