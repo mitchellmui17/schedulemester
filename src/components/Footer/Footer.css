@@ -2,10 +2,11 @@ body{
     margin: 0;
   }
   .footer {
-    position: fixed;
+    position:relative;
     overflow: hidden;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: 9999;
+    padding-top: 3px;
    }   

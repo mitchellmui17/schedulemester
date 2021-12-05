@@ -8,6 +8,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./MyCalendar.css";
+import background from "../../assets/images/wallhaven-0prd9n.jpg"
 
 const locales = {
     "en-US": require("date-fns/locale/en-US"),
@@ -53,7 +54,7 @@ function MyCalendar() {
     }
 
     return (
-            <div className="App font-style-Alice">
+            <div className="App font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
                 <div className="Container">
                     <div className="Cal_Header">
                         <h1 className="1_header">Calendar</h1>

@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import "./LandingPage.css"
-import background from "../../assets/images/wallhaven-g8zvv3.png"
+import background from "../../assets/images/wallhaven-0prd9n.jpg"
 import bottom_background from "../../assets/images/waveFont_Trim.png"
 import gallery_img1 from "../../assets/images/wallhaven-83dy9k.png"
 import "./../../assets/fonts/font.css"
 import Video from "../../videos/video.mp4";
 import { Card, Col, Container, Row } from "react-bootstrap";
-
+import background2 from "../../assets/images/wallhaven-01e2zg.png"
 
 
 class LandingPage extends Component{
@@ -15,20 +15,27 @@ class LandingPage extends Component{
     render() {
         return (
             <div className = "back font-style-Alice backgroundsize" style = {{backgroundImage: `url(${background})`}}>
-                     <div class="Video">
+                    <div class="Video">
                         <video autoPlay loop muted >
                             <source src={Video}type = "video/mp4"/> 
                         </video>
-                       </div> 
-                       <div className="layer1-left imgsize" style = {{backgroundImage: `url(${gallery_img1})`}}>
+                    </div> 
+                <div className="layer1-left imgsize" style = {{backgroundImage: `url(${gallery_img1})`}}>
                 </div>
 
-                <div className="layer1-right">
+                <div className="layer1-right" style = {{backgroundImage: `url(${background2})`}}>
                 
                 <h1>Welcome to the ScheduleMester</h1>
-                        <p> Schedulemester is an application for convenient planning of coursework by Users.</p>
+                        <article style={{textAlign: 'justify', margin: 20, lineHeight: 2}}>
+                            Schedulemester is an application for convenient planning of coursework by Users. 
+                            We are dedicated to providing an application that can improve users' performance and efficiency. 
+                            ScheduleMester will help to keep track of every event and task and plan out the efficient way to complete them. 
+                            Users are able to see the three most urgent tasks that are needed to be completed and the result of completing the tasks. 
+                            Also, ScheduleMester will remind users about the upcoming tasks for users to enough time to prepare and allocate time for them. 
+                            Users can check their GPA for a specific course or the overall GPA in real-time.
+                        </article>
                 </div>
-                <div className="layer2-left">
+                <div className="layer2-left"  style = {{backgroundImage: `url(${background2})`}}>
                     <h3> CUNY 2021 FALL EVENTS</h3>
                     <Container>
                         <Row>
@@ -81,7 +88,7 @@ class LandingPage extends Component{
                         </Row>
                     </Container>
                 </div>
-                <div className="layer2-right">
+                <div className="layer2-right" style = {{backgroundImage: `url(${background2})`}}>
                     <h3>CUNY 2021 FALL Breaks</h3>
                     <Container>
                         <Row>
