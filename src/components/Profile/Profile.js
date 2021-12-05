@@ -1,15 +1,14 @@
 import React, {useState, useEffect, useRef} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
-import {Button, Card, Form, Alert, Container} from "react-bootstrap"
+import {Button, Card, Form, Alert} from "react-bootstrap"
 import './Profile.css'
-import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
 import firebase from 'firebase/app';
 import {useAuth} from '../../context/AuthContext'
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
-import Course from '../Course/Course'
 import background from "../../assets/images/wallhaven-0prd9n.jpg"
+
 
 export const db = Fire.db;
 export const closeModal = (modalId) => {
@@ -42,7 +41,6 @@ export const updateModal = (task, elems) => {
     elems[0].innerHTML = task.Title + " (" + task.Course + ")"
     elems[1].innerHTML = task.Description
     elems[2].innerHTML = "Deadline: " + task.Date
-
     openModal("modal")
 }
 
@@ -52,8 +50,55 @@ export const updateCoursesModal = (tasks, course, courseTitleID, courseNumID, el
     showTasksByCourse(tasks, course.Course_id, elems)
     openModal("course-modal")
 }
+
+export const getIndexOfTask = (tasks, task) => {
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].Title === task.Title && tasks[i].Description === task.Description && tasks[i].Course === task.Course) {
+            return i
+        }
+    }
+}
     
-export const showTasks = (tasks) => {
+// onclick function for marking a task as complete. takes in the email to search for it in db 
+/* istanbul ignore next */
+const markTaskAsComplete = (email, task) => {    
+    db.getCollection('Tasks').doc(email).get().then((d) => {
+        if (d.exists) {
+            let tasks = d.data().Tasks
+            let idx = getIndexOfTask(tasks, task)
+            let data = {
+                Title: task.Title,
+                Description: task.Description, 
+                Course: task.Course,
+                Date: task.Date,
+                isComplete: true,
+                Priority: task.Priority
+            }
+            tasks[idx] = data
+            if (window.confirm("Are you sure that you want to mark this task as completed?")) {
+                d.ref.update({Tasks: tasks})
+                setTimeout(() => {window.location.reload(false)},500);
+            }
+        }                               
+    }) 
+}
+
+/* istanbul ignore next */
+const deleteTask = (email, task) => {
+    db.getCollection('Tasks').doc(email).get().then((d) => {
+        if (d.exists) {
+            let tasks = d.data().Tasks
+            let idx = getIndexOfTask(tasks, task)
+            tasks.splice(idx, 1) // remove the index of where the desired task to delete is from the data array
+            if (window.confirm("Are you sure that you want to delete this task? This cannot be reversed!")) {
+                d.ref.update({Tasks: tasks})
+                setTimeout(() => {window.location.reload(false)},500);
+            }
+        }
+    })
+}
+
+export const showTasks = (tasks, email) => {
     let arr = getTasksByHighestPriority(tasks)
     let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date")]
     let jsx = []
@@ -63,6 +108,8 @@ export const showTasks = (tasks) => {
                 <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
                 onClick = { () => updateModal(arr[i], elems)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
                 <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
+                <td><button className='task-btn' onClick = {() => markTaskAsComplete(email, arr[i])} id='complete-task'>Complete</button> <br/> 
+                <button className='task-btn' onClick = {() => deleteTask(email, arr[i])} id='remove-task'>Delete</button></td>
             </tr> )
     }
     return (<tbody>{jsx}</tbody>)
@@ -100,6 +147,13 @@ export const getTasksByCourse = (tasks, course) => {
     for (let i = 0; i < tasks.length; i++) 
         if (arr[i].Course === course)  courseArr[idx++] = arr[i]
     return courseArr
+}
+
+export const getUncompletedTasks = (tasks) => {
+    let arr = []
+    for (let i = 0; i < tasks.length; i++) 
+        if (!tasks[i].isComplete) arr.push(tasks[i])
+    return arr
 }
 
 // elems is an array of the elements: title, desc, date, and tbody
@@ -147,6 +201,10 @@ export default function Profile() {
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
     const [tasks, setTasks] = useState([]) /* istanbul ignore next */
     const history = useHistory();
+    const {updateProfilePicture } = useAuth();
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [file, setFile] = useState(null);
+    const [ success, setSuccess] = useState("");
 
     //consts here are for submission form to add courses to current users' document in Course collection.
     /* istanbul ignore next */
@@ -163,6 +221,7 @@ export default function Profile() {
             setName(doc.data().name);
             setMajor(doc.data().major);
             setSemester(doc.data().semester);   
+
         }
         else {
             return;
@@ -172,7 +231,7 @@ export default function Profile() {
     /* istanbul ignore next */
     const getTasks = async () => {
         await db.getCollection('Tasks').doc(currentUser.email).get().then((d) => {
-            if (d.exists)  setTasks(d.data().Tasks)           
+            if (d.exists)  setTasks(d.data().Tasks)                                
         })
     }
 
@@ -203,23 +262,16 @@ export default function Profile() {
                     for(x = 0; x < data.ListofCourses.length; x++){
                         tempcourseName.push(data.ListofCourses[x]);
                     }
-                    
                 }
-
             })
             setCourseName(tempcourseName);
         }).catch(error => console.log(error))
-        }
+    }
         
     /* istanbul ignore next */
     useEffect(() =>{
         getData()
     },[])
-
-
-    function refreshPage() {
-        window.location.reload(false);
-    }
 
     /* istanbul ignore next */
     async function handleSubmit(e){
@@ -240,7 +292,7 @@ export default function Profile() {
                     )
                 }).then(function() {// went through
                     console.log("Document successfully written!");
-                    refreshPage()
+                    window.location.reload(false);
                 })
                 .catch(function(error) { //broke down somewhere
                     console.error("Error writing document: ", error);
@@ -253,18 +305,63 @@ export default function Profile() {
     }
 
 
+    const handleChange = e => {
+        if (e.target.files[0]) {
+            setFile(e.target.files[0]);
+            setProfilePicture(URL.createObjectURL(e.target.files[0]));
+        }
+    }
+
+    const handleUpload = () => {
+        console.log(file);
+        if (file === null) {
+            setError("No file selected");
+        } else {
+            firebase.storage().ref('users/' + currentUser.uid + '/profile.jpg').put(file).then(function () {
+                console.log('successfully uploaded to firebase');
+                updateProfilePicture('users/' + currentUser.uid + '/profile.jpg');
+                setError("");
+            })
+        }
+    }
+
+    useEffect(() => {
+        //load avatar from storage
+        if (currentUser.photoURL) {
+            firebase.storage().ref('users/' + currentUser.uid + '/profile.jpg').getDownloadURL().then(url => {
+                setProfilePicture(url);
+            })
+        } else {
+            return;
+        }
+
+
+    }, [currentUser.photoURL, currentUser.uid]) // loadProfilePicture
+
+
     return(
         <div className="profile-page font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
             <div className="main main-raised">
                 <div className="profile-content">
                         <div className="profile">
-                            <img src={picture} id = 'pic' className="rounded-circle"/>
+                        <img
+                                    id="output"
+                                    src={profilePicture || "https://icon-library.com/images/cool-anime-icon/cool-anime-icon-9.jpg"}
+                                    className="rounded-circle"
+                                    width="200px"
+                                    height="150px"
+                                    alt="profilePic"
+                                />
+            
                             <div className="description">
                                 <h3 id="name">{name}</h3>
                                 <h5>Major: {major}</h5>
                                 <h5>Semester: {semester}</h5>
+
                                 {currentUser !== null?
                                 <div> 
+                                    <input type="file" accept="image/*" onChange={handleChange} />
+                                    <Button className="btn-primary btn-outline-light" onClick={handleUpload}>Update Profile Picture</Button>
                                     <Button onClick={handleLogout} className="btn-primary btn-outline-light">
                                         Log Out
                                     </Button>
@@ -274,7 +371,6 @@ export default function Profile() {
                             </div>
                         </div>
                 </div>
-                
                 
                 <table id = 'courses-table' className='child'>
                     <thead>
@@ -294,10 +390,9 @@ export default function Profile() {
                             <th><h5>Upcoming Tasks</h5></th>
                         </tr>
                     </thead>
-                 
-                    {showTasks(tasks)}
+                    {showTasks(getUncompletedTasks(tasks), currentUser.email)}
                 </table>
-
+                
                 {/* BAR GRAPH HERE */}
                 <table id = 'bar-table'>
                     <thead>
@@ -322,7 +417,7 @@ export default function Profile() {
                     </tbody>
                 </table>
             </div>
-        
+
         <div id = 'tasks-container' className='child'>
             <div id = 'modal' className='modal'>
                 <div id = 'modal-content'>
@@ -330,7 +425,6 @@ export default function Profile() {
                     <b><span id = 'modal-title'> </span></b> <br/>
                     <b> <span id = 'modal-date'> </span></b>
                     <p id = 'modal-description'> </p> <br/> 
-                    <a href='/Courses'> Go to Course</a>
                 </div>
             </div>
         </div>
