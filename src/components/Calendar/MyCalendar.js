@@ -1,11 +1,14 @@
 import React, {useState, useEffect, useRef} from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
+import {Button, Card, Form, Alert} from "react-bootstrap"
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
-import "react-datepicker/dist/react-datepicker.css";
+
 import "./MyCalendar.css";
 import {useAuth} from '../../context/AuthContext';
 import Fire from '../../firebase';
+import firebase from 'firebase/app';
+import { useHistory } from "react-router-dom"
 
 export const db = Fire.db;
 
@@ -22,7 +25,7 @@ export const formatDate = (date_time) => {
   return (year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds)
 }
 
-export const events  = [
+export const eventslist  = [
   {
     title: "123",
     start: new Date(2021, 12, 1),
@@ -31,15 +34,30 @@ export const events  = [
   },
 ]
 
+export const Event_List = (EventName) => {
+  let eventlength = EventName
+  let list = []
+  for (let z = 0; z < eventlength.length; z++){
+    list.push(
+      {
+        title: eventlength[z].Title,
+        start: eventlength[z].Start,
+        end: eventlength[z].End,
+      }
+    )
+  }
+  return (list)
+}
+
 export const printEventsTable = (EventName) => {
   let eventlength = EventName
   let list = []
   for (let z = 0; z < eventlength.length; z++){
-      list.push(
-        <div>          
-          Event - {eventlength[z].Title} Description - {eventlength[z].Description} Start {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')} End {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')}
-        </div>
-      )
+    list.push(
+      <div>          
+        Event - {eventlength[z].Title} Description - {eventlength[z].Description} Start {moment.unix(eventlength[z].Start.seconds).format('MMMM Do YYYY, h:mm:ss a')} End {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')}
+      </div>
+    )
   }
   return (<tbody>{list}</tbody>)
 }
@@ -69,11 +87,17 @@ export default function MyCalendar() {
   const [ allEnd, setEnd ] = useState([])
   const [ allPriority, setPriority ] = useState([])
   const { currentUser } = useAuth()
-
+  const [error, setError] = useState("")
   const localizer = momentLocalizer(moment);
+  const [loading, setLoading] = useState(false)
+  const history = useHistory();
 
-
-  
+  const TitleRef = useRef();
+  const DescriptionRef = useRef();
+  const PriorityRef = useRef();
+  const ProgressRef = useRef();
+  const StartRef = useRef();
+  const EndRef = useRef();
 
   const getData = async() =>{
     await db.getCollection("Events").get().then(snapshot => {
@@ -94,6 +118,37 @@ export default function MyCalendar() {
       getData()
   },[])
 
+  async function handleSubmit(e){
+    e.preventDefault()
+    try {
+        setError('')
+        setLoading(true)
+
+        db.getCollection('Events').doc(currentUser.email).update({
+            ListOfEvents: firebase.firestore.FieldValue.arrayUnion(
+                {   
+                    Title: TitleRef.current.value,
+                    Description: DescriptionRef.current.value,
+                    Priority: PriorityRef.current.value,
+                    Progress: ProgressRef.current.value,
+                    Start: StartRef.current.value,
+                    End: EndRef.current.value
+                    }
+                )
+            }).then(function() {// went through
+                console.log("Document successfully written!");
+                window.location.reload(false);
+            })
+            .catch(function(error) { //broke down somewhere
+                console.error("Error writing document: ", error);
+            });
+        history.push('/Calendar')
+    } catch{
+        setError('Failed to add event')
+    }
+    setLoading(false)
+  }
+
   return (
     <div>
       <div>
@@ -103,19 +158,54 @@ export default function MyCalendar() {
           </tr>
         </thead>
         {printEventsTable(allTitle)}
-        <button onClick={ () => openModal("add-course-modal") }>Add a event</button>
       </div>
       <div>
         <Calendar
           localizer={localizer}
-          events={events}
-          defaultView="week"
+          events={Event_List(allTitle)}
+          defaultView="month"
           defaultDate={new Date()}
           style={{ height: 500 }}
         />
       </div>
-      <div>
+      <div id = 'modal-content'>
+        <span onClick = { () => closeModal("add-course-modal") } id='modal-close' className="close">&times;</span>
+        <Card>
+          <Card.Body>
+              <h2 className = "text-center mb-4">Add Event</h2>
+              {error && <Alert variant ="danger">{error}</Alert>}
+              <form onSubmit = {handleSubmit}>
+                <Form.Group id = "courseName">
+                    <Form.Label>Title Name</Form.Label>
+                    <Form.Control type = "text" ref={TitleRef} required/>                 
+                </Form.Group>
+                <Form.Group id = "courseID">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control type = "text" ref={DescriptionRef} required/>                 
+                </Form.Group>
+                <Form.Group id = "examsGrade">
+                    <Form.Label>Priority</Form.Label>
+                    <Form.Control type = "number" ref={PriorityRef} required/>                 
+                </Form.Group>
+                <Form.Group id = "homeworksGrade">
+                    <Form.Label>Progress</Form.Label>
+                    <Form.Control type = "number" ref={ProgressRef} required/>                 
+                </Form.Group>
+                <Form.Group id = "projectsGrade">
+                    <Form.Label>Start of Event</Form.Label>
+                    <Form.Control type = "datetime-local" ref={StartRef} required/>                 
+                </Form.Group>
+                <Form.Group id = "projectsGrade">
+                    <Form.Label>End of Event</Form.Label>
+                    <Form.Control type = "datetime-local" ref={EndRef} required/>                 
+                </Form.Group>
+                <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
+                    Add Course
+                </Button>
+              </form>
+            </Card.Body>
+          </Card>
+        </div> 
       </div>
-    </div>
   );
 }
