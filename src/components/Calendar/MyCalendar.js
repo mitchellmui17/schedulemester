@@ -3,7 +3,6 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import {Button, Card, Form, Alert} from "react-bootstrap"
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
-
 import "./MyCalendar.css";
 import {useAuth} from '../../context/AuthContext';
 import Fire from '../../firebase';
@@ -24,15 +23,6 @@ export const formatDate = (date_time) => {
   
   return (year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds)
 }
-
-export const eventslist  = [
-  {
-    title: "123",
-    start: new Date(2021, 12, 1),
-    end: new Date(2021, 12, 2),
-    allDay: true,
-  },
-]
 
 export const Event_List = (EventName) => {
   let eventlength = EventName
@@ -77,7 +67,6 @@ export default function MyCalendar() {
   const TitleRef = useRef();
   const DescriptionRef = useRef();
   const PriorityRef = useRef();
-  const ProgressRef = useRef();
   const StartRef = useRef();
   const EndRef = useRef();
 
