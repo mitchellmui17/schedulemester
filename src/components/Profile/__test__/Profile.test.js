@@ -1,31 +1,42 @@
-import {render, screen, fireEvent} from '@testing-library/react';
-import React, { createElement } from 'react';
+import {render} from '@testing-library/react';
 import Profile from '../Profile';
 import { closeModal, openModal,  evaluatePriority, updateModal, showTasks,
-getTasksByHighestPriority, getTasksByCourse, showTasksByCourse, createTaskButton, createTaskRow } from '../Profile';
-
-import ReactDOM from 'react-dom';
-
-//import Fire from '../../../firebase'
-
-const testEmail = 'test@gmail.com'
+getTasksByHighestPriority, getTasksByCourse, showTasksByCourse, createTaskButton, createTaskRow,
+getIndexOfTask, getUncompletedTasks } from '../Profile';
 
 let tasks = [{
     Title: "Test Title 1",
     Description: "Test Description 1",
     Date: "Test Date 1",
     Priority: 1,
-    Course: "Test Course 1"
+    Course: "Test Course 1",
+    isComplete: false
 }, {Title: "Test Title 2",
     Description: "Test Description 2",
     Date: "Test Date 2",
     Priority: 2,
-    Course: "Test Course 2"
+    Course: "Test Course 2",
+    isComplete: false
 }, {Title: "Test Title 3",
     Description: "Test Description 3",
     Date: "Test Date 3",
     Priority: 0,
-    Course: "Test Course 3"}]
+    Course: "Test Course 3",
+    isComplete: true}]
+
+
+describe("tests that the task is being located correctly", () => {
+    it("gets the correct index of the task", () => {
+        expect(getIndexOfTask(tasks, tasks[0])).toBe(0)
+    })
+})
+
+describe("tests that we can get specifically only the uncompleted tasks", () => {
+    it("gets the uncompleted tasks only", () => {
+        expect(getUncompletedTasks(tasks).length).toBe(2)
+    })
+})
+
 
 describe("tests that we can show the tasks by course name", () => {
     document.body.innerHTML = "<div id = 'modal-title'>test</div>"
@@ -179,6 +190,7 @@ let courses = [
         Course_ID: "Test Course ID 3",
     }]
 
+/*
 describe("test for updateCoursesModal()", () => {
     document.body.innerHTML = "<div id = 'course-modal-title'>test</div>"
         + '<div id = "course-modal-ID">test</div>'
@@ -193,7 +205,7 @@ describe("test for updateCoursesModal()", () => {
         updateCoursesModal(courses[0], courseTitle, courseID)
         expect(courseID.innerHTML).toBe("Test Course ID 1")
     })
-})
+})*/
 
 describe("courses should show", () => {
     it("renders correctly", () => {

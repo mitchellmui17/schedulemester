@@ -7,7 +7,6 @@
 
 .child {
     display: inline-block;
-    height: 100%;
 }
 
 /**/
@@ -23,26 +22,26 @@ h5 {
 
 /* Priority Shapes */
 .priorityHigh {
-    border: solid 10px red;
+    border: solid 2px white;
     background-color: red;
     height:65px;
-    width:10px;
+    width:30px;
     box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 
 .priorityMid {
-    border: solid 10px yellow;
+    border: solid 2px white;
     background-color: yellow;
     height:65px;
-    width:10px;
+    width:30px;
     box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 
 .priorityLow {
-    border: solid 10px green;
+    border: solid 2px white;
     background-color: green;
     height:65px;
-    width:10px;
+    width:30px;
     box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 /**/
@@ -64,6 +63,7 @@ td {
     font-size: 14pt !important;
     font-weight: bold !important;
     transition: 800ms;
+    border: solid 2px white;
     box-shadow: 0 2px 10px 2px rgba(0,0,0,.14), 0 6px 5px 5px rgba(0,0,0,.12), 0 8px 3px -5px rgba(0,0,0,.2);
 }
 
@@ -74,7 +74,12 @@ td {
 
 #tasks-table {
     margin-top: 5%;
-    margin-left: 10%;
+    margin-left: 5%;
+}
+
+#complete-task, #remove-task {
+    width:  120px;
+    height: 32.5px;
 }
 
 #course-modal {
@@ -85,20 +90,12 @@ td {
     padding: 2%;
     margin-top: 30%;
     width: 1000px;
-    /*
-    width:400px;
-    margin-left: auto;
-    margin-right: auto; */
 }
 
 /* BAR GRAPH */
 #bar-table {
     margin-top: 5%;
     margin-right: 10%;
-    /*
-    margin-left: auto;
-    margin-right: auto; 
-    */
 }
 /**/
 
