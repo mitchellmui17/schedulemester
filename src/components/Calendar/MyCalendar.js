@@ -122,7 +122,7 @@ export default function MyCalendar() {
   }
 
   return (
-    <div>
+    <div style = {{backgroundImage: `url(${background})`}}>
       <div>
         <Calendar
           views={['month', 'agenda']}
