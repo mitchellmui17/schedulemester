@@ -49,19 +49,6 @@ export const Event_List = (EventName) => {
   return (list)
 }
 
-export const printEventsTable = (EventName) => {
-  let eventlength = EventName
-  let list = []
-  for (let z = 0; z < eventlength.length; z++){
-    list.push(
-      <div>          
-        Event - {eventlength[z].Title} Description - {eventlength[z].Description} Start {moment.unix(eventlength[z].Start.seconds).format('MMMM Do YYYY, h:mm:ss a')} End {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')}
-      </div>
-    )
-  }
-  return (<tbody>{list}</tbody>)
-}
-
 export const closeModal = (modalId) => {
   let modal = document.getElementById(modalId);
   modal.style.display = "none" 
@@ -81,11 +68,6 @@ export const updateEventModal = (event, eventTitle, eventDescription) => {
 export default function MyCalendar() {
 
   const [ allTitle, setTitle ] = useState([])
-	const [ allDescription, setDescription ] = useState([])
-	const [ allProgress, setProgress ] = useState([])
-  const [ allStart, setStart ] = useState([])
-  const [ allEnd, setEnd ] = useState([])
-  const [ allPriority, setPriority ] = useState([])
   const { currentUser } = useAuth()
   const [error, setError] = useState("")
   const localizer = momentLocalizer(moment);
@@ -130,7 +112,7 @@ export default function MyCalendar() {
                     Title: TitleRef.current.value,
                     Description: DescriptionRef.current.value,
                     Priority: PriorityRef.current.value,
-                    Progress: ProgressRef.current.value,
+                    Progress: false,
                     Start: StartRef.current.value,
                     End: EndRef.current.value
                     }
@@ -152,15 +134,8 @@ export default function MyCalendar() {
   return (
     <div>
       <div>
-        <thead>
-          <tr>
-            <th><h5>Events</h5></th>
-          </tr>
-        </thead>
-        {printEventsTable(allTitle)}
-      </div>
-      <div>
         <Calendar
+          views={['month', 'agenda']}
           localizer={localizer}
           events={Event_List(allTitle)}
           defaultView="month"
@@ -169,7 +144,6 @@ export default function MyCalendar() {
         />
       </div>
       <div id = 'modal-content'>
-        <span onClick = { () => closeModal("add-course-modal") } id='modal-close' className="close">&times;</span>
         <Card>
           <Card.Body>
               <h2 className = "text-center mb-4">Add Event</h2>
@@ -186,10 +160,6 @@ export default function MyCalendar() {
                 <Form.Group id = "examsGrade">
                     <Form.Label>Priority</Form.Label>
                     <Form.Control type = "number" ref={PriorityRef} required/>                 
-                </Form.Group>
-                <Form.Group id = "homeworksGrade">
-                    <Form.Label>Progress</Form.Label>
-                    <Form.Control type = "number" ref={ProgressRef} required/>                 
                 </Form.Group>
                 <Form.Group id = "projectsGrade">
                     <Form.Label>Start of Event</Form.Label>
