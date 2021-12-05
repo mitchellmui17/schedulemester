@@ -37,7 +37,10 @@ export const printEventsTable = (EventName) => {
   for (let z = 0; z < eventlength.length; z++){
       list.push(
         <div>          
-          Event - {eventlength[z].Title} Description - {eventlength[z].Description} Start {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')} End {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')}
+         <p>  Event Title: {eventlength[z].Title}  </p>
+         <p>  Description: {eventlength[z].Description} </p>
+         <p>  Start: {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')} </p>
+         <p>  End: {moment.unix(eventlength[z].End.seconds).format('MMMM Do YYYY, h:mm:ss a')} </p>
         </div>
       )
   }
@@ -73,8 +76,6 @@ export default function MyCalendar() {
   const localizer = momentLocalizer(moment);
 
 
-  
-
   const getData = async() =>{
     await db.getCollection("Events").get().then(snapshot => {
       const tempEventName= [];
@@ -93,6 +94,8 @@ export default function MyCalendar() {
   useEffect(() =>{
       getData()
   },[])
+
+
 
   return (
     <div>
