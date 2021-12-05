@@ -2,12 +2,12 @@ import React, {useState, useEffect, useRef} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
 import {Button, Card, Form, Alert} from "react-bootstrap"
 import './Profile.css'
-import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
 import firebase from 'firebase/app';
 import {useAuth} from '../../context/AuthContext'
 import { useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
+
 
 export const db = Fire.db;
 export const closeModal = (modalId) => {
@@ -200,6 +200,10 @@ export default function Profile() {
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
     const [tasks, setTasks] = useState([]) /* istanbul ignore next */
     const history = useHistory();
+    const {updateProfilePicture } = useAuth();
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [file, setFile] = useState(null);
+    const [ success, setSuccess] = useState("");
 
     //consts here are for submission form to add courses to current users' document in Course collection.
     /* istanbul ignore next */
@@ -216,6 +220,7 @@ export default function Profile() {
             setName(doc.data().name);
             setMajor(doc.data().major);
             setSemester(doc.data().semester);   
+
         }
         else {
             return;
@@ -298,18 +303,64 @@ export default function Profile() {
         setLoading(false)
     }
 
+
+    const handleChange = e => {
+        if (e.target.files[0]) {
+            setFile(e.target.files[0]);
+            setProfilePicture(URL.createObjectURL(e.target.files[0]));
+        }
+    }
+
+    const handleUpload = () => {
+        console.log(file);
+        if (file === null) {
+            setError("No file selected");
+        } else {
+            firebase.storage().ref('users/' + currentUser.uid + '/profile.jpg').put(file).then(function () {
+                console.log('successfully uploaded to firebase');
+                updateProfilePicture('users/' + currentUser.uid + '/profile.jpg');
+                setError("");
+            })
+        }
+    }
+
+    useEffect(() => {
+        //load avatar from storage
+        if (currentUser.photoURL) {
+            firebase.storage().ref('users/' + currentUser.uid + '/profile.jpg').getDownloadURL().then(url => {
+                setProfilePicture(url);
+            })
+        } else {
+            return;
+        }
+
+
+    }, [currentUser.photoURL, currentUser.uid]) // loadProfilePicture
+
+
     return(
         <div className="profile-page font-style-Alice">
             <div className="main main-raised">
                 <div className="profile-content">
                         <div className="profile">
-                            <img src={picture} id = 'pic' className="rounded-circle"/>
+                        <img
+                                    id="output"
+                                    src={profilePicture || "https://icon-library.com/images/cool-anime-icon/cool-anime-icon-9.jpg"}
+                                    className="rounded-circle"
+                                    width="200px"
+                                    height="150px"
+                                    alt="profilePic"
+                                />
+            
                             <div className="description">
                                 <h3 id="name">{name}</h3>
                                 <h5>Major: {major}</h5>
                                 <h5>Semester: {semester}</h5>
+
                                 {currentUser !== null?
                                 <div> 
+                                    <input type="file" accept="image/*" onChange={handleChange} />
+                                    <Button className="btn-primary btn-outline-light" onClick={handleUpload}>Update Profile Picture</Button>
                                     <Button onClick={handleLogout} className="btn-primary btn-outline-light">
                                         Log Out
                                     </Button>

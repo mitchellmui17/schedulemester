@@ -39,7 +39,7 @@ export default function SignUp() {
                     Homeworks: 0,
                     Projects: 0,
                     Participation: 0
-
+                    
                     }).then(function() {// went through
                         console.log("Document successfully written!");
                         
