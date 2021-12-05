@@ -256,8 +256,6 @@ export default function Profile() {
         setLoading(false)
     }
 
-<<<<<<< Updated upstream
-=======
     const handleChange = e => {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
@@ -291,7 +289,6 @@ export default function Profile() {
 
     }, [currentUser.photoURL, currentUser.uid]) // loadProfilePicture
 
->>>>>>> Stashed changes
 
     return(
         <div className="profile-page font-style-Alice">
