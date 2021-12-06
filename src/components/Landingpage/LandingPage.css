@@ -58,8 +58,7 @@ position: absolute;
 top: 72%; 
 left: 96px;
 width: 44.5%;
-min-height: 80vh;
-
+min-height: 60vh;
 box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
 
 }
@@ -70,6 +69,6 @@ position: absolute;
 top: 72%;
 left: 50.75%;
 width: 44.45%;
-min-height: 80vh;
+min-height: 60vh;
 box-shadow: 0 0 0 10px hsl(188, 67.3%, 71.2%);
 }

@@ -51,7 +51,7 @@ export default function SignUp() {
                     .catch(function(error) { //broke down somewhere
                         console.error("Error writing document: ", error);
                     });
-            history.push('/Home');
+            history.push('/Login');
         } catch(error){
             console.log(error)
         
