@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import about from "../../assets/images/about.jpg"
 import "./../../assets/fonts/font.css"
-import background from "../../assets/images/wallhaven-0prd9n.jpg"
+import background from "../../assets/images/wallhaven-0qpr1q.png"
+import './ContactUs.css'
 
 class ContactUs extends Component{
         render() {
@@ -10,8 +11,8 @@ class ContactUs extends Component{
                     {/* <div className="left-half">
                         <img className="image_time" src={about} alt="about"/>
                     </div> */}
-                    <div className="right-half">
-                        <article style = {{textAlign: "justify", margin: 70}}>
+                    <div>
+                        <article className="text-style" style = {{textAlign: "justify", margin: 70}}>
                             <h1>About Us</h1>
                             <p>Tracker (Murad) is keeping track of everyone progress status, and the documenting how the way how they measure and track.</p>
                             <p>Unit Tester (Daniel) is writing unit testing for the application and tutorial on how to use the unit testing.</p>

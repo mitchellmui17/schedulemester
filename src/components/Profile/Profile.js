@@ -340,7 +340,7 @@ export default function Profile() {
 
 
     return(
-        <div className="profile-page font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
+        <div className="profile-page font-style-Alice backgroundsize" style = {{backgroundImage: `url(${background})`}}>
             <div className="main main-raised">
                 <div className="profile-content">
                         <div className="profile">
@@ -379,7 +379,7 @@ export default function Profile() {
                         </tr>
                     </thead>
                     {printCoursesTable(tasks, courseName)}
-                    <button onClick={ () => openModal("add-course-modal") }>Add a course</button>
+                    <button onClick={ () => openModal("add-course-modal") } className="buttonsize">Add a course</button>
                 </table>
             </div>
             

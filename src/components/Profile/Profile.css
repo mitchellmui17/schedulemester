@@ -204,3 +204,11 @@ td {
   background-color: #6dcedd !important;
   border-color: #6dcedd !important;
 }
+
+.backgroundsize{
+    min-height:1300px;
+}
+
+.buttonsize{
+    max-width: 150px;
+}
