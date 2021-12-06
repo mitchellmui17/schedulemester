@@ -193,7 +193,7 @@ export default function MyCalendar() {
   }
 
   return (
-    <div style = {{backgroundImage: `url(${background})`}}>
+    <div className="backgroundsize_calendar" style = {{backgroundImage: `url(${background})`}}>
       <div class = "left-half">
         <Calendar
           views={['month', 'agenda']}

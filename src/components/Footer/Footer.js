@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import "./Footer.css"
-import background from "../../assets/images/wallhaven-0prd9n.jpg"
+import background from "../../assets/images/wallhaven-0prd9n-trim.png"
 
 function Footer(){
     return (
