@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react'
 import logo from "../../assets/images/ScheduleMester-logo/default.png"
-import background from "../../assets/images/wallhaven-nkexld-2.png"
+import background from "../../assets/images/wallhaven-0jp1j5_trim2.png"
 import {Link} from 'react-router-dom'
 import {useAuth} from "../../context/AuthContext"
 import Fire from "../../firebase"

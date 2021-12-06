@@ -7,6 +7,7 @@ import firebase from 'firebase/app';
 import {useAuth} from '../../context/AuthContext'
 import { useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
+import background from "../../assets/images/wallhaven-0prd9n.jpg"
 
 
 export const db = Fire.db;
@@ -339,7 +340,7 @@ export default function Profile() {
 
 
     return(
-        <div className="profile-page font-style-Alice">
+        <div className="profile-page font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
             <div className="main main-raised">
                 <div className="profile-content">
                         <div className="profile">

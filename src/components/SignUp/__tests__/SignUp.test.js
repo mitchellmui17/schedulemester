@@ -1,18 +1,17 @@
-import {render, screen, fireEvent} from '@testing-library/react';
-import toBeDisabled from '@testing-library/jest-dom'
+import {render, screen, cleanup} from '@testing-library/react';
 import React from 'react';
-import SignUp from "../SignUp.js";
-import ReactDOM from 'react-dom';
+import {SignUpButton} from "../SignUp.js";
+import 'regenerator-runtime/runtime'
+import "@testing-library/jest-dom/extend-expect";
 
-jest.mock('../SignUp', () =>{
-    const signup = 'placeholder';
-})
 
-describe("Tests for Frontend", () =>{
-    test("renders without crashing", () =>{
-        const root = document.createElement("div");
-        render(SignUp, root);
-        
-    })
+
+describe("Test for SignUp", ()=>{
+    afterEach(cleanup);
+    test("button render", ()=> {
+        render(<SignUpButton/>)
+        expect(screen.getByTestId('btn-test')).toHaveTextContent('Sign Up');
+
+    });
 
 })
