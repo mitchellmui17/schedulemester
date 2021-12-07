@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom"
 
 export const db = Fire.db;
 
+/* istanbul ignore next */
 export const formatDate = (date_time) => {
   var timestamp = date_time;
   var date = new Date(timestamp.seconds * 1000);
@@ -25,6 +26,7 @@ export const formatDate = (date_time) => {
   return (year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds)
 }
 
+/* istanbul ignore next */
 export const Event_List = (EventName, TaskName) => {
   let eventlength = EventName
   let Tasklength = TaskName
@@ -65,7 +67,7 @@ export const updateEventModal = (event, eventTitle, eventDescription) => {
   eventDescription.innerHTML = event.Description
   openModal("course-modal")
 }
-
+/* istanbul ignore next */
 export default function MyCalendar() {
 
   const [ allEventTitle, setEventTitle ] = useState([])
@@ -89,6 +91,7 @@ export default function MyCalendar() {
   const CourseTRef = useRef();
   const EndTRef = useRef();
 
+  /* istanbul ignore next */
   const getEventData = async() =>{
     await db.getCollection("Events").get().then(snapshot => {
       const tempEventName= [];
@@ -109,7 +112,7 @@ export default function MyCalendar() {
     getEventData()
   },[])
 
-
+  /* istanbul ignore next */
   const getCourseID = async() =>{
     await db.getCollection("Course").get().then(snapshot =>{
       const tempCourseId = [];
@@ -134,7 +137,7 @@ export default function MyCalendar() {
   useEffect(() =>{
     getCourseID()
   },[])
-
+  /* istanbul ignore next */
   const printOptions = (listCourseId) =>{
     listCourseId.map(list =>(
       <option key = {list} value = {list}>
@@ -143,6 +146,7 @@ export default function MyCalendar() {
     ))
 
   }
+  /* istanbul ignore next */
   const getTasksData = async() =>{
     await db.getCollection("Tasks").get().then(snapshot => {
       const tempTaskName= [];
@@ -163,7 +167,7 @@ export default function MyCalendar() {
   useEffect(() =>{
     getTasksData()
   },[])
-
+  /* istanbul ignore next */
   async function handleSubmitEvent(e){
     e.preventDefault()
     try {
@@ -194,7 +198,7 @@ export default function MyCalendar() {
     }
     setLoading(false)
   }
-
+  /* istanbul ignore next */
   async function handleSubmitTask(e){
     e.preventDefault()
     try {
