@@ -167,6 +167,7 @@ export const getCompletedTasks = (tasks) => {
 }
 
 export const uncompletedTasksData = (tasks) => {
+    if(tasks != undefined){
     let arr = getUncompletedTasks(tasks);
     var shortMonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format;
 
@@ -184,8 +185,10 @@ export const uncompletedTasksData = (tasks) => {
     console.log(uncomTasksData)
     return uncomTasksData;   
 }
+}
 
 export const completedTasksData = (tasks) => {
+    if(tasks != undefined){
     let arr2 = getCompletedTasks(tasks);
     var shortMonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format;
 
@@ -203,8 +206,10 @@ export const completedTasksData = (tasks) => {
     console.log(comTasksData)
     return comTasksData;
 }
+}
 
 export const graphDATA = (tasks) => {
+    if(tasks != undefined){
     let uTasksData = uncompletedTasksData(tasks);
     let cTasksData = completedTasksData(tasks);
     let chartdata = [
@@ -225,6 +230,7 @@ export const graphDATA = (tasks) => {
     //let storeagedata = []
     //console.log(storeagedata)
     return chartdata
+}
 }
 
 // elems is an array of the elements: title, desc, date, and tbody
