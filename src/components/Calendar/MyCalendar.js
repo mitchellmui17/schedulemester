@@ -268,7 +268,7 @@ export default function MyCalendar() {
                     <Form.Control type = "datetime-local" ref={EndERef} required/>                 
                   </Form.Group>
                   <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
-                    Add Course
+                    Add Event
                   </Button>
                 </form>
               </Card.Body>
@@ -309,7 +309,7 @@ export default function MyCalendar() {
                     <Form.Control type = "datetime-local" ref={EndTRef} required/>                 
                   </Form.Group>
                   <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
-                    Add Course
+                    Add Task
                   </Button>
                 </form>
               </Card.Body>
