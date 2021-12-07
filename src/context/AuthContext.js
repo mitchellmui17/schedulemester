@@ -36,9 +36,6 @@ export function AuthProvider({children}){
 
     function updateProfilePicture(profilePicture) {
         currentUser.updateProfile({ photoURL: profilePicture });
-        firebase.database().ref('users/').child(currentUser.uid).update({
-            "photoURL": profilePicture
-        });
         console.log("Photo in Database uploaded " + currentUser.photoURL);
     }
 
