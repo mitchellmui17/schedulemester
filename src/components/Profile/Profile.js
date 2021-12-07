@@ -275,10 +275,10 @@ export default function Profile() {
     const [courseName, setCourseName] = useState(""); /* istanbul ignore next */
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
     const [tasks, setTasks] = useState([]) /* istanbul ignore next */
-    const history = useHistory();
-    const {updateProfilePicture } = useAuth();
-    const [profilePicture, setProfilePicture] = useState(null);
-    const [file, setFile] = useState(null);
+    const history = useHistory(); /* istanbul ignore next */
+    const {updateProfilePicture } = useAuth(); /* istanbul ignore next */ 
+    const [profilePicture, setProfilePicture] = useState(null); /* istanbul ignore next */
+    const [file, setFile] = useState(null); /* istanbul ignore next */
     const [ success, setSuccess] = useState("");
 
     //consts here are for submission form to add courses to current users' document in Course collection.
@@ -296,7 +296,6 @@ export default function Profile() {
             setName(doc.data().name);
             setMajor(doc.data().major);
             setSemester(doc.data().semester);   
-
         }
         else {
             return;
@@ -380,6 +379,7 @@ export default function Profile() {
     }
 
 
+    /* istanbul ignore next */
     const handleChange = e => {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
@@ -387,6 +387,7 @@ export default function Profile() {
         }
     }
 
+    /* istanbul ignore next */
     const handleUpload = () => {
         console.log(file);
         if (file === null) {
@@ -400,6 +401,7 @@ export default function Profile() {
         }
     }
 
+    /* istanbul ignore next */
     useEffect(() => {
         //load avatar from storage
         if (currentUser.photoURL) {
