@@ -2,12 +2,13 @@ import React, {useState, useEffect, useRef} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
 import {Button, Card, Form, Alert} from "react-bootstrap"
 import './Profile.css'
-import picture from './../../assets/profile/default_profile_pic.jpg'
 import Fire from '../../firebase'
 import firebase from 'firebase/app';
 import {useAuth} from '../../context/AuthContext'
 import { useHistory } from "react-router-dom"
 import "./../../assets/fonts/font.css"
+import background from "../../assets/images/wallhaven-0prd9n.jpg"
+
 
 export const db = Fire.db;
 export const closeModal = (modalId) => {
@@ -99,19 +100,22 @@ const deleteTask = (email, task) => {
 
 export const showTasks = (tasks, email) => {
     let arr = getTasksByHighestPriority(tasks)
-    let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date")]
-    let jsx = []
-    for (let i = 0; i < arr.length; i++) {
-        jsx.push(
-            <tr key = {"tr"+i}>
-                <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
-                onClick = { () => updateModal(arr[i], elems)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
-                <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
-                <td><button className='task-btn' onClick = {() => markTaskAsComplete(email, arr[i])} id='complete-task'>Complete</button> <br/> 
-                <button className='task-btn' onClick = {() => deleteTask(email, arr[i])} id='remove-task'>Delete</button></td>
-            </tr> )
+    if(arr != undefined){
+        let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date")]
+        let jsx = []
+        for (let i = 0; i < arr.length; i++) {
+            jsx.push(
+                <tr key = {"tr"+i}>
+                    <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
+                    onClick = { () => updateModal(arr[i], elems)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
+                    <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
+                    <td><button className='task-btn' onClick = {() => markTaskAsComplete(email, arr[i])} id='complete-task'>Complete</button> <br/> 
+                    <button className='task-btn' onClick = {() => deleteTask(email, arr[i])} id='remove-task'>Delete</button></td>
+                </tr> )
+        }
+        return (<tbody>{jsx}</tbody>)
     }
-    return (<tbody>{jsx}</tbody>)
+    return
 }
 
 export const printCoursesTable = (tasks, courseName) => {
@@ -133,10 +137,13 @@ export const printCoursesTable = (tasks, courseName) => {
 
 export const getTasksByHighestPriority = (tasks) => {
     let arr = []
-    for (let i = 0; i < tasks.length; i++) arr.push(tasks[i])
-    return arr.sort( (a, b) => {
-        return b.Priority - a.Priority
-    })
+    if(tasks != undefined){
+        for (let i = 0; i < tasks.length; i++) arr.push(tasks[i])
+        return arr.sort( (a, b) => {
+            return b.Priority - a.Priority
+        })
+    }
+    return
 }
 
 export const getTasksByCourse = (tasks, course) => {
@@ -150,9 +157,11 @@ export const getTasksByCourse = (tasks, course) => {
 
 export const getUncompletedTasks = (tasks) => {
     let arr = []
+    if(tasks != undefined){
     for (let i = 0; i < tasks.length; i++) 
         if (!tasks[i].isComplete) arr.push(tasks[i])
     return arr
+    }
 }
 
 // elems is an array of the elements: title, desc, date, and tbody
@@ -200,6 +209,10 @@ export default function Profile() {
     const {currentUser, logout} = useAuth(); /* istanbul ignore next */
     const [tasks, setTasks] = useState([]) /* istanbul ignore next */
     const history = useHistory();
+    const {updateProfilePicture } = useAuth();
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [file, setFile] = useState(null);
+    const [ success, setSuccess] = useState("");
 
     //consts here are for submission form to add courses to current users' document in Course collection.
     /* istanbul ignore next */
@@ -216,6 +229,7 @@ export default function Profile() {
             setName(doc.data().name);
             setMajor(doc.data().major);
             setSemester(doc.data().semester);   
+
         }
         else {
             return;
@@ -298,18 +312,64 @@ export default function Profile() {
         setLoading(false)
     }
 
+
+    const handleChange = e => {
+        if (e.target.files[0]) {
+            setFile(e.target.files[0]);
+            setProfilePicture(URL.createObjectURL(e.target.files[0]));
+        }
+    }
+
+    const handleUpload = () => {
+        console.log(file);
+        if (file === null) {
+            setError("No file selected");
+        } else {
+            firebase.storage().ref('users/' + currentUser.uid + '/profile.jpg').put(file).then(function () {
+                console.log('successfully uploaded to firebase');
+                updateProfilePicture('users/' + currentUser.uid + '/profile.jpg');
+                setError("");
+            })
+        }
+    }
+
+    useEffect(() => {
+        //load avatar from storage
+        if (currentUser.photoURL) {
+            firebase.storage().ref('users/' + currentUser.uid + '/profile.jpg').getDownloadURL().then(url => {
+                setProfilePicture(url);
+            })
+        } else {
+            return;
+        }
+
+
+    }, [currentUser.photoURL, currentUser.uid]) // loadProfilePicture
+
+
     return(
-        <div className="profile-page font-style-Alice">
+        <div className="profile-page font-style-Alice backgroundsize" style = {{backgroundImage: `url(${background})`}}>
             <div className="main main-raised">
                 <div className="profile-content">
                         <div className="profile">
-                            <img src={picture} id = 'pic' className="rounded-circle"/>
+                        <img
+                                    id="output"
+                                    src={profilePicture || "https://icon-library.com/images/cool-anime-icon/cool-anime-icon-9.jpg"}
+                                    className="rounded-circle"
+                                    width="200px"
+                                    height="150px"
+                                    alt="profilePic"
+                                />
+            
                             <div className="description">
                                 <h3 id="name">{name}</h3>
                                 <h5>Major: {major}</h5>
                                 <h5>Semester: {semester}</h5>
+
                                 {currentUser !== null?
                                 <div> 
+                                    <input type="file" accept="image/*" onChange={handleChange} />
+                                    <Button className="btn-primary btn-outline-light" onClick={handleUpload}>Update Profile Picture</Button>
                                     <Button onClick={handleLogout} className="btn-primary btn-outline-light">
                                         Log Out
                                     </Button>
@@ -327,7 +387,7 @@ export default function Profile() {
                         </tr>
                     </thead>
                     {printCoursesTable(tasks, courseName)}
-                    <button onClick={ () => openModal("add-course-modal") }>Add a course</button>
+                    <button onClick={ () => openModal("add-course-modal") } className="buttonsize">Add a course</button>
                 </table>
             </div>
             

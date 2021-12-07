@@ -7,16 +7,21 @@ import {Link, useHistory} from 'react-router-dom'
 import "./SignUp.css"
 import background from '../../assets/images/wallhaven-nme3w9.png';
 
+export const SignUpButton = () => (
+    <Button data-testid="btn-test"  className = "button-test w-100" type = "submit" >Sign Up</Button>
+  );
+  
 export default function SignUp() {
 
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
+    const majorRef = useRef();
     const nameRef = useRef();
-    const userRef = useRef();
+    const semesterRef = useRef();
     const {signup} = useAuth();
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false)
+   // const [loading, setLoading] = useState(false)
     const history = useHistory();
     let db = Fire.db;
 
@@ -25,34 +30,59 @@ export default function SignUp() {
         if(passwordRef.current.value !== passwordConfirmRef.current.value){
             return setError('Passwords do not match')
         }
+        
 
         try{
             setError('')
-            setLoading(true) //prevents users from creating multiple accounts on submit
+           // setLoading(true) //prevents users from creating multiple accounts on submit
             await signup(emailRef.current.value, passwordRef.current.value)
                 db.getCollection('Users').doc(emailRef.current.value).set({
-                    username: userRef.current.value,
                     password: passwordRef.current.value,
                     name: nameRef.current.value,
                     email: emailRef.current.value,
-                    Grades: 0,
-                    Homeworks: 0,
-                    Projects: 0,
-                    Participation: 0
-
+                    major: majorRef.current.value,
+                    semester: semesterRef.current.value
+  
+                    
                     }).then(function() {// went through
-                        console.log("Document successfully written!");
+                        console.log("Document successfully written for Users collection!");
                         
                     })
                     .catch(function(error) { //broke down somewhere
-                        console.error("Error writing document: ", error);
+                        console.error("Error writing document for Users collection!: ", error);
                     });
-            history.push('/Home');
+
+                db.getCollection('Tasks').doc(emailRef.current.value).set({      
+                    }).then(function() {// went through
+                        console.log("Document successfully written for Tasks collection!");
+                        
+                    })
+                    .catch(function(error) { //broke down somewhere
+                        console.error("Error writing document for Tasks collection!: ", error);
+                    });
+                db.getCollection('Course').doc(emailRef.current.value).set({      
+                }).then(function() {// went through
+                    console.log("Document successfully written for Course collection!");
+                    
+                })
+                .catch(function(error) { //broke down somewhere
+                    console.error("Error writing document for Course collection!: ", error);
+                });
+                db.getCollection('Events').doc(emailRef.current.value).set({      
+                }).then(function() {// went through
+                    console.log("Document successfully written for Events collection!");
+                    
+                })
+                .catch(function(error) { //broke down somewhere
+                    console.error("Error writing document for Events collection!: ", error);
+                });
+                
+            history.push('/Profile');
         } catch(error){
             console.log(error)
         
         }
-        setLoading(false)
+        //setLoading(false)
 
        
     }
@@ -70,10 +100,6 @@ export default function SignUp() {
                             <Form.Label>Email</Form.Label>
                             <Form.Control type = "email" ref={emailRef} required/>                 
                         </Form.Group>
-                        <Form.Group id = "user">
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control type = "text" ref={userRef} required/>                 
-                        </Form.Group>
                         <Form.Group id = "Name">
                             <Form.Label>Full Name</Form.Label>
                             <Form.Control type = "text" ref={nameRef} required/>                 
@@ -86,13 +112,15 @@ export default function SignUp() {
                             <Form.Label>Password Confirmation</Form.Label>
                             <Form.Control type = "password" ref={passwordConfirmRef} required/>                 
                         </Form.Group>
-                        {/* <Form.Group id = "name-confirm">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type = "text" ref={nameRef} required/>                 
-                        </Form.Group> */}
-                        <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
-                            Sign Up
-                        </Button>
+                        <Form.Group id = "Major">
+                            <Form.Label>Major</Form.Label>
+                            <Form.Control type = "text" ref={majorRef} required/>                 
+                        </Form.Group>
+                        <Form.Group id = "Semester ">
+                            <Form.Label>Current Semester</Form.Label>
+                            <Form.Control type = "text" ref={semesterRef} required/>                 
+                        </Form.Group>
+                        {SignUpButton()}
                         <div className="w-100 text-center mt-2">
                             <Link className="links" to='/Login'>》Login Here《</Link>
                         </div>
