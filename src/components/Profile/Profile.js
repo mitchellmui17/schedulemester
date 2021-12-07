@@ -100,19 +100,22 @@ const deleteTask = (email, task) => {
 
 export const showTasks = (tasks, email) => {
     let arr = getTasksByHighestPriority(tasks)
-    let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date")]
-    let jsx = []
-    for (let i = 0; i < arr.length; i++) {
-        jsx.push(
-            <tr key = {"tr"+i}>
-                <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
-                onClick = { () => updateModal(arr[i], elems)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
-                <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
-                <td><button className='task-btn' onClick = {() => markTaskAsComplete(email, arr[i])} id='complete-task'>Complete</button> <br/> 
-                <button className='task-btn' onClick = {() => deleteTask(email, arr[i])} id='remove-task'>Delete</button></td>
-            </tr> )
+    if(arr != undefined){
+        let elems = [document.getElementById("modal-title"), document.getElementById("modal-description"), document.getElementById("modal-date")]
+        let jsx = []
+        for (let i = 0; i < arr.length; i++) {
+            jsx.push(
+                <tr key = {"tr"+i}>
+                    <td> <button key = {"btn"+i} value = {i} className = 'task-btn' 
+                    onClick = { () => updateModal(arr[i], elems)}> {arr[i].Title }<br/>({arr[i].Course}) </button> </td>
+                    <td> <div key = {"div"+i} className = {evaluatePriority(arr[i].Priority)}> </div> </td>
+                    <td><button className='task-btn' onClick = {() => markTaskAsComplete(email, arr[i])} id='complete-task'>Complete</button> <br/> 
+                    <button className='task-btn' onClick = {() => deleteTask(email, arr[i])} id='remove-task'>Delete</button></td>
+                </tr> )
+        }
+        return (<tbody>{jsx}</tbody>)
     }
-    return (<tbody>{jsx}</tbody>)
+    return
 }
 
 export const printCoursesTable = (tasks, courseName) => {
@@ -134,10 +137,13 @@ export const printCoursesTable = (tasks, courseName) => {
 
 export const getTasksByHighestPriority = (tasks) => {
     let arr = []
-    for (let i = 0; i < tasks.length; i++) arr.push(tasks[i])
-    return arr.sort( (a, b) => {
-        return b.Priority - a.Priority
-    })
+    if(tasks != undefined){
+        for (let i = 0; i < tasks.length; i++) arr.push(tasks[i])
+        return arr.sort( (a, b) => {
+            return b.Priority - a.Priority
+        })
+    }
+    return
 }
 
 export const getTasksByCourse = (tasks, course) => {
@@ -151,9 +157,11 @@ export const getTasksByCourse = (tasks, course) => {
 
 export const getUncompletedTasks = (tasks) => {
     let arr = []
+    if(tasks != undefined){
     for (let i = 0; i < tasks.length; i++) 
         if (!tasks[i].isComplete) arr.push(tasks[i])
     return arr
+    }
 }
 
 // elems is an array of the elements: title, desc, date, and tbody

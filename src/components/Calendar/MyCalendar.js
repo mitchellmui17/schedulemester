@@ -70,6 +70,7 @@ export default function MyCalendar() {
 
   const [ allEventTitle, setEventTitle ] = useState([])
   const [ allTaskTitle, setTaskTitle ] = useState([])
+  const [ listCourseId, setlistCourseId] = useState([])
   const { currentUser } = useAuth()
   const [error, setError] = useState("")
   const localizer = momentLocalizer(moment);
@@ -108,6 +109,40 @@ export default function MyCalendar() {
     getEventData()
   },[])
 
+
+  const getCourseID = async() =>{
+    await db.getCollection("Course").get().then(snapshot =>{
+      const tempCourseId = [];
+      snapshot.forEach(doc =>{
+        const data = doc.data();
+        if(currentUser.email === doc.id){
+          if(data.ListofCourses != undefined){
+            
+            for( let x = 0; x < data.ListofCourses.length; x++){
+              tempCourseId.push(data.ListofCourses[x].Course_id);
+            }
+            setlistCourseId(tempCourseId);
+          }else{
+            setlistCourseId(tempCourseId);
+          }
+          
+
+        }
+      })
+    })
+  }
+  useEffect(() =>{
+    getCourseID()
+  },[])
+
+  const printOptions = (listCourseId) =>{
+    listCourseId.map(list =>(
+      <option key = {list} value = {list}>
+        {list}
+      </option>
+    ))
+
+  }
   const getTasksData = async() =>{
     await db.getCollection("Tasks").get().then(snapshot => {
       const tempTaskName= [];
@@ -248,8 +283,14 @@ export default function MyCalendar() {
                 <h2 className = "text-center mb-4">Add Tasks</h2>
                 <form onSubmit = {handleSubmitTask}>
                 <Form.Group id = "TitleName">
-                    <Form.Label>Course Name</Form.Label>
-                    <Form.Control type = "text" ref={CourseTRef} required/>                 
+                    <Form.Label>Course Name</Form.Label><br/>
+                      <select style = {{marginBottom:"10px", padding:"2%"}} id = "selection" ref = {CourseTRef}>
+                        {listCourseId.map(list => (
+                          <option key ={list} value = {list}>
+                            {list}
+                          </option>
+                        ))}
+                      </select> 
                   </Form.Group>
                   <Form.Group id = "TitleName">
                     <Form.Label>Title Name</Form.Label>
