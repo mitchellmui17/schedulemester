@@ -30,13 +30,6 @@ export const evaluatePriority = (priority) => {
     else return "priorityHigh"        
 }
 
-export const DATA = [
-    { name: 'Sept', 'Task Completed': 7, 'Task Todo': 0 }, //Template data table for graph.
-    { name: 'Oct', 'Task Completed': 5, 'Task Todo': 3 },  //Waiting on making table on firebase to see what 
-    { name: 'Nov', 'Task Completed': 2, 'Task Todo': 8 },  //fields the Courses table. Should have it done
-    { name: 'Dec', 'Task Completed': 0, 'Task Todo': 10 }, //upon next meeting.
-];
-
 export const updateModal = (task, elems) => {
     elems[0].innerHTML = task.Title + " (" + task.Course + ")"
     elems[1].innerHTML = task.Description
@@ -162,6 +155,76 @@ export const getUncompletedTasks = (tasks) => {
         if (!tasks[i].isComplete) arr.push(tasks[i])
     return arr
     }
+}
+
+export const getCompletedTasks = (tasks) => {
+    let arr = []
+    if(tasks != undefined){
+    for (let i = 0; i < tasks.length; i++) 
+        if (tasks[i].isComplete) arr.push(tasks[i])
+    return arr
+    }
+}
+
+export const uncompletedTasksData = (tasks) => {
+    let arr = getUncompletedTasks(tasks);
+    var shortMonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format;
+
+    let unComformatMonths = []
+    for (let z = 0; z < arr.length; z++)
+    {
+        unComformatMonths.push(new Date(arr[z].Date));
+    }
+    //console.log(unformatMonths)
+
+    var uncomTasksData = [];
+    for (let i = 0; i < unComformatMonths.length; i++){
+        uncomTasksData.push(shortMonthName(unComformatMonths[i]))
+    }
+    console.log(uncomTasksData)
+    return uncomTasksData;   
+}
+
+export const completedTasksData = (tasks) => {
+    let arr2 = getCompletedTasks(tasks);
+    var shortMonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format;
+
+    let unformatMonths = []
+    for (let z = 0; z < arr2.length; z++)
+    {
+        unformatMonths.push(new Date(arr2[z].Date));
+    }
+    //console.log(unformatMonths)
+
+    var comTasksData = [];
+    for (let i = 0; i < unformatMonths.length; i++){
+        comTasksData.push(shortMonthName(unformatMonths[i]))
+    }
+    console.log(comTasksData)
+    return comTasksData;
+}
+
+export const graphDATA = (tasks) => {
+    let uTasksData = uncompletedTasksData(tasks);
+    let cTasksData = completedTasksData(tasks);
+    let chartdata = [
+        { name: 'Jan', 'Task Completed': cTasksData.filter(x => x === "Jan").length, 'Task Todo': uTasksData.filter(x => x === "Jan").length },
+        { name: 'Feb', 'Task Completed': cTasksData.filter(x => x === "Feb").length, 'Task Todo': uTasksData.filter(x => x === "Feb").length },
+        { name: 'Mar', 'Task Completed': cTasksData.filter(x => x === "Mar").length, 'Task Todo': uTasksData.filter(x => x === "Mar").length },
+        { name: 'Apr', 'Task Completed': cTasksData.filter(x => x === "Apr").length, 'Task Todo': uTasksData.filter(x => x === "Apr").length },
+        { name: 'May', 'Task Completed': cTasksData.filter(x => x === "May").length, 'Task Todo': uTasksData.filter(x => x === "May").length },
+        { name: 'Jun', 'Task Completed': cTasksData.filter(x => x === "Jun").length, 'Task Todo': uTasksData.filter(x => x === "Jun").length },
+        { name: 'Jul', 'Task Completed': cTasksData.filter(x => x === "Jul").length, 'Task Todo': uTasksData.filter(x => x === "Jul").length },
+        { name: 'Aug', 'Task Completed': cTasksData.filter(x => x === "Aug").length, 'Task Todo': uTasksData.filter(x => x === "Aug").length },
+        { name: 'Sept', 'Task Completed': cTasksData.filter(x => x === "Sept").length, 'Task Todo': uTasksData.filter(x => x === "Sept").length }, //Template data table for graph.
+        { name: 'Oct', 'Task Completed': cTasksData.filter(x => x === "Oct").length, 'Task Todo': uTasksData.filter(x => x === "Oct").length },  //Waiting on making table on firebase to see what 
+        { name: 'Nov', 'Task Completed': cTasksData.filter(x => x === "Nov").length, 'Task Todo': uTasksData.filter(x => x === "Nov").length },  //fields the Courses table. Should have it done
+        { name: 'Dec', 'Task Completed': cTasksData.filter(x => x === "Dec").length, 'Task Todo': uTasksData.filter(x => x === "Dec").length }, //upon next meeting.
+    ]
+    console.log(chartdata)
+    //let storeagedata = []
+    //console.log(storeagedata)
+    return chartdata
 }
 
 // elems is an array of the elements: title, desc, date, and tbody
@@ -399,6 +462,8 @@ export default function Profile() {
                         </tr>
                     </thead>
                     {showTasks(getUncompletedTasks(tasks), currentUser.email)}
+                    {/* {uncompletedTasksData(tasks)}
+                    {completedTasksData(tasks)} */}
                 </table>
                 
                 {/* BAR GRAPH HERE */}
@@ -411,12 +476,12 @@ export default function Profile() {
                     <tbody>
                         <tr>
                             <td>
-                                <BarChart id='bar-graph' className = 'child' width={500} height={500} data={DATA} >
+                                <BarChart id='bar-graph' className = 'child' width={500} height={500} data={graphDATA(tasks)} >
                                     <CartesianGrid />
                                     <XAxis dataKey="name" />
                                     <YAxis />
                                     <Bar dataKey="Task Completed" stackId="a" fill="#8884d8" />
-                                    <Bar dataKey="Task Todo" stackId="a" fill="#82ca9d" />
+                                    <Bar dataKey="Task Todo" stackId="a" fill="#d3d3d3" />
                                     <Tooltip />
                                     <Legend />
                                 </BarChart> 
