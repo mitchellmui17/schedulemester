@@ -9,13 +9,8 @@ import "./../../assets/fonts/font.css"
 import { Navbar } from 'react-bootstrap'
 
 export default function NavigationBar(){
+  /* istanbul ignore next */
   const { currentUser } = useAuth()  
-  let database = Fire.db
-  const [position, setPosition] = useState("");
-
-  // handleClick = () => {
-  //     this.setState({ clicked: !this.state.clicked })
-  // }
 
     return (
 

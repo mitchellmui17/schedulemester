@@ -1,4 +1,4 @@
-/* istanbul ignore file */
+
 import React, {useRef, useState} from 'react'
 import {Card, Form, Button, Container, Alert} from 'react-bootstrap'
 import Fire from '../../firebase'
@@ -10,21 +10,23 @@ import background from '../../assets/images/wallhaven-nme3w9.png';
 export const SignUpButton = () => (
     <Button data-testid="btn-test"  className = "button-test w-100" type = "submit" >Sign Up</Button>
   );
-  
+
+/* istanbul ignore next */
 export default function SignUp() {
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
-    const majorRef = useRef();
-    const nameRef = useRef();
-    const semesterRef = useRef();
-    const {signup} = useAuth();
-    const [error, setError] = useState('');
+    const emailRef = useRef(); /* istanbul ignore next */
+    const passwordRef = useRef(); /* istanbul ignore next */
+    const passwordConfirmRef = useRef();/* istanbul ignore next */
+    const majorRef = useRef();/* istanbul ignore next */
+    const nameRef = useRef();/* istanbul ignore next */
+    const semesterRef = useRef();/* istanbul ignore next */
+    const {signup} = useAuth();/* istanbul ignore next */
+    const [error, setError] = useState('');/* istanbul ignore next */
    // const [loading, setLoading] = useState(false)
-    const history = useHistory();
-    let db = Fire.db;
+    const history = useHistory();/* istanbul ignore next */
+    let db = Fire.db;/* istanbul ignore next */
 
+    /* istanbul ignore next */
     async function handleSubmit(e){
         e.preventDefault()
         if(passwordRef.current.value !== passwordConfirmRef.current.value){
@@ -86,6 +88,7 @@ export default function SignUp() {
 
        
     }
+    /* istanbul ignore next */
     return (
 
         <div className = "font-style-Alice" style = {{backgroundImage: `url(${background})`}}>
