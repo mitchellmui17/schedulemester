@@ -221,14 +221,12 @@ export const graphDATA = (tasks) => {
         { name: 'Jun', 'Task Completed': cTasksData.filter(x => x === "Jun").length, 'Task Todo': uTasksData.filter(x => x === "Jun").length },
         { name: 'Jul', 'Task Completed': cTasksData.filter(x => x === "Jul").length, 'Task Todo': uTasksData.filter(x => x === "Jul").length },
         { name: 'Aug', 'Task Completed': cTasksData.filter(x => x === "Aug").length, 'Task Todo': uTasksData.filter(x => x === "Aug").length },
-        { name: 'Sept', 'Task Completed': cTasksData.filter(x => x === "Sept").length, 'Task Todo': uTasksData.filter(x => x === "Sept").length }, //Template data table for graph.
-        { name: 'Oct', 'Task Completed': cTasksData.filter(x => x === "Oct").length, 'Task Todo': uTasksData.filter(x => x === "Oct").length },  //Waiting on making table on firebase to see what 
-        { name: 'Nov', 'Task Completed': cTasksData.filter(x => x === "Nov").length, 'Task Todo': uTasksData.filter(x => x === "Nov").length },  //fields the Courses table. Should have it done
-        { name: 'Dec', 'Task Completed': cTasksData.filter(x => x === "Dec").length, 'Task Todo': uTasksData.filter(x => x === "Dec").length }, //upon next meeting.
+        { name: 'Sept', 'Task Completed': cTasksData.filter(x => x === "Sept").length, 'Task Todo': uTasksData.filter(x => x === "Sept").length },
+        { name: 'Oct', 'Task Completed': cTasksData.filter(x => x === "Oct").length, 'Task Todo': uTasksData.filter(x => x === "Oct").length },  
+        { name: 'Nov', 'Task Completed': cTasksData.filter(x => x === "Nov").length, 'Task Todo': uTasksData.filter(x => x === "Nov").length },  
+        { name: 'Dec', 'Task Completed': cTasksData.filter(x => x === "Dec").length, 'Task Todo': uTasksData.filter(x => x === "Dec").length }, 
     ]
     console.log(chartdata)
-    //let storeagedata = []
-    //console.log(storeagedata)
     return chartdata
 }
 }
