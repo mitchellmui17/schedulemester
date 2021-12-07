@@ -2,7 +2,8 @@ import {render} from '@testing-library/react';
 import Profile from '../Profile';
 import { closeModal, openModal,  evaluatePriority, updateModal, showTasks,
 getTasksByHighestPriority, getTasksByCourse, showTasksByCourse, createTaskButton, createTaskRow,
-getIndexOfTask, getUncompletedTasks } from '../Profile';
+getIndexOfTask, getUncompletedTasks, getCompletedTasks, uncompletedTasksData, completedTasksData,
+graphDATA } from '../Profile';
 
 let tasks = [{
     Title: "Test Title 1",
@@ -37,6 +38,29 @@ describe("tests that we can get specifically only the uncompleted tasks", () => 
     })
 })
 
+describe("tests that we can get specifically only the completed tasks", () => {
+    it("gets the uncompleted tasks only", () => {
+        expect(getCompletedTasks(tasks).length).toBe(1)
+    })
+})
+
+describe("tests that we can get dates from only the uncompleted tasks", () =>{
+    it("gets the dates from only the uncompleted tasks", () => {
+        expect(uncompletedTasksData(tasks).length).toBe(2)
+    })
+})
+
+describe("tests that we can get dates from only the completed tasks", () =>{
+    it("gets the dates from only the completed tasks", () => {
+        expect(completedTasksData(tasks).length).toBe(1)
+    })
+})
+
+describe("tests that we can get data from Tasks collection for all 12 months", () =>{
+    it("gets the data from tasks collection for all months", () => {
+        expect(graphDATA(tasks).length).toBe(12)
+    })
+})
 
 describe("tests that we can show the tasks by course name", () => {
     document.body.innerHTML = "<div id = 'modal-title'>test</div>"
@@ -207,12 +231,13 @@ describe("test for updateCoursesModal()", () => {
     })
 })*/
 
-describe("courses should show", () => {
-    it("renders correctly", () => {
-        const root = document.createElement("tbody");
-        render(printCoursesTable(courses), root);
-    })
-})
+// describe("courses should show", () => {
+//     it("renders correctly", () => {
+//         const root = document.createElement("tbody");
+//         render(printCoursesTable(courses), root);
+//     })
+// })
+
 
 
 
