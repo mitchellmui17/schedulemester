@@ -424,7 +424,7 @@ export default function Profile() {
                         {success && <Alert variant="success">{success}</Alert>}
                         <img
                                     id="output"
-                                    src={profilePicture || "https://icon-library.com/images/cool-anime-icon/cool-anime-icon-9.jpg"}
+                                    src={profilePicture || "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1024px-OOjs_UI_icon_userAvatar.svg.png"}
                                     className="rounded-circle"
                                     width="40%"
                                     height="40%"
