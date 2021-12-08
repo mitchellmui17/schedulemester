@@ -119,6 +119,7 @@ By default, the package.json is set so whenever ```npm test``` is run, Jest will
 
 ## Authors
  - Kenneth Feng
+ - Mitchell
  - Murad
  - Daniel Dong
  - Lucas Lin
