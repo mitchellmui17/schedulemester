@@ -305,7 +305,7 @@ export default function MyCalendar() {
                     <Form.Control type = "text" ref={DescriptionTRef} required/>                 
                   </Form.Group>
                   <Form.Group id = "Priority">
-                    <Form.Label>Priority</Form.Label>
+                    <Form.Label>Priority <br/>(Enter 2 for High, 1 for Medium, 0 for Low)</Form.Label>
                     <Form.Control type = "number" ref={PriorityTRef} required/>                 
                   </Form.Group>
                   <Form.Group id = "EndTime">
