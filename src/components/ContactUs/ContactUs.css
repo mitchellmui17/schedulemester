@@ -3,3 +3,12 @@
     text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
     
 }
+
+.links{
+    text-decoration: none;
+    color: #FFFFFF;
+    -webkit-text-stroke-width: 0.1px;
+    -webkit-text-stroke-color: grey;
+    
+
+}

@@ -290,9 +290,6 @@ export default function Profile() {
     const [loading, setLoading] = useState(false) /* istanbul ignore next */
     const courseNameRef = useRef(); /* istanbul ignore next */
     const courseIDRef = useRef(); /* istanbul ignore next */
-    const examGRef = useRef(); /* istanbul ignore next */
-    const homeworkGRef = useRef(); /* istanbul ignore next */
-    const projectGRef = useRef(); /* istanbul ignore next */
 
     /* istanbul ignore next */ 
     db.getCollection('Users').doc(currentUser.email).get().then((doc) => {
@@ -362,10 +359,7 @@ export default function Profile() {
                 ListofCourses: firebase.firestore.FieldValue.arrayUnion(
                     {   
                         Course_Name: courseNameRef.current.value,
-                        Course_id: courseIDRef.current.value,
-                        Exams: examGRef.current.value,
-                        Homeworks: homeworkGRef.current.value,
-                        Projects: projectGRef.current.value
+                        Course_id: courseIDRef.current.value
                         }
                     )
                 }).then(function() {// went through
@@ -550,18 +544,6 @@ export default function Profile() {
                             <Form.Group id = "courseID">
                                 <Form.Label>Course ID</Form.Label>
                                 <Form.Control type = "text" ref={courseIDRef} required/>                 
-                            </Form.Group>
-                            <Form.Group id = "examsGrade">
-                                <Form.Label>Exams Grade</Form.Label>
-                                <Form.Control type = "number" ref={examGRef} required/>                 
-                            </Form.Group>
-                            <Form.Group id = "homeworksGrade">
-                                <Form.Label>Homeworks Grade</Form.Label>
-                                <Form.Control type = "number" ref={homeworkGRef} required/>                 
-                            </Form.Group>
-                            <Form.Group id = "projectsGrade">
-                                <Form.Label>Projects Grade</Form.Label>
-                                <Form.Control type = "number" ref={projectGRef} required/>                 
                             </Form.Group>
                         <Button data-testid="btn-test" disabled = {loading} className = "button-test w-100" type = "submit" >
                             Add Course
