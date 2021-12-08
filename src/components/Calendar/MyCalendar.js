@@ -155,10 +155,12 @@ export default function MyCalendar() {
         if (currentUser.email === doc.id){
           let x =0;
           for(x = 0; x < data.Tasks.length; x++){
+            if(!data.Tasks[x].isComplete)
             tempTaskName.push(data.Tasks[x]);
           }
         }
       })
+      
       setTaskTitle(tempTaskName);
     }).catch(error => console.log(error))
   }
@@ -288,7 +290,7 @@ export default function MyCalendar() {
                 <form onSubmit = {handleSubmitTask}>
                 <Form.Group id = "TitleName">
                     <Form.Label>Course Name</Form.Label><br/>
-                      <select style = {{marginBottom:"10px", padding:"2%"}} id = "selection" ref = {CourseTRef}>
+                      <select style = {{marginBottom:"10px", padding:"2%"}} id = "selection" ref = {CourseTRef} required>
                         {listCourseId.map(list => (
                           <option key ={list} value = {list}>
                             {list}
