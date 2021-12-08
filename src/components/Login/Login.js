@@ -5,8 +5,8 @@ import {useAuth} from '../../context/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import "./Login.css"
 import Fire from '../../firebase'
-import logo from '../../assets/images/ScheduleMester-logo/default_Stroke.png';
-import background from '../../assets/images/wallhaven-nme3w9.png';
+import logo from "../../assets/images/ScheduleMester-logo/default.png"
+import background from '../../assets/images/wave.svg';
 import "./../../assets/fonts/font.css"
 
 
@@ -51,22 +51,27 @@ export default function Login() {
 
 
     return (
-        <div style = {{backgroundImage: `url(${background})`}}>
+        <div className = "background-style" style = {{backgroundImage: `url(${background})`}}>
         <div className= "grid-container font-style-Alice">
             <div className = "grid-child first"> 
                 <Container className = "d-flex justify-content-center" style ={{minHeight: "100vh"}}>
                     <div  className= 'd-flex  align-items-center justify-content-center'>
-                    <img src ={logo} width= "500" height ="500"></img>
+                    {/* //<img src ={logo} width= "500" height ="500"></img> */}
                     </div>
-                    <div  className= 'd-flex align-items-center'>
-                    <p>This was just placeholder text</p>
-                    </div>
+                    <div  className= 'd-flex align-items-center text'>
+                        <div>
+                        Questions? Contact us at ScheduleMester@gmail.com! Or <br/>
+                        Don't have an account yet?<Link className="links" to = '/SignUp'> Click here!</Link>  
+                        </div>
+                    </div>  
+                    
                 </Container>
             </div>
             <div className="test">
                 <Container className = "grid-child second d-flex align-items-right justify-content-center" style ={{minHeight: "100vh"}}>
-                    <div className ="w-100 div" style = {{ maxWidth: '400px'}}>
-                        <Card>
+                    <div className ="w-100 div right-side" style = {{ maxWidth: '400px'}}>
+                        <img className = "logo" src ={logo}/>
+                        <Card className = "card-style" style = {{borderRadius: '10px'}}>
                             <Card.Body>
                                 <h2 className = "text-center mb-4">Login</h2>
                                     {/* {error && <Alert variant ="danger">{error}</Alert>} */}
@@ -79,12 +84,10 @@ export default function Login() {
                                         <Form.Label>Password</Form.Label>
                                         <Form.Control type = "password" ref={passwordRef} required/>
                                     </Form.Group>
-                                    <Button className = "button-test w-100" type = "submit" disabled={loading}>
+                                    <Button className = "button-test w-100 btn-outline-light" type = "submit" disabled={loading}>
                                         Login
                                     </Button>
-                                    <div className = "w-100 text-center mt-2">
-                                        <Link className="links" to = '/SignUp'>Don't have an account yet?</Link>    
-                                    </div>
+                                    
                                     <div className = "w-100 text-center mt-2">
                                         <Link className="links" to = '/ResetPassword'>Forgot your password? </Link>    
                                     </div>
