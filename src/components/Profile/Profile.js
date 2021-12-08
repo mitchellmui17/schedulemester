@@ -378,17 +378,15 @@ export default function Profile() {
         setLoading(false)
     }
 
-
-    /* istanbul ignore next */
-    const handleChange = e => {
+/* istanbul ignore next */
+    async function handleChange (e)  {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
             setProfilePicture(URL.createObjectURL(e.target.files[0]));
         }
     }
-
-    /* istanbul ignore next */
-    const handleUpload = () => {
+/* istanbul ignore next */
+    async function handleUpload() {
         console.log(file);
         if (file === null) {
             setError("No file selected");
@@ -397,7 +395,7 @@ export default function Profile() {
                 console.log('successfully uploaded to firebase');
                 updateProfilePicture('users/' + currentUser.uid + '/profile.jpg');
                 setError("");
-            })
+            });
         }
     }
 
@@ -417,29 +415,33 @@ export default function Profile() {
 
 
     return(
+        
         <div className="profile-page font-style-Alice backgroundsize" style = {{backgroundImage: `url(${background})`}}>
             <div className="main main-raised">
-                <div className="profile-content">
-                        <div className="profile">
+                <div className="profile-content" style = {{backgroundColor: "#FFFFFF", padding: "10px", borderRadius:"6%"}}>
+                        <div className="profile" style = {{paddingBottom: "10%"}}>
+                        {error && <Alert variant="danger">{error}</Alert>}
+                        {success && <Alert variant="success">{success}</Alert>}
                         <img
                                     id="output"
                                     src={profilePicture || "https://icon-library.com/images/cool-anime-icon/cool-anime-icon-9.jpg"}
                                     className="rounded-circle"
-                                    width="200px"
-                                    height="150px"
+                                    width="40%"
+                                    height="40%"
                                     alt="profilePic"
+                                
                                 />
             
-                            <div className="description">
+                            <div className="description" style = {{padding: '14px'}}>
                                 <h3 id="name">{name}</h3>
                                 <h5>Major: {major}</h5>
                                 <h5>Semester: {semester}</h5>
 
                                 {currentUser !== null?
                                 <div> 
-                                    <input type="file" accept="image/*" onChange={handleChange} />
-                                    <Button className="btn-primary btn-outline-light" onClick={handleUpload}>Update Profile Picture</Button>
-                                    <Button onClick={handleLogout} className="btn-primary btn-outline-light">
+                                    <input type="file" accept="image/*" onChange={handleChange} style = {{padding: '5px', textAlign:'center'}} />
+                                    <Button className="btn-primary btn-outline-light" onClick={handleUpload} style = {{width: '80%', margin: '5px', borderRadius: "10px"}}>Update Profile Picture</Button>
+                                    <Button onClick={handleLogout} className="btn-primary btn-outline-light" style = {{width: '80%', margin: '5px', borderRadius: "10px"}}>
                                         Log Out
                                     </Button>
                                 </div>:
@@ -448,7 +450,7 @@ export default function Profile() {
                             </div>
                         </div>
                 </div>
-                
+                <div>
                 <table id = 'courses-table' className='child'>
                     <thead>
                         <tr>
@@ -458,6 +460,7 @@ export default function Profile() {
                     {printCoursesTable(tasks, courseName)}
                     <button onClick={ () => openModal("add-course-modal") } className="buttonsize">Add a course</button>
                 </table>
+                </div>
             </div>
             
             <div className = 'parent'>
@@ -473,13 +476,13 @@ export default function Profile() {
                 </table>
                 
                 {/* BAR GRAPH HERE */}
-                <table id = 'bar-table'>
+                <table id = 'bar-table' className="table-background">       
                     <thead>
                         <tr>
                             <th><h5>Tasks Progress</h5></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         <tr>
                             <td>
                                 <BarChart id='bar-graph' className = 'child' width={500} height={500} data={graphDATA(tasks)} >
