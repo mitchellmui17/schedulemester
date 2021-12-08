@@ -140,12 +140,14 @@ export const getTasksByHighestPriority = (tasks) => {
 }
 
 export const getTasksByCourse = (tasks, course) => {
+    if(tasks != undefined){
     let arr = getTasksByHighestPriority(tasks)
     let idx = 0
     let courseArr = []
     for (let i = 0; i < tasks.length; i++) 
         if (arr[i].Course === course)  courseArr[idx++] = arr[i]
     return courseArr
+}
 }
 
 export const getUncompletedTasks = (tasks) => {
@@ -234,6 +236,7 @@ export const graphDATA = (tasks) => {
 // elems is an array of the elements: title, desc, date, and tbody
 // need this parameter for unit testing
 export const showTasksByCourse = (tasks, currentCourse, elems) => {
+    if(tasks != undefined){
     let arr = getTasksByCourse(tasks, currentCourse)
     elems[3].innerHTML = ''
     console.log(arr.length)
@@ -242,6 +245,7 @@ export const showTasksByCourse = (tasks, currentCourse, elems) => {
         let row = createTaskRow(task, createTaskButton(task, elems))
         elems[3].appendChild(row)
     })
+}
 }
 
 export const createTaskRow = (task, taskBtn) => {
