@@ -25,14 +25,12 @@ class LandingPage extends Component{
 
                 <div className="layer1-right" style = {{backgroundImage: `url(${background2})`}}>
                 
-                <h1>Welcome to the ScheduleMester</h1>
+                <h1>Welcome to ScheduleMester</h1>
                         <article style={{textAlign: 'justify', margin: 20, lineHeight: 2}}>
                             Schedulemester is an application for convenient planning of coursework by Users. 
                             We are dedicated to providing an application that can improve users' performance and efficiency. 
                             ScheduleMester will help to keep track of every event and task and plan out the efficient way to complete them. 
-                            Users are able to see the three most urgent tasks that are needed to be completed and the result of completing the tasks. 
-                            Also, ScheduleMester will remind users about the upcoming tasks for users to enough time to prepare and allocate time for them. 
-                            Users can check their GPA for a specific course or the overall GPA in real-time.
+                            Users are able to see their most urgent tasks that need to be completed as well as a graph detailing their progress. 
                         </article>
                 </div>
                 <div className="layer2-left"  style = {{backgroundImage: `url(${background2})`}}>
