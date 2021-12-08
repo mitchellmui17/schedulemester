@@ -14,21 +14,21 @@ class ContactUs extends Component{
                     <div>
                         <article className="text-style" style = {{textAlign: "justify", margin: 70}}>
                             <h1>About Us</h1>
-                            <p>Tracker (Murad) is keeping track of everyone progress status, and the documenting how the way how they measure and track.</p>
-                            <p>Unit Tester (Daniel) is writing unit testing for the application and tutorial on how to use the unit testing.</p>
-                            <p>Code Reviewer (Lucas) is responsible for the request pull from the github and making sure the review process and coding standard 
-                            for the projects.</p>
-                            <p>Continues Integrator (Mitchell) is to making sure every pull request is working successful and establishing the continuous integration.</p>
-                            <p>Customer (Kenneth) is to making sure the user stories will be created  that define the prioritizing for each release</p>
-                            <p>And coming up with acceptance criteria for each of the user stories.</p>
-                            <p>Designed (Dongxin) is response for using Figma to keep track of the UI of the website and how we want to designed it.</p>
+                            <p>Tracker (Murad) is keeping track of everyone's progress, and documenting how their work over time.</p>
+                            <p>Unit Tester (Daniel) is setting up unit testing for the application and writing tutorials on how to use it.</p>
+                            <p>Code Reviewer (Lucas) is responsible for setting the review standard for the pull requests on GitHub as well as determining the coding standards 
+                            for the project.</p>
+                            <p>Continuous Integrator (Mitchell) is to making sure every pull request is working successful and managing the deployment process.</p>
+                            <p>Customer (Kenneth) is making sure the user stories of the project are being worked on in order of priority for each release,</p>
+                            <p>as well as determining the way to go about the implementation process.</p>
+                            <p>Designer/Documenter (Dongxin) is responsible for using Figma to design the UI of the website and documenting the progress of the project </p>
                             <h1>Contact Us</h1>
-                            <p>Murad:</p>
-                            <p>Daniel:</p>
-                            <p>Lucas:</p>
-                            <p>Mitchell:</p>
-                            <p>Kenneth:</p>
-                            <p>Dongxin:</p>
+                            <p>Murad: <a href='https://github.com/MuradAle'>Github</a></p>
+                            <p>Daniel: <a href='https://github.com/DD155'>Github</a></p>
+                            <p>Lucas: <a href='https://github.com/chunxianlin'>Github</a></p>
+                            <p>Mitchell: <a href='https://github.com/mitchellmui17'>Github</a></p>
+                            <p>Kenneth: <a href='https://github.com/Primagon'>Github</a></p>
+                            <p>Dongxin: <a href='https://github.com/dxliang001'>Github</a></p>
                         </article>
                     </div>
                 </div>
